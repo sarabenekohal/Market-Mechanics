@@ -279,6 +279,8 @@ footer b{color:#dce7f6}
       <a href="#ch23">23 · Fees & the Cost of Investing</a>
       <a href="#ch24">24 · Taxes & Account Types</a>
       <a href="#ch25">25 · The Macro Backdrop</a>
+      <a class="part" href="#part6">Part VI · The Frontier</a>
+      <a href="#ch26">26 · Crypto, Blockchain & Fintech</a>
       <a href="#glossary">Glossary</a>
     </nav>
   </aside>
@@ -372,13 +374,13 @@ footer b{color:#dce7f6}
           <text x="40" y="30" font-size="11" fill="#5b6b82" transform="rotate(-90 40,120)" text-anchor="middle">Higher expected return →</text>
           <text x="470" y="240" font-size="11" fill="#5b6b82" text-anchor="middle">Higher risk / more ways to lose →</text>
           <polyline points="80,200 230,170 380,135 540,100 700,65 860,40" fill="none" stroke="url(#rg)" stroke-width="4"/>
-          <g font-size="11.5" font-weight="700" fill="#0d1b2e">
-            <circle cx="80" cy="200" r="6" fill="#22b06b"/><text x="92" y="196">Cash / T-bills</text>
-            <circle cx="230" cy="170" r="6" fill="#39bdf8"/><text x="242" y="166">Gov't bonds</text>
-            <circle cx="380" cy="135" r="6" fill="#13b6a6"/><text x="392" y="131">Corp. bonds</text>
-            <circle cx="540" cy="100" r="6" fill="#d6a52a"/><text x="552" y="96">Blue-chip stocks</text>
-            <circle cx="700" cy="65" r="6" fill="#f5852a"/><text x="640" y="55">Small / growth stocks</text>
-            <circle cx="860" cy="40" r="6" fill="#e2563f"/><text x="700" y="34">Options / leverage</text>
+          <g font-size="11.5" font-weight="700" fill="#0d1b2e" text-anchor="middle">
+            <circle cx="80" cy="200" r="6" fill="#22b06b"/><text x="96" y="180">Cash / T-bills</text>
+            <circle cx="230" cy="170" r="6" fill="#39bdf8"/><text x="230" y="150">Gov't bonds</text>
+            <circle cx="380" cy="135" r="6" fill="#13b6a6"/><text x="380" y="115">Corp. bonds</text>
+            <circle cx="540" cy="100" r="6" fill="#d6a52a"/><text x="540" y="80">Blue-chip stocks</text>
+            <circle cx="700" cy="65" r="6" fill="#f5852a"/><text x="700" y="45">Small / growth stocks</text>
+            <circle cx="858" cy="40" r="6" fill="#e2563f"/><text x="845" y="22">Options / leverage</text>
           </g>
         </svg>
         <p class="fig-cap">Nothing sits in the top-left corner (high return, low risk) — if it did, everyone would pile in until the price rose and the return fell. The market is constantly erasing free lunches.</p>
@@ -1958,6 +1960,119 @@ footer b{color:#dce7f6}
     </div>
   </section>
 
+  <!-- ===================== PART VI ===================== -->
+  <section id="part6" class="part-head">
+    <div class="wrap">
+      <div class="num">VI</div>
+      <div>
+        <h2>The Frontier</h2>
+        <p>Where markets are heading next: blockchain and crypto, and the fintech innovations rewiring how — and what — ordinary people can invest in.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 26 ===================== -->
+  <section id="ch26">
+    <div class="wrap">
+      <div class="chapnum">Chapter 26</div>
+      <h2 class="chap">Crypto, Blockchain &amp; the Fintech Frontier</h2>
+      <p class="lede">A whole new financial universe has grown up alongside the traditional one in this chapter's lifetime — built on a technology called blockchain, populated by cryptocurrencies, and pushed forward by "fintech" apps that have torn down old barriers (and built some new traps). You don't need to invest a dollar in any of it, but you do need to understand it, because it's reshaping the markets you <em>do</em> invest in.</p>
+
+      <h3>Blockchain: a shared ledger no one owns</h3>
+      <p>Strip away the hype and a <strong>blockchain</strong> is just a <em>ledger</em> — a record book of who owns what and who paid whom. The radical part is that instead of one trusted institution (a bank, a clearing house from Chapter 1) keeping the book, thousands of computers around the world keep <em>identical copies</em> and constantly agree on the contents. Once an entry is written and confirmed, it's effectively permanent and visible to all. No central owner, no single off-switch.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Imagine a shared Google Doc that records every transaction, except thousands of people each hold a copy, new lines can only be added if most copies agree, and no one can secretly erase old lines. That's a blockchain: a record everyone can trust <em>without</em> trusting any single keeper of the records. Removing the middleman is the whole point.</p></div>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 26.1</p>
+        <p class="fig-sub">Traditional ledger vs. blockchain</p>
+        <svg viewBox="0 0 920 210" role="img" aria-label="Centralized ledger versus distributed blockchain">
+          <g font-family="inherit">
+            <text x="230" y="26" font-size="13" font-weight="800" fill="#0d1b2e" text-anchor="middle">Traditional: one central keeper</text>
+            <circle cx="230" cy="110" r="34" fill="#fbf4e2" stroke="#d6a52a" stroke-width="2"/>
+            <text x="230" y="106" font-size="11" font-weight="700" fill="#a07a13" text-anchor="middle">BANK /</text>
+            <text x="230" y="120" font-size="11" font-weight="700" fill="#a07a13" text-anchor="middle">LEDGER</text>
+            <g stroke="#c7d0dd" stroke-width="2">
+              <line x1="230" y1="76" x2="120" y2="55"/><line x1="230" y1="76" x2="340" y2="55"/>
+              <line x1="196" y1="110" x2="90" y2="120"/><line x1="264" y1="110" x2="370" y2="120"/>
+              <line x1="230" y1="144" x2="160" y2="175"/><line x1="230" y1="144" x2="300" y2="175"/>
+            </g>
+            <g fill="#eef6ff" stroke="#2f7df6"><circle cx="120" cy="55" r="11"/><circle cx="340" cy="55" r="11"/><circle cx="90" cy="120" r="11"/><circle cx="370" cy="120" r="11"/><circle cx="160" cy="175" r="11"/><circle cx="300" cy="175" r="11"/></g>
+
+            <line x1="470" y1="20" x2="470" y2="195" stroke="#dde3ec"/>
+            <text x="695" y="26" font-size="13" font-weight="800" fill="#0d1b2e" text-anchor="middle">Blockchain: everyone holds a copy</text>
+            <g fill="#e9f9f1" stroke="#22b06b" stroke-width="2">
+              <circle cx="580" cy="60" r="16"/><circle cx="695" cy="50" r="16"/><circle cx="810" cy="60" r="16"/>
+              <circle cx="560" cy="130" r="16"/><circle cx="695" cy="150" r="16"/><circle cx="830" cy="130" r="16"/>
+            </g>
+            <g stroke="#22b06b" stroke-opacity=".5" stroke-width="1.5">
+              <line x1="580" y1="60" x2="695" y2="50"/><line x1="695" y1="50" x2="810" y2="60"/>
+              <line x1="580" y1="60" x2="560" y2="130"/><line x1="810" y1="60" x2="830" y2="130"/>
+              <line x1="560" y1="130" x2="695" y2="150"/><line x1="695" y1="150" x2="830" y2="130"/>
+              <line x1="695" y1="50" x2="695" y2="150"/><line x1="580" y1="60" x2="830" y2="130"/><line x1="810" y1="60" x2="560" y2="130"/>
+            </g>
+            <text x="695" y="185" font-size="11" fill="#5b6b82" text-anchor="middle">identical copies, no central point of control</text>
+          </g>
+        </svg>
+        <p class="fig-cap">The left model trusts one institution to keep honest books. The right model replaces that trust with math and replication across many independent computers.</p>
+      </div>
+
+      <h3>Cryptocurrencies: the assets that live on blockchains</h3>
+      <p>A <strong>cryptocurrency</strong> is a digital asset recorded on a blockchain. The major categories a beginner should recognize:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Type</th><th>Example</th><th>The idea</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">"Digital gold"</td><td>Bitcoin</td><td>A fixed, capped supply (21M coins) meant as a scarce store of value outside any government's control.</td></tr>
+          <tr><td class="co-name">Smart-contract platform</td><td>Ethereum</td><td>A blockchain that runs programs ("smart contracts") — the base layer for apps, tokens, and DeFi.</td></tr>
+          <tr><td class="co-name">Stablecoin</td><td>USDC, USDT</td><td>Tokens pegged to a stable value (usually $1), used as digital cash to move money between cryptos.</td></tr>
+          <tr><td class="co-name">Tokens</td><td>Thousands of others</td><td>Coins for specific projects or apps — ranging from serious to outright worthless or fraudulent.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>How crypto trades differently</h4>
+      <p>Crypto markets break several rules you learned earlier: they trade <strong>24/7</strong> (no opening bell, no closing auction), there's <strong>no central regulator or clearing house</strong> guaranteeing trades, and you can hold assets yourself in a <strong>wallet</strong> rather than at a broker. That self-custody is powerful ("be your own bank") but unforgiving — lose your private key and the money is gone forever, with no help desk to call.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Crypto concentrates almost every risk in this guide at once: extreme volatility (50%+ drops are routine), no FDIC insurance, rampant scams and "rug pulls," exchanges that have collapsed with customer funds (remember FTX), and unsettled regulation. Most of the thousands of tokens are worthless or designed to separate you from your money. Treat crypto as the <em>far</em> right end of the risk ladder from Figure 0.1 — only money you can afford to lose entirely, and never because an influencer told you it's "going to the moon."</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Beyond currencies, blockchains power <strong>DeFi</strong> (decentralized finance — lending, trading, and earning yield through code instead of banks) and <strong>NFTs</strong> (unique tokens proving ownership of a digital item). The big open question is which of this is durable financial infrastructure and which is a speculative bubble. The honest answer in 2026: some of both, and nobody knows the final split. A notable bridge to the traditional world arrived when regulators approved <strong>spot Bitcoin ETFs</strong> — letting you hold Bitcoin exposure in an ordinary brokerage account (Chapter 11), wrapping a wild new asset in a familiar, regulated package.</p></div>
+
+      <h3>Fintech: the apps rewiring access to markets</h3>
+      <p>"Fintech" (financial technology) is the wave of apps and startups that have made investing cheaper, faster, and open to far more people. Three innovations matter most for a beginner.</p>
+
+      <h4>1. Commission-free trading — and how "free" really works</h4>
+      <p>A decade ago, every trade cost $5–$10 in commission. Then apps like <strong>Robinhood</strong> popularized <strong>$0-commission trading</strong>, and the whole industry followed. This genuinely democratized investing — but "free" isn't free. As you learned in Chapter 1, these apps largely make money through <strong>payment for order flow (PFOF)</strong>: they sell your orders to big trading firms, who pay for the right to fill them. You also pay the bid-ask spread, and the slick, game-like app design can quietly nudge you to trade more (and worse) than you should.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>If you're not paying for the product, you often <em>are</em> the product. Commission-free apps removed a real, visible cost — which is great — but they replaced it with hidden ones (order flow sold to traders, the spread) and a design built to keep you tapping. Free trading is wonderful for a patient long-term investor and a subtle trap for an over-active one.</p></div>
+
+      <p>Alongside zero commissions came <strong>fractional shares</strong> — the ability to buy $10 of a $1,000 stock. This is a genuinely great innovation for beginners: it lets you diversify and dollar-cost-average with tiny amounts of money, no longer locked out by high share prices.</p>
+
+      <h4>2. Tokenization of private companies &amp; real-world assets</h4>
+      <p>One of the most hyped frontiers is <strong>tokenization</strong>: putting ownership of a real-world asset — a private company's shares, a building, a piece of art, a Treasury bond — onto a blockchain as a tradable token. The pitch is seductive: it could bring <em>liquidity</em> (Chapter 4) to famously illiquid assets, let ordinary people own slices of pre-IPO startups (Chapter 8) that were once reserved for the wealthy, and allow 24/7 trading with instant settlement.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Tokenizing a private company doesn't fix the hard problems — it can hide them. A private startup still has <em>no real market price</em> and rarely discloses financials, so a token "worth $X" may be backed by little more than hype. Worse, some tokenized-share products give you a contract that merely <em>tracks</em> a private company without real ownership or legal rights. A liquid wrapper around an illiquid, opaque, hard-to-value asset can be more dangerous than the asset itself, because it <em>feels</em> safe and tradable. Demand to know exactly what legal claim the token actually represents.</p></div>
+
+      <h4>3. ETFs that mix private and public companies</h4>
+      <p>A brand-new development is <strong>ETFs that hold both public stocks and stakes in private companies</strong> — trying to give regular investors access to the private-market growth (think pre-IPO tech) that used to be off-limits. The appeal is real: some of the biggest gains now happen <em>before</em> a company ever IPOs, and these funds promise a slice of that in a one-click, exchange-traded wrapper.</p>
+      <p>But they collide with a deep structural problem — a <strong>liquidity mismatch</strong>:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tension</th><th>Public side</th><th>Private side</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Pricing</td><td>Updates every second on the exchange.</td><td>No market price; valued by estimate, sometimes stale for months.</td></tr>
+          <tr><td class="co-name">Liquidity</td><td>Sell instantly.</td><td>Can take years to exit a private stake.</td></tr>
+          <tr><td class="co-name">The risk</td><td colspan="2">An ETF promising daily liquidity while holding illiquid, hard-to-value private assets must rely on the creation/redemption machinery (Chapter 11) working smoothly — which can break exactly when markets panic, causing the ETF's price to swing far from its true value.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>These mixed funds raise hard questions regulators are still wrestling with: How do you fairly value the private holdings each day? What happens if everyone wants to redeem at once but the private assets can't be sold quickly? Critics warn it could repackage the same illiquidity-and-valuation risks that have burned investors before, dressed in a friendly ETF costume. Promising — but unproven, and exactly the kind of shiny new product to approach with the four questions from this guide's intro.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The frontier is genuinely exciting and genuinely dangerous, and the same disciplines apply: <strong>understand what you actually own, know who profits from selling it to you, and never take a risk you're not paid for.</strong> Blockchain may reshape the market's plumbing; fintech has already widened access for the better. But new wrappers don't repeal old laws of finance — liquidity, valuation, and risk still rule. For most beginners, the boring core (diversified, low-cost, long-term) belongs at the center, with anything on this frontier as a small, eyes-open satellite — money you could lose entirely without losing sleep.</p></div>
+    </div>
+  </section>
+
   <!-- ===================== GLOSSARY ===================== -->
   <section id="glossary">
     <div class="wrap">
@@ -2091,6 +2206,20 @@ footer b{color:#dce7f6}
         <dt>Lock-up period</dt><dd>The 90–180 days after an IPO when insiders can't sell; its expiry often triggers a selloff.</dd>
         <dt>Direct listing</dt><dd>Going public by listing existing shares without underwriters raising new money.</dd>
         <dt>SPAC</dt><dd>A shell company that's already public, used to take another company public by merger.</dd>
+        <dt>Blockchain</dt><dd>A shared, tamper-resistant ledger kept identically by many computers, with no central owner.</dd>
+        <dt>Cryptocurrency</dt><dd>A digital asset recorded on a blockchain (e.g. Bitcoin, Ethereum).</dd>
+        <dt>Bitcoin</dt><dd>The first and largest crypto; a capped-supply "digital gold."</dd>
+        <dt>Ethereum</dt><dd>A blockchain that runs programmable "smart contracts," the base for many crypto apps.</dd>
+        <dt>Stablecoin</dt><dd>A crypto token pegged to a stable value (usually $1), used as digital cash.</dd>
+        <dt>Wallet</dt><dd>Software/hardware that holds your crypto keys; lose the key and the funds are gone.</dd>
+        <dt>DeFi</dt><dd>Decentralized finance — lending, trading, and yield run by code instead of banks.</dd>
+        <dt>NFT</dt><dd>A unique blockchain token proving ownership of a specific digital item.</dd>
+        <dt>Spot Bitcoin ETF</dt><dd>A regulated fund holding Bitcoin, giving exposure inside a normal brokerage account.</dd>
+        <dt>Fintech</dt><dd>Financial-technology apps that make investing cheaper and more accessible.</dd>
+        <dt>Commission-free trading</dt><dd>$0-per-trade investing, typically funded by payment for order flow and the spread.</dd>
+        <dt>Fractional shares</dt><dd>Buying a small slice of one share, enabling tiny diversified investments.</dd>
+        <dt>Tokenization</dt><dd>Representing a real-world asset (private shares, property) as a tradable blockchain token.</dd>
+        <dt>Liquidity mismatch</dt><dd>A fund offering daily liquidity while holding assets that can't be sold quickly — a key risk of private/public ETFs.</dd>
       </dl>
     </div>
   </section>
