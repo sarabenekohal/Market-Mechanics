@@ -1185,6 +1185,27 @@ footer b{color:#dce7f6}
 
       <div class="callout plain"><span class="lab">🧒 Plain English</span><p>An option is like a refundable deposit on a concert ticket. A <em>call</em> locks in a price to buy later — great if prices soar, and if they don't, you only lose the deposit (the premium). A <em>put</em> is like buying insurance: it pays off if the thing you own loses value.</p></div>
 
+      <h3>Moneyness: in-the-money, at-the-money, out-of-the-money</h3>
+      <p>The first piece of jargon to master is <strong>moneyness</strong> — where the stock's current price sits relative to the option's strike. It decides whether the option has any real value <em>right now</em>, and it's the single biggest driver of how an option behaves.</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Term</th><th>For a CALL (right to buy)</th><th>For a PUT (right to sell)</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">In-the-money (ITM)</td><td>Stock is <strong>above</strong> the strike — you could buy below market. Has real value.</td><td>Stock is <strong>below</strong> the strike — you could sell above market. Has real value.</td></tr>
+          <tr><td class="co-name">At-the-money (ATM)</td><td colspan="2">Stock is right <strong>at</strong> the strike. The most sensitive to movement (highest time value).</td></tr>
+          <tr><td class="co-name">Out-of-the-money (OTM)</td><td>Stock is <strong>below</strong> the strike — no point buying high. No intrinsic value yet.</td><td>Stock is <strong>above</strong> the strike — no point selling low. No intrinsic value yet.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>The stock is at <strong>$100</strong>.<br>
+      • A <strong>$90 call</strong> is <em>in-the-money</em> (you can buy at $90 vs. $100 market — $10 of real value baked in).<br>
+      • A <strong>$100 call</strong> is <em>at-the-money</em>.<br>
+      • A <strong>$110 call</strong> is <em>out-of-the-money</em> (no one pays to buy at $110 when the market is $100 — it's all hope).<br>
+      Puts flip it: a $110 put is ITM, a $90 put is OTM. ITM options cost more (they contain real value); OTM options are cheap but are pure bets that need the stock to <em>move</em> to ever pay off.</p></div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>"In-the-money" just means the option is already worth exercising; "out-of-the-money" means it'd be pointless to exercise right now, so you're paying purely for the <em>chance</em> it moves your way before expiration. Cheap OTM options feel like lottery tickets for a reason — most expire worthless.</p></div>
+
       <h3>Why people use options</h3>
       <ul>
         <li><strong>Leverage:</strong> a small premium controls 100 shares' worth of upside. Big percentage gains possible — and total loss of the premium just as possible.</li>
@@ -1265,9 +1286,39 @@ footer b{color:#dce7f6}
       <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You own 5 call contracts with a delta of 0.40. Each contract covers 100 shares, so your <strong>position delta</strong> = 5 × 100 × 0.40 = <strong>200</strong> — you're effectively long 200 shares. If the stock rises $1, you make ~$200. Now suppose gamma is 0.05: after that $1 move, your delta climbs to 0.45, so your exposure grows to 225 shares automatically. That's positive gamma working <em>for</em> you as a buyer — and exactly what an option <em>seller</em> dreads, because for them it compounds losses.</p></div>
 
       <h3>Intrinsic vs. time value</h3>
-      <p>An option's premium has two parts. <strong>Intrinsic value</strong> is the profit if you exercised right now (a $100 call when the stock's at $108 has $8 of intrinsic value). <strong>Time value</strong> is the extra you pay for the <em>chance</em> things move further before expiration. As expiration nears, time value bleeds away to zero (that's theta in action) — which is why most options buyers lose: they're right on direction but run out of time.</p>
+      <p>An option's premium has two parts. <strong>Intrinsic value</strong> is the profit if you exercised right now (a $100 call when the stock's at $108 has $8 of intrinsic value — and only ITM options have any). <strong>Time value</strong> (also called <em>extrinsic value</em>) is the extra you pay for the <em>chance</em> things move further before expiration. An OTM option is <em>all</em> time value — pure hope. As expiration nears, time value bleeds away to zero (that's theta in action) — which is why most options buyers lose: they're right on direction but run out of time.</p>
+      <div class="formula">
+        <span class="big">Option premium = Intrinsic value + Time (extrinsic) value</span>
+        <span class="note">Intrinsic = how far in-the-money it is (never below 0) · Time value = everything else you're paying, driven mostly by time left and <em>volatility</em></span>
+      </div>
 
-      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Options are the most common way new traders blow up. Buying cheap, far-out-of-the-money "lottery ticket" calls feels exciting, but theta and the odds grind them to zero most of the time. And <em>selling</em> options naked (without owning the underlying) can lose far more than you put in. <strong>If you can't explain delta, gamma, and theta out loud, you're not ready to trade options with real money.</strong> Learn on paper first.</p></div>
+      <h3>Volatility: the hidden engine of an option's price</h3>
+      <p>Here's the part beginners miss and pros obsess over: <strong>the biggest driver of an option's time value is volatility</strong> — how much the stock is <em>expected</em> to swing. More expected movement means a bigger chance the option finishes deep in-the-money, so the option costs more. There are two flavors of volatility, and the difference is everything:</p>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--sky)"><h5>Historical (realized) volatility</h5><p>How much the stock <em>actually</em> moved in the past. A measured fact.</p></div>
+        <div class="card" style="border-top-color:var(--purple)"><h5>Implied volatility (IV)</h5><p>How much the market <em>expects</em> it to move in the future — the volatility "baked into" the option's price right now. A forecast, and the number that really sets the premium.</p></div>
+      </div>
+      <p><strong>Implied volatility</strong> is the key. When IV is high (fear, big event coming), options are <em>expensive</em>; when IV is low (calm), options are <em>cheap</em> — even for the same stock at the same price. This is why the same option can cost wildly different amounts on two different days. (It's the same idea as the VIX, Chapter 15, which is just the implied volatility of the whole S&amp;P 500.)</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap — "IV crush"</span><p>The classic beginner heartbreak: you buy a call right before <strong>earnings</strong> because you're sure the stock will jump. The stock <em>does</em> jump — and your call <em>loses money anyway</em>. Why? Before earnings, uncertainty pumps implied volatility sky-high, inflating the premium you paid. The moment earnings pass, the uncertainty vanishes and IV collapses — "<strong>IV crush</strong>" — deflating your option's time value faster than the stock's move inflated it. <strong>You can be right on direction and still lose, because you overpaid for volatility.</strong> Buying options into a known event is often a bet against IV crush, not just a bet on direction.</p></div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Implied volatility is the "weather forecast premium" on insurance. When a storm (earnings, news) is expected, insurance gets pricey; once the storm passes — even if it was a big one — prices drop back to calm-weather levels. Buy your insurance when it's already priced for a hurricane and you can lose even if the hurricane arrives.</p></div>
+
+      <h3>Getting started: reading an option chain</h3>
+      <p>When you pull up options in a broker, you see an <strong>option chain</strong> — a grid of every available contract. Here's how to read it and what to decide, step by step:</p>
+      <div class="kv">
+        <dt>Contract size</dt><dd>One contract = <strong>100 shares</strong>. A premium quoted at "$2.00" costs you $2 × 100 = <strong>$200</strong>. This trips up almost every beginner.</dd>
+        <dt>Expiration</dt><dd>Pick a date. More time = more expensive (more time value) but more room to be right. Too little time and theta eats you alive.</dd>
+        <dt>Strike</dt><dd>The locked-in price. ITM strikes cost more but behave more like the stock (higher delta); OTM strikes are cheap lottery tickets with low odds.</dd>
+        <dt>Bid / ask</dt><dd>Options spreads are often <em>wide</em> (Chapter 3) — you can lose several percent instantly to the spread. Use limit orders; check the spread before trading.</dd>
+        <dt>Open interest / volume</dt><dd>How many contracts exist / traded. Low numbers = illiquid = wide spreads and hard exits. Stick to liquid contracts.</dd>
+      </div>
+
+      <p>Putting it together, the two core choices are <strong>which strike</strong> (the ITM↔OTM trade-off: safety and cost vs. cheapness and long odds) and <strong>which expiration</strong> (time costs money but theta punishes you for too little of it). A practical beginner default: give yourself <em>plenty</em> of time and don't go far OTM.</p>
+
+      <div class="callout investor"><span class="lab">📈 A sane on-ramp for beginners</span><p>If you're determined to start, do it in this order: <strong>(1)</strong> paper-trade first until the Greeks and IV crush feel obvious; <strong>(2)</strong> begin with <em>defined-risk</em> strategies where your worst case is known up front — buying a <strong>protective put</strong> on stock you own, or selling a <strong>covered call</strong> against 100 shares you hold (Chapter 19); <strong>(3)</strong> size tiny — risk only what you'd be fine losing entirely (Chapter 17); <strong>(4)</strong> avoid <em>selling naked</em> options and far-OTM "lottery" calls until you deeply understand the risks. The goal early on is to <em>learn the machine</em> without it costing you a fortune.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Options are the most common way new traders blow up. Buying cheap, far-out-of-the-money "lottery ticket" calls feels exciting, but theta, IV crush, and the odds grind them to zero most of the time. And <em>selling</em> options naked (without owning the underlying) can lose far more than you put in. <strong>If you can't explain delta, gamma, theta, and implied volatility out loud, you're not ready to trade options with real money.</strong> Learn on paper first.</p></div>
 
       <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Options aren't just for speculating — they're how the whole financial system prices and transfers <em>risk</em>. The math behind them (the Black–Scholes model, which won a Nobel Prize) connects an option's price to volatility, time, and interest rates. That same volatility input is what the VIX index measures (Chapter 15). Options are where "how risky is the future?" gets an actual price tag.</p></div>
 
@@ -2908,6 +2959,17 @@ footer b{color:#dce7f6}
         <dt>Rho</dt><dd>How much an option moves when interest rates change.</dd>
         <dt>Premium</dt><dd>The price you pay to buy an option.</dd>
         <dt>Strike</dt><dd>The set price at which an option lets you buy or sell.</dd>
+        <dt>Moneyness</dt><dd>Where the stock price sits relative to the strike (ITM / ATM / OTM).</dd>
+        <dt>In-the-money (ITM)</dt><dd>An option that already has real exercise value (call: stock above strike; put: below).</dd>
+        <dt>At-the-money (ATM)</dt><dd>An option whose strike is right at the current stock price.</dd>
+        <dt>Out-of-the-money (OTM)</dt><dd>An option with no intrinsic value yet — pure time value/hope.</dd>
+        <dt>Intrinsic value</dt><dd>An option's built-in value if exercised now; zero unless it's in-the-money.</dd>
+        <dt>Time / extrinsic value</dt><dd>The part of the premium beyond intrinsic value, driven by time left and volatility.</dd>
+        <dt>Implied volatility (IV)</dt><dd>The future volatility the market has priced into an option — the main driver of its premium.</dd>
+        <dt>Historical volatility</dt><dd>How much a stock actually moved in the past.</dd>
+        <dt>IV crush</dt><dd>The sharp drop in implied volatility after an event (e.g. earnings) that can sink an option even if the stock moves your way.</dd>
+        <dt>Option chain</dt><dd>The grid of all available option contracts by strike and expiration.</dd>
+        <dt>Open interest</dt><dd>The number of option contracts currently outstanding; a gauge of liquidity.</dd>
         <dt>Alpha</dt><dd>Return earned above what your market exposure (beta) would predict — the "skill" part.</dd>
         <dt>Beta</dt><dd>How much an investment moves relative to the overall market.</dd>
         <dt>Volatility</dt><dd>How much returns bounce around their average (standard deviation).</dd>
