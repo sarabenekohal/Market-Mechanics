@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Markets Actually Work — A Beginner Investor's Field Guide</title>
+<style>
+:root{
+  --ink:#0d1b2e;          /* deep navy text/dark panels */
+  --ink-2:#16263f;
+  --panel:#13233c;
+  --panel-2:#1b2f4d;
+  --paper:#ffffff;
+  --bg:#eef1f6;
+  --muted:#5b6b82;
+  --line:#dde3ec;
+  --gold:#d6a52a;
+  --gold-soft:#f4e6bd;
+  --blue:#2f7df6;
+  --sky:#39bdf8;
+  --teal:#13b6a6;
+  --green:#22b06b;
+  --orange:#f5852a;
+  --purple:#8a63e8;
+  --red:#e2563f;
+  --pink:#e0518f;
+  --radius:14px;
+  --shadow:0 10px 30px rgba(13,27,46,.08), 0 2px 8px rgba(13,27,46,.05);
+  --maxw:920px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.62;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{line-height:1.2;font-weight:800;letter-spacing:-.01em}
+a{color:var(--blue);text-decoration:none}
+sup{font-size:.65em}
+
+/* ---------- Layout ---------- */
+.layout{display:flex;align-items:flex-start}
+.sidebar{
+  position:sticky;top:0;height:100vh;width:280px;flex:0 0 280px;
+  background:var(--ink);color:#cdd8e8;overflow-y:auto;padding:26px 20px 60px;
+}
+.sidebar .brand{font-weight:800;color:#fff;font-size:15px;letter-spacing:.02em;line-height:1.3}
+.sidebar .brand span{color:var(--gold)}
+.sidebar .tag{font-size:11px;color:#8095b2;text-transform:uppercase;letter-spacing:.14em;margin:4px 0 22px}
+.sidebar nav a{
+  display:block;color:#aebcd1;font-size:13.5px;padding:6px 10px;border-radius:8px;
+  border-left:2px solid transparent;margin:1px 0;transition:.15s;
+}
+.sidebar nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.sidebar nav a.part{color:var(--gold);font-weight:700;text-transform:uppercase;font-size:10.5px;letter-spacing:.13em;margin-top:18px;padding-bottom:2px}
+.sidebar nav a.active{background:rgba(214,165,42,.14);color:#fff;border-left-color:var(--gold)}
+
+.main{flex:1 1 auto;min-width:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+/* progress bar */
+#progress{position:fixed;top:0;left:280px;right:0;height:3px;background:transparent;z-index:50}
+#progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--sky))}
+
+/* mobile top bar */
+.topbar{display:none;position:sticky;top:0;z-index:40;background:var(--ink);color:#fff;
+  padding:12px 16px;align-items:center;justify-content:space-between}
+.topbar button{background:var(--gold);border:0;color:var(--ink);font-weight:800;border-radius:8px;padding:7px 12px;font-size:13px}
+
+/* ---------- Cover ---------- */
+.cover{background:radial-gradient(1200px 600px at 70% -10%,#1d3a63 0,transparent 60%),linear-gradient(160deg,#0b1830 0%,#0d1b2e 55%,#10213b 100%);
+  color:#eaf1fb;padding:90px 0 70px;position:relative;overflow:hidden}
+.cover .wrap{position:relative;z-index:2}
+.cover .cover-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.26em;font-size:12px;font-weight:700;border-bottom:1px solid rgba(214,165,42,.35);padding-bottom:14px;margin-bottom:30px}
+.cover h1{font-size:clamp(32px,5.4vw,58px);margin:0 0 16px;color:#fff;max-width:900px}
+.cover h1 .grad{background:linear-gradient(90deg,var(--gold),var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .sub{font-size:clamp(16px,2.4vw,21px);color:#aec2dd;max-width:720px;font-weight:500}
+.cover .rule{width:90px;height:4px;background:var(--gold);border-radius:3px;margin:26px 0}
+.cover .cover-edition{display:flex;flex-direction:column;gap:8px;margin-top:30px;color:#aec2dd;font-size:14px}
+.cover .cover-edition b{color:#fff;font-weight:800;letter-spacing:.02em}
+.cover-orbs{position:absolute;inset:0;z-index:1;opacity:.5}
+
+/* ---------- Sections ---------- */
+section{padding:54px 0;border-bottom:1px solid var(--line)}
+section:nth-child(even){background:var(--paper)}
+.part-head{background:var(--ink);color:#fff;padding:40px 0}
+.part-head .wrap{display:flex;align-items:center;gap:20px}
+.part-head .num{font-size:46px;font-weight:800;color:var(--gold);line-height:1}
+.part-head h2{font-size:26px;margin:0;color:#fff}
+.part-head p{margin:6px 0 0;color:#a9bdd9;font-size:15px}
+
+.chapnum{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-soft);padding:5px 12px;border-radius:30px;margin-bottom:14px}
+h2.chap{font-size:clamp(26px,4vw,38px);margin:0 0 6px}
+.lede{font-size:19px;color:#33455e;max-width:760px;margin:10px 0 8px;font-weight:500}
+h3{font-size:23px;margin:38px 0 10px;color:var(--ink)}
+h4{font-size:17px;margin:24px 0 6px;color:var(--ink-2)}
+p{margin:12px 0}
+ul,ol{padding-left:22px}
+li{margin:7px 0}
+strong{color:var(--ink)}
+
+/* ---------- Callouts ---------- */
+.callout{border-radius:var(--radius);padding:18px 20px 18px 22px;margin:22px 0;border-left:5px solid;position:relative;font-size:15.5px}
+.callout .lab{font-weight:800;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;display:block;margin-bottom:5px}
+.callout p{margin:6px 0}
+.callout.plain{background:#eef6ff;border-color:var(--blue)}
+.callout.plain .lab{color:var(--blue)}
+.callout.investor{background:#fbf4e2;border-color:var(--gold)}
+.callout.investor .lab{color:#a07a13}
+.callout.emerging{background:#e9f9f1;border-color:var(--green)}
+.callout.emerging .lab{color:#11814c}
+.callout.choke{background:#fdeeea;border-color:var(--red)}
+.callout.choke .lab{color:#bf3c25}
+.callout.note{background:#f3f1fb;border-color:var(--purple)}
+.callout.note .lab{color:#6b46c9}
+
+.analogy{display:flex;gap:14px;align-items:flex-start;background:#eef6ff;border:1px dashed #b8d4f7;border-radius:12px;padding:14px 16px;margin:18px 0;font-size:15.5px}
+.analogy .ic{font-size:22px;flex:0 0 auto;filter:saturate(1.1)}
+
+/* ---------- Figure / infographic frame ---------- */
+.fig{background:var(--ink);border-radius:18px;padding:24px 24px 26px;margin:30px 0;color:#dce7f6;box-shadow:var(--shadow)}
+.fig.light{background:linear-gradient(180deg,#fbfcfe,#f1f5fb);color:var(--ink);border:1px solid var(--line)}
+.fig-title{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--sky);margin:0 0 4px}
+.fig.light .fig-title{color:var(--blue)}
+.fig-sub{font-size:14px;color:#9fb3d1;margin:0 0 18px}
+.fig.light .fig-sub{color:var(--muted)}
+.fig svg{width:100%;height:auto;display:block}
+.fig-cap{font-size:12.5px;color:#8aa0c0;margin-top:14px;font-style:italic}
+.fig.light .fig-cap{color:var(--muted)}
+
+/* card grid */
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--panel);border-radius:12px;padding:15px 16px;border-top:3px solid var(--sky)}
+.fig.light .card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--sky)}
+.card h5{margin:0 0 6px;font-size:14.5px;color:#fff;font-weight:800}
+.fig.light .card h5{color:var(--ink)}
+.card p{margin:0;font-size:13px;color:#aebfd8;line-height:1.5}
+.fig.light .card p{color:#43576f}
+.card .co{display:block;margin-top:9px;font-size:12px;font-weight:700;color:var(--gold)}
+
+/* ---------- Tables ---------- */
+.tablewrap{overflow-x:auto;margin:24px 0;border-radius:12px;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:14px;min-width:560px}
+thead th{background:var(--ink);color:#fff;text-align:left;padding:12px 14px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:#33455e}
+tbody tr:nth-child(even){background:#f7f9fc}
+tbody tr:hover{background:#fef8e8}
+.tk{display:inline-block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;font-weight:700;
+  background:#eef1f6;color:var(--ink);padding:2px 7px;border-radius:5px;border:1px solid var(--line)}
+.tk.priv{background:#f3f1fb;color:#6b46c9;border-color:#ddd4f5}
+.co-name{font-weight:700;color:var(--ink)}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;box-shadow:var(--shadow)}
+.stat .n{font-size:28px;font-weight:800;color:var(--ink);line-height:1}
+.stat .n .u{font-size:15px;color:var(--gold)}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+.tag-pill{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;margin:2px 4px 2px 0}
+.pill-mono{background:#fdeeea;color:#bf3c25}
+.pill-strong{background:#e9f9f1;color:#11814c}
+.pill-weak{background:#fef3e0;color:#a3631a}
+
+.kv{display:grid;grid-template-columns:140px 1fr;gap:2px 16px;margin:14px 0;font-size:15px}
+.kv dt{font-weight:700;color:var(--ink-2)}
+.kv dd{margin:0;color:#43576f}
+
+hr.soft{border:0;border-top:1px solid var(--line);margin:30px 0}
+
+.disclaimer{background:#fff7e6;border:1px solid #f0dca6;border-radius:12px;padding:16px 18px;font-size:13.5px;color:#6b5417;margin:26px 0}
+
+/* four-question framework */
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
+.qcard{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:12px;padding:15px 16px;box-shadow:var(--shadow)}
+.qcard .qn{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.qcard h5{margin:6px 0 6px;font-size:15px;color:var(--ink)}
+.qcard p{margin:0;font-size:13px;color:#43576f;line-height:1.5}
+@media(max-width:900px){.qgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.qgrid{grid-template-columns:1fr}}
+
+/* formula block */
+.formula{background:#0d1b2e;color:#eaf1fb;border-radius:12px;padding:18px 20px;margin:18px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;overflow-x:auto;box-shadow:var(--shadow)}
+.formula .big{font-size:18px;font-weight:700;color:#fff}
+.formula .note{display:block;margin-top:8px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12.5px;color:#9fb3d1}
+
+/* scale rows */
+.moatscale{display:flex;flex-direction:column;gap:8px;margin:18px 0 6px}
+.moatrow{display:flex;align-items:center;gap:12px;font-size:14px;color:#33455e;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 13px}
+.dots{flex:0 0 auto;display:inline-flex;gap:4px}
+.dot{width:12px;height:12px;border-radius:50%;background:#dde3ec;border:1px solid #c7d0dd}
+.dot.f{background:var(--green);border-color:var(--green)}
+.dot.m{background:var(--gold);border-color:var(--gold)}
+.dot.w{background:var(--red);border-color:var(--red)}
+.moatrow b{color:var(--ink)}
+
+footer{background:var(--ink);color:#8ea3c2;padding:40px 0;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+footer b{color:#dce7f6}
+
+/* responsive */
+@media(max-width:1000px){
+  .sidebar{display:none}
+  #progress{left:0}
+  .topbar{display:flex}
+  .sidebar.open{display:block;position:fixed;z-index:60;width:82%;max-width:320px}
+  .g3,.g4{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+  body{font-size:16px}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .kv{grid-template-columns:1fr}
+}
+@media print{
+  .sidebar,.topbar,#progress{display:none}
+  body{background:#fff;font-size:11.5px}
+  section{break-inside:avoid;padding:20px 0;border-color:#ccc}
+  .fig{break-inside:avoid;background:#0d1b2e !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"><div></div></div>
+
+<div class="topbar">
+  <div style="font-weight:800">How Markets <span style="color:var(--gold)">Actually Work</span></div>
+  <button onclick="document.querySelector('.sidebar').classList.toggle('open')">Contents</button>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">How Markets <span>Actually Work</span></div>
+    <div class="tag">Beginner Investor's Field Guide</div>
+    <nav id="toc">
+      <a href="#cover">Cover</a>
+      <a href="#howto">How to Read This</a>
+      <a href="#lens">The Investor's Lens</a>
+      <a class="part" href="#part1">Part I · The Marketplace</a>
+      <a href="#ch1">1 · Who's Who in the Market</a>
+      <a href="#ch2">2 · How a Trade Actually Works</a>
+      <a href="#ch3">3 · Market Makers & the Spread</a>
+      <a href="#ch4">4 · Liquidity, Slippage & the Order Book</a>
+      <a class="part" href="#part2">Part II · The Things You Trade</a>
+      <a href="#ch5">5 · Equities (Stocks)</a>
+      <a href="#ch6">6 · Bonds & Bond Pricing</a>
+      <a href="#ch7">7 · Options & the Greeks</a>
+      <a class="part" href="#part3">Part III · Risk & Return</a>
+      <a href="#ch8">8 · Return, Alpha & Beta</a>
+      <a href="#ch9">9 · Risk, Sharpe & the VIX</a>
+      <a href="#ch10">10 · Markowitz & Diversification</a>
+      <a href="#ch11">11 · Sizing, Margin & Leverage</a>
+      <a class="part" href="#part4">Part IV · Strategy & Analysis</a>
+      <a href="#ch12">12 · Going Long, Going Short</a>
+      <a href="#ch13">13 · Reading a Company</a>
+      <a href="#ch14">14 · Momentum, Volume & Scores</a>
+      <a href="#glossary">Glossary</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+  <!-- ================= COVER ================= -->
+  <section id="cover" class="cover">
+    <svg class="cover-orbs" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="cg1" cx="50%" cy="50%"><stop offset="0%" stop-color="#39bdf8" stop-opacity=".5"/><stop offset="100%" stop-color="#39bdf8" stop-opacity="0"/></radialGradient>
+        <radialGradient id="cg2" cx="50%" cy="50%"><stop offset="0%" stop-color="#d6a52a" stop-opacity=".4"/><stop offset="100%" stop-color="#d6a52a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="980" cy="60" r="260" fill="url(#cg1)"/>
+      <circle cx="180" cy="430" r="240" fill="url(#cg2)"/>
+      <g stroke="#39bdf8" stroke-opacity=".18" fill="none">
+        <path d="M0 360 H1200 M0 400 H1200 M0 320 H1200"/>
+        <path d="M300 280 V500 M600 280 V500 M900 280 V500"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div class="cover-top">
+        <span>Reference Manual / Volume I</span>
+        <span>Edition 2026.1</span>
+      </div>
+      <h1>How Markets <span class="grad">Actually Work</span></h1>
+      <p class="sub">A plain-English field guide to market microstructure — the players, the plumbing, the math, and the metrics behind every trade. Written so a smart 14-year-old can follow it, and detailed enough to keep as a reference.</p>
+      <div class="rule"></div>
+      <div class="cover-edition">
+        <div><b>Audience</b> — Brand-new investors who want the real mental model</div>
+        <div><b>Shelf life</b> — Structural, not a hot stock tip</div>
+        <div><b>Companion to</b> — Your brokerage app &amp; the financial news</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW TO READ ================= -->
+  <section id="howto">
+    <div class="wrap">
+      <div class="chapnum">Read Me First</div>
+      <h2 class="chap">How to read this guide</h2>
+      <p class="lede">This is a textbook, not a stock pitch. The goal is to give you the durable mental model of how financial markets are built — so that any headline, earnings report, or trade you ever make can be slotted into place. Specific prices change every second. The machinery underneath does not.</p>
+
+      <p>You don't need any background in finance, economics, or math beyond what you learned in school. A "market" sounds abstract, but it's really just a giant, fast, rule-bound version of something you already understand: <strong>a place where buyers and sellers meet and agree on a price.</strong> The whole game is figuring out (1) what you're actually buying, (2) what it's worth, (3) what could go wrong, and (4) how the trade physically happens behind the scenes.</p>
+
+      <p>Many chapters use the same <strong>four-question framework</strong>. Once you internalize it, you can apply it to any new instrument, strategy, or piece of jargon you ever meet:</p>
+
+      <div class="qgrid">
+        <div class="qcard"><div class="qn">Question 01</div><h5>What is it, really?</h5><p>The plain-English job of the thing, stripped of jargon. If you can't explain it in two sentences, you don't understand it yet.</p></div>
+        <div class="qcard"><div class="qn">Question 02</div><h5>Who's on the other side?</h5><p>Every trade has a buyer and a seller. Knowing who they are and why they're trading tells you a lot.</p></div>
+        <div class="qcard"><div class="qn">Question 03</div><h5>How do you get paid?</h5><p>Where the return comes from — and the risk you take to earn it. Return and risk are always joined at the hip.</p></div>
+        <div class="qcard"><div class="qn">Question 04</div><h5>What could break it?</h5><p>The scenario that wipes out your profit. Good investors spend more time here than on the upside.</p></div>
+      </div>
+
+      <p>And to keep things in plain English, five recurring guides appear in colored boxes:</p>
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Translates a scary term into something you already understand. If you only read these boxes, you'll still "get it."</p></div>
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The "so what" for your money — how this idea actually changes a decision you'd make.</p></div>
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>Real numbers, worked step by step, so the formula stops being scary and becomes something you can do yourself.</p></div>
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>A common, expensive mistake beginners make here — and how to avoid it.</p></div>
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>How this one piece fits into the larger machine of the financial system.</p></div>
+
+      <div class="disclaimer"><strong>Important:</strong> This is an educational explainer, <em>not</em> investment advice. Company and product names are examples used to illustrate how things work — not recommendations to buy or sell anything. All numbers are <em>round, illustrative approximations</em> chosen to build intuition; real figures move constantly. Investing involves real risk of loss. Always do your own research and speak to a licensed professional before investing real money.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= THE INVESTOR'S LENS ================= -->
+  <section id="lens">
+    <div class="wrap">
+      <div class="chapnum">The Mental Model</div>
+      <h2 class="chap">The Investor's Lens: price, risk &amp; the other side of the trade</h2>
+      <p class="lede">Before we touch a single stock, install three ideas in your head. Everything else in this guide hangs off these three hooks.</p>
+
+      <h3>1. Price is just an agreement, made by the last two people who traded</h3>
+      <p>When you see a stock "is worth $100," that doesn't mean a wise committee decided it. It means the <em>most recent</em> buyer and seller agreed on $100 for a tiny number of shares. The next trade could be $99.97 or $100.04. A market price is a constantly updating <strong>opinion poll with money on the line</strong> — not a fact. Your job as an investor is to have a better-informed opinion than the crowd, often enough to come out ahead.</p>
+
+      <h3>2. Every trade has two sides — and you should know why the other person is selling</h3>
+      <p>You can't buy unless someone sells. If you think a stock is a screaming bargain at $100, someone equally informed is happily handing it to you at $100. Why? Maybe they need cash, maybe they run a fund that must sell, maybe they know something you don't. Asking <strong>"who is on the other side, and why?"</strong> is the single best habit a beginner can build. It kills overconfidence fast.</p>
+
+      <h3>3. Return and risk are the same coin, seen from two sides</h3>
+      <p>There is no such thing as a high return with no risk. If something <em>looks</em> like free money, you have simply not yet found the risk — it's hiding (in leverage, in a rare-but-catastrophic event, in something illiquid you can't sell when you need to). The entire field of finance is really one question asked over and over: <strong>am I being paid enough return to take this much risk?</strong></p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 0.1</p>
+        <p class="fig-sub">The risk–return ladder you'll see on every page</p>
+        <svg viewBox="0 0 920 250" role="img" aria-label="Risk and return ladder from cash to options">
+          <defs>
+            <linearGradient id="rg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#22b06b"/><stop offset="1" stop-color="#e2563f"/></linearGradient>
+          </defs>
+          <line x1="60" y1="210" x2="880" y2="210" stroke="#c7d0dd" stroke-width="2"/>
+          <line x1="60" y1="210" x2="60" y2="30" stroke="#c7d0dd" stroke-width="2"/>
+          <text x="40" y="30" font-size="11" fill="#5b6b82" transform="rotate(-90 40,120)" text-anchor="middle">Higher expected return →</text>
+          <text x="470" y="240" font-size="11" fill="#5b6b82" text-anchor="middle">Higher risk / more ways to lose →</text>
+          <polyline points="80,200 230,170 380,135 540,100 700,65 860,40" fill="none" stroke="url(#rg)" stroke-width="4"/>
+          <g font-size="11.5" font-weight="700" fill="#0d1b2e">
+            <circle cx="80" cy="200" r="6" fill="#22b06b"/><text x="92" y="196">Cash / T-bills</text>
+            <circle cx="230" cy="170" r="6" fill="#39bdf8"/><text x="242" y="166">Gov't bonds</text>
+            <circle cx="380" cy="135" r="6" fill="#13b6a6"/><text x="392" y="131">Corp. bonds</text>
+            <circle cx="540" cy="100" r="6" fill="#d6a52a"/><text x="552" y="96">Blue-chip stocks</text>
+            <circle cx="700" cy="65" r="6" fill="#f5852a"/><text x="640" y="55">Small / growth stocks</text>
+            <circle cx="860" cy="40" r="6" fill="#e2563f"/><text x="700" y="34">Options / leverage</text>
+          </g>
+        </svg>
+        <p class="fig-cap">Nothing sits in the top-left corner (high return, low risk) — if it did, everyone would pile in until the price rose and the return fell. The market is constantly erasing free lunches.</p>
+      </div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The whole game in one sentence: <strong>understand what you own, know who's on the other side, and never take a risk you're not being paid for.</strong> Now let's open the hood and see how the machine actually runs.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== PART I ===================== -->
+  <section id="part1" class="part-head">
+    <div class="wrap">
+      <div class="num">I</div>
+      <div>
+        <h2>The Marketplace</h2>
+        <p>The plumbing: who the players are, how an order travels from your phone to a done deal, and where prices actually come from.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 1 ===================== -->
+  <section id="ch1">
+    <div class="wrap">
+      <div class="chapnum">Chapter 1</div>
+      <h2 class="chap">Who's Who in the Market</h2>
+      <p class="lede">When you tap "Buy" in an app, it feels like you're buying directly from a company. You're not. Your order passes through a small crowd of specialized middlemen, each doing one job, each taking a sliver. Knowing the cast of characters is the first step to understanding why prices behave the way they do — and where your money actually goes.</p>
+
+      <p>"The market" isn't a building anymore; it's a network of computers run by different companies, each with a defined role. Here's the cast, in the order your order meets them.</p>
+
+      <div class="fig">
+        <p class="fig-title">Figure 1.1</p>
+        <p class="fig-sub">The path of a single buy order, and who touches it</p>
+        <svg viewBox="0 0 920 250" role="img" aria-label="Order flow from investor to broker to exchange to clearing to settlement">
+          <g font-family="inherit">
+            <g><rect x="20" y="90" width="150" height="70" rx="10" fill="#16263f" stroke="#26405f"/>
+              <text x="95" y="120" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">You</text>
+              <text x="95" y="140" font-size="10.5" fill="#aebfd8" text-anchor="middle">the investor</text></g>
+            <g><rect x="200" y="90" width="150" height="70" rx="10" fill="#16263f" stroke="#26405f"/>
+              <text x="275" y="120" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">Broker</text>
+              <text x="275" y="140" font-size="10.5" fill="#aebfd8" text-anchor="middle">routes your order</text></g>
+            <g><rect x="380" y="90" width="150" height="70" rx="10" fill="#243d28" stroke="#d6a52a" stroke-width="1.5"/>
+              <text x="455" y="116" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">Exchange /</text>
+              <text x="455" y="133" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">Market Maker</text>
+              <text x="455" y="151" font-size="10.5" fill="#f4e6bd" text-anchor="middle">match buyer &amp; seller</text></g>
+            <g><rect x="560" y="90" width="150" height="70" rx="10" fill="#16263f" stroke="#26405f"/>
+              <text x="635" y="116" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">Clearing</text>
+              <text x="635" y="133" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">House</text>
+              <text x="635" y="151" font-size="10.5" fill="#aebfd8" text-anchor="middle">guarantees the trade</text></g>
+            <g><rect x="740" y="90" width="160" height="70" rx="10" fill="#16263f" stroke="#26405f"/>
+              <text x="820" y="116" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">Custodian /</text>
+              <text x="820" y="133" font-size="13" fill="#fff" font-weight="800" text-anchor="middle">Settlement</text>
+              <text x="820" y="151" font-size="10.5" fill="#aebfd8" text-anchor="middle">shares ↔ cash swap</text></g>
+            <g stroke="#d6a52a" stroke-width="2" fill="none">
+              <path d="M170 125 H200" marker-end="url(#ar)"/>
+              <path d="M350 125 H380" marker-end="url(#ar)"/>
+              <path d="M530 125 H560" marker-end="url(#ar)"/>
+              <path d="M710 125 H740" marker-end="url(#ar)"/>
+            </g>
+            <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#d6a52a"/></marker></defs>
+          </g>
+        </svg>
+        <p class="fig-cap">Your order is invisible to you after the first step, but each box is a separate company doing a separate job — and being paid for it.</p>
+      </div>
+
+      <h3>The brokers: your door into the market</h3>
+      <p>A <strong>broker</strong> (or brokerage) is the company whose app or website you use — think Fidelity, Schwab, Robinhood, Interactive Brokers. You can't walk up to an exchange yourself; only members can. The broker is your licensed go-between. Brokers come in two flavors:</p>
+      <ul>
+        <li><strong>Discount / online brokers</strong> — they just execute the trades you choose. Cheap or free. This is what most people use.</li>
+        <li><strong>Full-service brokers &amp; advisors</strong> — they also give advice, build plans, and manage money, for a higher fee.</li>
+      </ul>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A broker is like a ticket reseller for the stock market. You can't get into the stadium (the exchange) on your own, so you go through someone with access. They handle the paperwork; you pay them a little for the convenience.</p></div>
+
+      <h4>If the app is free, how does the broker make money?</h4>
+      <p>Several ways — and it's worth knowing them because they reveal who the broker really works for:</p>
+      <ul>
+        <li><strong>Payment for order flow (PFOF):</strong> instead of sending your order to a public exchange, the broker sells it to a big trading firm (a "wholesaler" market maker) who pays the broker for the right to fill it. This is how many "commission-free" apps make money. It's legal and disclosed, but it means your order is a product being sold.</li>
+        <li><strong>Interest</strong> on the uninvested cash sitting in your account.</li>
+        <li><strong>Margin interest</strong> when you borrow money to trade (Chapter 11).</li>
+        <li><strong>Fees</strong> for premium data, fancy order types, or fund management.</li>
+      </ul>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>"Commission-free" doesn't mean cost-free. With payment for order flow, your fill price might be a hair worse than the best available, and that hidden cost can dwarf the old $5 commission on big or frequent trades. For small, occasional trades it rarely matters; for active trading, it can.</p></div>
+
+      <h3>The exchanges: where prices are made</h3>
+      <p>An <strong>exchange</strong> (NYSE, Nasdaq, Cboe, the London Stock Exchange) is the organized venue that matches buyers with sellers and publishes the resulting prices. Modern exchanges are essentially giant, ultra-fast computer programs — the "trading floor" with shouting people is mostly a TV backdrop now. The exchange's core job is running the <strong>order book</strong> (Chapter 4) and enforcing fair, orderly rules.</p>
+
+      <h3>The market makers: the always-on shopkeepers</h3>
+      <p>A <strong>market maker</strong> is a firm that promises to <em>always</em> be willing to buy and sell a given stock, quoting both a price it'll buy at and a price it'll sell at. Without them, you might tap "Buy" and find nobody selling at that exact instant. They provide <strong>liquidity</strong> — the ability to trade right now. They earn the <strong>spread</strong> (the small gap between their buy and sell prices). All of Chapter 3 is about them.</p>
+
+      <h3>The clearing house: the trust machine</h3>
+      <p>Here's a problem: when you buy and a stranger sells, how do you trust they'll actually deliver the shares — and how do they trust you'll actually pay? You don't have to. A <strong>clearing house</strong> (in the US, the DTCC and its arm the NSCC) steps into the middle of every trade and becomes the buyer to every seller and the seller to every buyer. If one side defaults, the clearing house eats it, not you. This is the invisible backbone that lets millions of strangers trade safely.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A clearing house is like the escrow service on a marketplace app: it holds both sides accountable so neither the buyer nor the seller can run off with the goods or the money.</p></div>
+
+      <h4>Settlement: when it's actually "done"</h4>
+      <p>The trade isn't truly finished the instant it's matched. <strong>Settlement</strong> is when shares and cash actually swap owners. In the US this now happens one business day after the trade ("T+1"). A <strong>custodian</strong> is the institution that officially holds your shares for safekeeping (usually a unit of your broker). Fun fact: you almost never hold a paper certificate — your ownership is just a database entry.</p>
+
+      <h3>The big players you're trading against</h3>
+      <p>Beyond the plumbing, here are the participants whose buying and selling actually moves prices:</p>
+      <div class="grid g3">
+        <div class="card" style="border-top-color:var(--gold)"><h5>Retail investors</h5><p>Regular people like you, trading your own money. Individually small; collectively huge, especially in popular stocks.</p></div>
+        <div class="card" style="border-top-color:var(--sky)"><h5>Institutions</h5><p>Pension funds, mutual funds, insurers, endowments. They manage other people's money in enormous size and dominate daily volume.</p></div>
+        <div class="card" style="border-top-color:var(--red)"><h5>Hedge funds</h5><p>Private funds that can go long and short, use leverage, and chase returns aggressively for wealthy clients (Chapter 12).</p></div>
+        <div class="card" style="border-top-color:var(--teal)"><h5>Market makers / HFTs</h5><p>High-frequency trading firms providing liquidity and arbitraging tiny price differences in microseconds.</p></div>
+        <div class="card" style="border-top-color:var(--purple)"><h5>Corporations</h5><p>Companies issuing new shares, buying back their own stock, or issuing bonds to raise money.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h5>Regulators</h5><p>The referees (the SEC and FINRA in the US) who set and enforce the rules, but don't trade.</p></div>
+      </div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>The market exists to do two real-world jobs: <strong>(1)</strong> let companies and governments raise money (the "primary market," where new shares and bonds are first sold), and <strong>(2)</strong> let everyone else trade those existing securities among themselves afterward (the "secondary market," which is where you and almost all the action live). Everything in this guide is mostly about the secondary market.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>When you understand that your "free" trade is being routed, sold, matched, cleared, and settled by five different paid parties, two things click: why your fill price isn't always perfect, and why nobody in this chain is your friend — they're businesses. Knowing the cast lets you read the news ("the SEC fined a broker for PFOF practices") and instantly know what it means for you.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 2 ===================== -->
+  <section id="ch2">
+    <div class="wrap">
+      <div class="chapnum">Chapter 2</div>
+      <h2 class="chap">How a Trade Actually Works</h2>
+      <p class="lede">You tap "Buy 10 shares." What happens in the next half-second decides what price you pay. The type of order you choose, and the way it's routed, matters more than beginners realize. This chapter follows your order from tap to confirmation and arms you with the order types that protect you.</p>
+
+      <h3>Bid, ask, and the spread — the two prices that always exist</h3>
+      <p>At any moment a stock doesn't have one price; it has <strong>two</strong>:</p>
+      <ul>
+        <li>The <strong>bid</strong> — the highest price anyone is currently willing to <em>pay</em> to buy.</li>
+        <li>The <strong>ask</strong> (or "offer") — the lowest price anyone is currently willing to <em>accept</em> to sell.</li>
+      </ul>
+      <p>The gap between them is the <strong>spread</strong>. If the bid is $99.98 and the ask is $100.02, the spread is 4 cents. If you want to buy <em>right now</em>, you pay the ask ($100.02). If you want to sell <em>right now</em>, you get the bid ($99.98). That little gap is a real cost you pay every round trip — and it's the market maker's profit.</p>
+
+      <div class="analogy"><span class="ic">💱</span><div>Think of a currency booth at the airport. It'll <em>sell</em> you euros at one rate and <em>buy</em> them back at a worse one. You lose the difference just by walking up and walking away. The bid-ask spread is exactly that, for stocks.</div></div>
+
+      <h3>The two order types you must know</h3>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--orange)"><h5>Market order</h5><p><strong>"Fill me right now, at whatever the going price is."</strong> Fast and guaranteed to execute — but <em>not</em> guaranteed at any specific price. In a fast-moving or thin stock, you can get a nasty surprise.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h5>Limit order</h5><p><strong>"Fill me only at $X or better."</strong> You set the worst price you'll accept. It protects you from bad fills — but it might never execute if the price never reaches your limit.</p></div>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Beginners default to market orders because they're simple. On a big, liquid stock during normal hours, that's usually fine. But on a thinly traded stock, at the open/close, or right after news, a market order can fill far from the price you saw. <strong>When in doubt, use a limit order.</strong> A few cents of patience beats a few dollars of slippage.</p></div>
+
+      <h4>Other useful order types</h4>
+      <div class="kv">
+        <dt>Stop / stop-loss</dt><dd>Becomes a market order once the price falls to a trigger you set — a way to automatically bail out of a losing position. Warning: in a crash it can fill far below your trigger.</dd>
+        <dt>Stop-limit</dt><dd>Like a stop, but turns into a limit order, so you won't sell below a floor — at the risk of not selling at all.</dd>
+        <dt>Good-'til-canceled (GTC)</dt><dd>A limit order that stays alive for days/weeks until it fills or you cancel it.</dd>
+        <dt>Day order</dt><dd>Expires at the end of the trading day if unfilled (the default for most orders).</dd>
+        <dt>Fill-or-kill / IOC</dt><dd>Execute immediately and completely (or partially), or cancel — used by active traders.</dd>
+      </div>
+
+      <h3>What happens in that half-second</h3>
+      <ol>
+        <li><strong>You submit.</strong> Your broker receives the order.</li>
+        <li><strong>Routing.</strong> The broker decides where to send it — a public exchange, or a wholesaler market maker (PFOF), or its own internal pool. Brokers are legally required to seek "best execution" for you.</li>
+        <li><strong>Matching.</strong> The venue matches your order against the best available opposite order in the order book (Chapter 4), or the market maker fills it from its own inventory.</li>
+        <li><strong>Execution.</strong> A price is struck. You get a confirmation. Congrats — you "own" the shares economically.</li>
+        <li><strong>Clearing &amp; settlement.</strong> Over the next business day (T+1), the clearing house and custodians make the share-for-cash swap official.</li>
+      </ol>
+
+      <h3>Where prices "live": the lit market and the dark pools</h3>
+      <p>Most trading happens on <strong>lit markets</strong> — public exchanges where every bid and ask is visible. But a big chunk happens in <strong>dark pools</strong>: private venues where large institutions trade huge blocks without showing their hand. Why hide? If a pension fund needs to sell a million shares, broadcasting that would crash the price before they finish. Dark pools let them trade quietly. For a retail investor this is mostly trivia, but it explains why "the market" is more fragmented than the single ticker on your screen suggests.</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>The US stock market is split across roughly a dozen exchanges and dozens of dark pools, all linked by a system that's supposed to give you the National Best Bid and Offer (NBBO) — the best price available anywhere. This fragmentation is invisible to you but is the reason high-frequency traders, who race between venues, exist at all.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You control two things on every trade: the <strong>order type</strong> and the <strong>timing</strong>. Master limit orders, avoid the chaotic first and last few minutes of the trading day unless you have a reason, and you've already eliminated the most common, most avoidable way beginners lose money before the investment thesis even gets a chance.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 3 ===================== -->
+  <section id="ch3">
+    <div class="wrap">
+      <div class="chapnum">Chapter 3</div>
+      <h2 class="chap">Market Makers &amp; the Spread</h2>
+      <p class="lede">Someone has to be willing to trade with you the instant you want to trade — even when no other regular investor happens to want the opposite side at that exact moment. That "someone" is the market maker. Understanding how they earn the spread, and the risk they carry, demystifies a huge chunk of how prices actually form.</p>
+
+      <h3>The shopkeeper analogy</h3>
+      <p>Imagine a baseball-card shop. The owner will <strong>buy</strong> a card from you for $9 and <strong>sell</strong> the same card to the next customer for $11. He doesn't care if the card goes up or down long-term — he makes $2 on every round trip, all day, by being the always-available counterparty. That $2 is his spread, and it's his pay for two things: (1) the <em>service</em> of being instantly available, and (2) the <em>risk</em> that he's holding inventory that might drop in value before he can sell it.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A market maker is a shopkeeper for stocks. They buy a bit below the "fair" price and sell a bit above it, pocketing the difference. They make money on <em>volume and turnover</em>, not on betting which way the stock goes.</p></div>
+
+      <h3>How the spread is set</h3>
+      <p>A market maker's spread isn't arbitrary. It widens and narrows based on:</p>
+      <div class="grid g2">
+        <div class="card"><h5>Liquidity / volume</h5><p>A stock that trades millions of shares a day (Apple) has a razor-thin spread — pennies. A sleepy micro-cap might have a spread of several percent.</p></div>
+        <div class="card"><h5>Volatility</h5><p>The more the price jumps around, the more risk the maker carries holding inventory, so they widen the spread to compensate.</p></div>
+        <div class="card"><h5>Inventory risk</h5><p>If the maker is already holding too much of a stock, they'll shade their quotes to offload it.</p></div>
+        <div class="card"><h5>Adverse selection</h5><p>The fear that whoever's trading with them knows something they don't. More informed traders around = wider spreads.</p></div>
+      </div>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 3.1</p>
+        <p class="fig-sub">Where the spread sits around the "true" price</p>
+        <svg viewBox="0 0 920 170" role="img" aria-label="A number line showing bid, mid price and ask">
+          <line x1="60" y1="100" x2="860" y2="100" stroke="#c7d0dd" stroke-width="2"/>
+          <g font-family="inherit">
+            <line x1="300" y1="80" x2="300" y2="120" stroke="#22b06b" stroke-width="3"/>
+            <text x="300" y="70" font-size="13" font-weight="800" fill="#11814c" text-anchor="middle">BID $99.98</text>
+            <text x="300" y="140" font-size="11" fill="#5b6b82" text-anchor="middle">maker buys here</text>
+
+            <line x1="460" y1="85" x2="460" y2="115" stroke="#8a63e8" stroke-width="2" stroke-dasharray="4 3"/>
+            <text x="460" y="70" font-size="12" font-weight="700" fill="#6b46c9" text-anchor="middle">MID $100.00</text>
+            <text x="460" y="140" font-size="11" fill="#5b6b82" text-anchor="middle">"fair" price</text>
+
+            <line x1="620" y1="80" x2="620" y2="120" stroke="#e2563f" stroke-width="3"/>
+            <text x="620" y="70" font-size="13" font-weight="800" fill="#bf3c25" text-anchor="middle">ASK $100.02</text>
+            <text x="620" y="140" font-size="11" fill="#5b6b82" text-anchor="middle">maker sells here</text>
+
+            <path d="M300 105 H620" stroke="#d6a52a" stroke-width="0"/>
+            <text x="460" y="118" font-size="11" font-weight="700" fill="#a07a13" text-anchor="middle">← spread = $0.04 →</text>
+          </g>
+        </svg>
+        <p class="fig-cap">You buy at the ask and sell at the bid, so you "pay the spread" both ways. On a liquid stock it's pennies; the cost is real but tiny. On an illiquid one it can quietly eat several percent of your money.</p>
+      </div>
+
+      <h3>The modern market maker</h3>
+      <p>Today the biggest market makers are high-tech firms like Citadel Securities, Virtu, and Jane Street. They use <strong>high-frequency trading (HFT)</strong> — computers that quote and trade in microseconds across thousands of stocks at once. They've driven spreads to historic lows (great for you) but also profit from being faster than everyone else (controversial). When your "free" broker sells your order via PFOF, it's usually one of these firms buying it.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Don't trade illiquid stocks (tiny companies, far-out options, obscure tickers) with the same casualness as Apple. A 3% spread means you're instantly down 3% the moment you buy — before the company does anything. Always glance at the bid-ask spread before trading something unfamiliar.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Market makers are why you can always trade — but you pay them the spread for that privilege on every single trade. For a long-term investor making a few trades a year in big stocks, this cost is negligible. For a day trader making hundreds of trades in small names, the spread (plus slippage, next chapter) is often the difference between profit and loss. <strong>The more you trade, the more the market maker is your real opponent.</strong></p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 4 ===================== -->
+  <section id="ch4">
+    <div class="wrap">
+      <div class="chapnum">Chapter 4</div>
+      <h2 class="chap">Liquidity, Slippage &amp; the Order Book</h2>
+      <p class="lede">"Liquidity" is the most important market-structure word you've probably never had explained properly. It decides how cheaply you can get in and out, how violently prices move on news, and why the same dollar amount is trivial in one stock and impossible in another. Let's make it concrete by looking inside the order book.</p>
+
+      <h3>Liquidity: how easily can you trade without moving the price?</h3>
+      <p><strong>Liquidity</strong> is the ability to buy or sell quickly, in size, without pushing the price against yourself. A stock is <em>liquid</em> if you can sell a lot of it fast and still get a fair price. It's <em>illiquid</em> if even a modest sale tanks the price because there aren't enough buyers waiting.</p>
+
+      <div class="analogy"><span class="ic">🏠</span><div>Cash is perfectly liquid — spend it instantly at full value. A share of Apple is very liquid. A rare painting or a house is illiquid: worth a lot on paper, but selling it fast means accepting a big discount. Same idea, whole spectrum.</div></div>
+
+      <h3>The order book: the actual list of who wants what</h3>
+      <p>Behind every stock is an <strong>order book</strong> — a live, sorted list of all the resting limit orders: buyers stacked up on one side, sellers on the other. The top of each side is the best bid and best ask you see. The <em>depth</em> behind those top prices is what really determines liquidity.</p>
+
+      <div class="fig">
+        <p class="fig-title">Figure 4.1</p>
+        <p class="fig-sub">A simplified order book — and what a big market buy order does to it</p>
+        <svg viewBox="0 0 920 320" role="img" aria-label="Order book ladder showing bids and asks with depth">
+          <g font-family="inherit">
+            <text x="230" y="30" font-size="12" font-weight="800" fill="#22b06b" text-anchor="middle">BUYERS (BIDS)</text>
+            <text x="690" y="30" font-size="12" font-weight="800" fill="#e2563f" text-anchor="middle">SELLERS (ASKS)</text>
+            <!-- bids -->
+            <g>
+              <rect x="120" y="50"  width="320" height="30" rx="4" fill="#16263f"/><rect x="320" y="50" width="120" height="30" fill="#22b06b" fill-opacity=".5"/>
+              <text x="135" y="70" font-size="12" fill="#fff">$99.98 ×  600</text>
+              <rect x="120" y="84"  width="320" height="30" rx="4" fill="#16263f"/><rect x="280" y="84" width="160" height="30" fill="#22b06b" fill-opacity=".4"/>
+              <text x="135" y="104" font-size="12" fill="#fff">$99.97 ×  900</text>
+              <rect x="120" y="118" width="320" height="30" rx="4" fill="#16263f"/><rect x="200" y="118" width="240" height="30" fill="#22b06b" fill-opacity=".3"/>
+              <text x="135" y="138" font-size="12" fill="#fff">$99.96 × 1,400</text>
+            </g>
+            <!-- asks -->
+            <g>
+              <rect x="480" y="50"  width="320" height="30" rx="4" fill="#16263f"/><rect x="480" y="50" width="120" height="30" fill="#e2563f" fill-opacity=".5"/>
+              <text x="640" y="70" font-size="12" fill="#fff" text-anchor="end">$100.02 ×  400</text>
+              <rect x="480" y="84"  width="320" height="30" rx="4" fill="#16263f"/><rect x="480" y="84" width="170" height="30" fill="#e2563f" fill-opacity=".4"/>
+              <text x="640" y="104" font-size="12" fill="#fff" text-anchor="end">$100.03 ×  700</text>
+              <rect x="480" y="118" width="320" height="30" rx="4" fill="#16263f"/><rect x="480" y="118" width="260" height="30" fill="#e2563f" fill-opacity=".3"/>
+              <text x="640" y="138" font-size="12" fill="#fff" text-anchor="end">$100.04 × 1,600</text>
+            </g>
+            <!-- big order -->
+            <rect x="120" y="180" width="680" height="110" rx="10" fill="#243d28" stroke="#d6a52a"/>
+            <text x="140" y="208" font-size="13" font-weight="800" fill="#f4e6bd">You send a MARKET BUY for 1,000 shares:</text>
+            <text x="140" y="232" font-size="12.5" fill="#cfe0f5">• First 400 fill at $100.02 (eats the top ask)</text>
+            <text x="140" y="252" font-size="12.5" fill="#cfe0f5">• Next 600 fill at $100.03 (climbs to the next level)</text>
+            <text x="140" y="276" font-size="12.5" fill="#fff" font-weight="700">Average price ≈ $100.026, not $100.02 — that gap is SLIPPAGE.</text>
+          </g>
+        </svg>
+        <p class="fig-cap">A market order "walks the book," eating the cheapest sellers first and climbing to worse prices as it goes. The thinner the book, the worse it walks.</p>
+      </div>
+
+      <h3>Slippage: the price you saw vs. the price you got</h3>
+      <p><strong>Slippage</strong> is the difference between the price you expected and the price you actually got. It happens when (1) your order is bigger than what's available at the best price, so it walks the book, or (2) the price moves in the split-second between your tap and the fill. Slippage is small and ignorable for tiny orders in liquid stocks, and brutal for big orders in illiquid ones.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You want 1,000 shares. Only 400 are offered at $100.02; the next 600 are at $100.03. Your market order fills all 1,000 at an <strong>average of $100.026</strong>. You expected to pay $100.02. The extra $0.006 × 1,000 = <strong>$6 of slippage</strong>. Tiny here. But scale it to a fund buying 1,000,000 shares of a small company and slippage becomes the dominant cost of trading.</p></div>
+
+      <h3>How to measure liquidity at a glance</h3>
+      <div class="kv">
+        <dt>Volume</dt><dd>How many shares trade per day. High volume = liquid. (Also a key analysis signal — see Chapter 14.)</dd>
+        <dt>Spread</dt><dd>Tight spread = liquid; wide spread = illiquid. The single fastest tell.</dd>
+        <dt>Depth</dt><dd>How many shares are resting near the best price. Deep book = you can trade size without moving price.</dd>
+        <dt>Market cap</dt><dd>Bigger companies are generally more liquid than tiny ones, all else equal.</dd>
+      </div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Liquidity is fickle: it's abundant in calm markets and <em>vanishes</em> exactly when you need it most — in a panic, everyone wants to sell and the buyers disappear, spreads blow out, and prices gap down. "Liquidity dries up" is a phrase you'll hear in every crisis. Many financial disasters are, at their core, liquidity disasters: assets that <em>looked</em> sellable turned out not to be when the music stopped.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Before you ever buy something, ask: <strong>"How easily can I get out?"</strong> A great investment you can't sell when you need cash is a trap. Favor liquid instruments while learning. And remember slippage and the spread are <em>guaranteed</em> costs that compound with every trade — they're a powerful argument for trading less, not more.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== PART II ===================== -->
+  <section id="part2" class="part-head">
+    <div class="wrap">
+      <div class="num">II</div>
+      <div>
+        <h2>The Things You Trade</h2>
+        <p>The three core asset classes — stocks, bonds, and options — what each one actually is, how it's priced, and how you make or lose money on it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 5 ===================== -->
+  <section id="ch5">
+    <div class="wrap">
+      <div class="chapnum">Chapter 5</div>
+      <h2 class="chap">Equities (Stocks)</h2>
+      <p class="lede">A share of stock is the most famous financial instrument, and the most misunderstood. It is not a lottery ticket or a number on a screen — it's a tiny slice of ownership in a real business. Once you internalize that, everything from dividends to market cap to "the stock dropped on good earnings" starts to make sense.</p>
+
+      <h3>What a share actually is</h3>
+      <p>A company divides its ownership into <strong>shares</strong>. Own one share of a company that has issued one billion shares, and you own one-billionth of that business — its factories, its brand, its profits, and its debts. As a part-owner ("shareholder") you get:</p>
+      <ul>
+        <li>A claim on the company's future profits (paid out as <strong>dividends</strong>, or reinvested to grow the business and ideally lift the share price).</li>
+        <li>A vote on big decisions (usually one vote per share).</li>
+        <li><strong>Limited liability</strong> — the most you can lose is what you put in. If the company goes bankrupt owing billions, they can't come after your house.</li>
+      </ul>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Buying a stock is buying a sliver of a company and becoming a part-owner. If a pizza shop is cut into 100 slices of ownership and you buy one, you get 1% of the profits — and 1% of the headaches.</p></div>
+
+      <h3>Where the return comes from</h3>
+      <p>You make money on a stock two ways: <strong>capital gains</strong> (you sell for more than you paid) and <strong>dividends</strong> (your slice of the profits, paid in cash). Over the long run, stock returns ultimately come from companies earning growing profits. In the short run, prices are driven by mood, news, and flows — which is why a stock can fall on "good" earnings if the good news was already expected and priced in.</p>
+
+      <h3>Key numbers on every stock</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Term</th><th>Plain English</th><th>Why you care</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Share price</td><td>Cost of one share right now.</td><td>By itself, almost meaningless (see below).</td></tr>
+          <tr><td class="co-name">Shares outstanding</td><td>Total number of shares that exist.</td><td>Needed to get the real size of the company.</td></tr>
+          <tr><td class="co-name">Market cap</td><td>Price × shares = total value of the whole company.</td><td>The <em>real</em> measure of how big a company is.</td></tr>
+          <tr><td class="co-name">Dividend yield</td><td>Annual dividend ÷ price, as a %.</td><td>The cash income you get just for holding.</td></tr>
+          <tr><td class="co-name">P/E ratio</td><td>Price ÷ earnings per share.</td><td>How many years of profit you're paying for — a rough "expensive vs. cheap" gauge.</td></tr>
+          <tr><td class="co-name">Float</td><td>Shares actually available to trade publicly.</td><td>Low float = more volatile, easier to squeeze.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>"This stock is only $5, it's cheaper than the $400 one!" — <strong>false.</strong> A $5 stock with 10 billion shares is a $50B company; a $400 stock with 10 million shares is a $4B company. <strong>Price per share tells you nothing about whether a stock is cheap.</strong> Look at market cap and valuation ratios like P/E, never the sticker price alone.</p></div>
+
+      <h3>Types of stock</h3>
+      <div class="grid g3">
+        <div class="card" style="border-top-color:var(--gold)"><h5>Common stock</h5><p>What you normally buy. Voting rights, dividends if declared, full upside — and last in line if the company goes bust.</p></div>
+        <div class="card" style="border-top-color:var(--sky)"><h5>Preferred stock</h5><p>Gets dividends before common holders and stands ahead of them in bankruptcy, but usually no votes. Behaves part-stock, part-bond.</p></div>
+        <div class="card" style="border-top-color:var(--teal)"><h5>Growth vs. value</h5><p>Growth = fast-expanding, expensive, betting on the future. Value = cheaper, steadier, betting the market underrates it.</p></div>
+      </div>
+
+      <h3>How shares come to exist: the IPO</h3>
+      <p>A private company "goes public" through an <strong>IPO (initial public offering)</strong>, selling shares to investors for the first time and raising cash to grow. After that, those shares trade between investors on the exchange — the company itself doesn't get money from your later trades. Companies can also issue <em>more</em> shares later (diluting existing owners) or <strong>buy back</strong> their own shares (concentrating ownership and often supporting the price).</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Over the last century, a broad basket of US stocks has returned roughly <em>10% per year on average</em> before inflation — far more than bonds or cash — but with gut-wrenching drops of 30–50% along the way. That trade-off is the engine of long-term wealth-building: stocks pay you more <em>because</em> you have to endure the volatility. Indexes like the S&amp;P 500 (the 500 biggest US companies) let you own that whole basket cheaply.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Treat a stock as a business, not a ticker. Before buying, ask the four questions: what does this company do, who are its customers, how does it actually make money, and what could break it? That mindset — investing rather than gambling — is what separates people who build wealth in stocks from people who churn their accounts to zero. Chapter 13 gives you the toolkit to actually evaluate a company.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 6 ===================== -->
+  <section id="ch6">
+    <div class="wrap">
+      <div class="chapnum">Chapter 6</div>
+      <h2 class="chap">Bonds &amp; Bond Pricing</h2>
+      <p class="lede">If a stock is owning a slice of a company, a bond is <em>lending money</em> to one (or to a government). Bonds are less glamorous than stocks but they're a bigger market, and the way their prices move — especially the famous "prices fall when interest rates rise" — confuses almost every beginner. Let's fix that with one clear example.</p>
+
+      <h3>What a bond is</h3>
+      <p>A <strong>bond</strong> is an IOU. You lend an organization money; in return they promise to (1) pay you interest periodically and (2) return your original loan at a set future date. The pieces:</p>
+      <div class="kv">
+        <dt>Face value (par)</dt><dd>The amount repaid at the end — usually $1,000 per bond.</dd>
+        <dt>Coupon</dt><dd>The fixed interest rate paid each year. A 5% coupon on $1,000 = $50/year.</dd>
+        <dt>Maturity</dt><dd>The date you get your principal back — could be months or 30 years.</dd>
+        <dt>Issuer</dt><dd>Who's borrowing: a government (Treasuries), a city (munis), or a company (corporates).</dd>
+        <dt>Yield</dt><dd>Your actual return given the price you paid — the number that really matters.</dd>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A bond is a loan with a certificate. You're the bank: you hand over cash, collect interest checks for a while, and get your money back at the end — <em>assuming</em> the borrower doesn't go broke.</p></div>
+
+      <h3>The big idea: bond prices move <em>opposite</em> to interest rates</h3>
+      <p>This is the one thing everyone gets confused by, so let's nail it with numbers.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You buy a bond for $1,000 that pays a $50 coupon every year (a 5% yield). The next week, interest rates rise and brand-new bonds are issued paying $70/year (7%). Who wants <em>your</em> $50 bond now? Nobody — at $1,000. To sell it, you must drop the price until your $50 coupon represents a competitive 7% return. $50 ÷ 0.07 ≈ <strong>$714</strong>. Your bond's price <em>fell</em> because rates <em>rose</em>. Flip it: if new bonds only pay 3%, your 5% bond becomes a prize and its price rises above $1,000.</p></div>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 6.1</p>
+        <p class="fig-sub">The see-saw: bond prices vs. interest rates</p>
+        <svg viewBox="0 0 920 180" role="img" aria-label="See-saw showing rates up means prices down">
+          <line x1="160" y1="140" x2="760" y2="140" stroke="#c7d0dd" stroke-width="3"/>
+          <polygon points="460,140 430,110 490,110" fill="#5b6b82"/>
+          <g transform="rotate(-12 460 110)">
+            <rect x="220" y="95" width="480" height="14" rx="7" fill="#0d1b2e"/>
+            <circle cx="240" cy="102" r="26" fill="#e9f9f1" stroke="#22b06b" stroke-width="2"/>
+            <text x="240" y="98" font-size="11" font-weight="800" fill="#11814c" text-anchor="middle">RATES</text>
+            <text x="240" y="112" font-size="11" font-weight="800" fill="#11814c" text-anchor="middle">↑ UP</text>
+            <circle cx="680" cy="102" r="26" fill="#fdeeea" stroke="#e2563f" stroke-width="2"/>
+            <text x="680" y="98" font-size="11" font-weight="800" fill="#bf3c25" text-anchor="middle">PRICES</text>
+            <text x="680" y="112" font-size="11" font-weight="800" fill="#bf3c25" text-anchor="middle">↓ DOWN</text>
+          </g>
+        </svg>
+        <p class="fig-cap">Existing bonds compete with newly issued ones. When new bonds pay more, old bonds must get cheaper to compete — and vice versa. It's a permanent see-saw.</p>
+      </div>
+
+      <h3>Duration: how sensitive your bond is to that see-saw</h3>
+      <p><strong>Duration</strong> measures how much a bond's price moves when rates change. A rough rule: a bond with a duration of 8 will lose about 8% of its value if rates rise 1% (and gain ~8% if rates fall 1%). Long-maturity bonds have high duration (very sensitive); short-term bonds have low duration (barely budge). This is why "long bonds" can be surprisingly risky even though the borrower is rock-solid.</p>
+
+      <h3>The two risks of any bond</h3>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--red)"><h5>Credit (default) risk</h5><p>The borrower might not pay you back. Governments of stable countries rarely default; shaky companies might. Rated by agencies from <strong>AAA</strong> (safest) down to <strong>junk</strong> (below BBB−). More risk = higher yield to compensate.</p></div>
+        <div class="card" style="border-top-color:var(--orange)"><h5>Interest-rate risk</h5><p>Even a bond that <em>will</em> be repaid in full can lose market value in the meantime if rates rise — the see-saw above. Matters if you might sell before maturity.</p></div>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>"Bonds are safe." Half-true. A US Treasury held to maturity has almost no default risk — but a long-term bond fund can drop 20%+ when rates spike, as many investors painfully learned in 2022. <strong>Safe from default ≠ safe from price swings.</strong> Match your bond's maturity to when you'll need the money.</p></div>
+
+      <h3>Why bonds belong in a portfolio</h3>
+      <p>Bonds usually pay steady income and often (not always) rise when stocks fall — investors flee to their safety in a crisis. That makes them a <strong>diversifier</strong> and a shock-absorber, the calm counterweight to volatile stocks. A classic starter mix is something like 60% stocks / 40% bonds, dialing toward more bonds as you get closer to needing the money.</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>The interest rate on government bonds — especially the US 10-year Treasury — is the gravity of all of finance. It's the "risk-free rate" everything else is measured against (you'll see it again in alpha, Sharpe, and option pricing). When it moves, stocks, mortgages, and currencies all move. Central banks (the Fed) steer short-term rates to manage the economy, which is why markets hang on every word from them.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Bonds give you the "risk-free" baseline to judge everything else. If a safe Treasury pays 5%, then a risky stock had better offer a lot more <em>expected</em> return to be worth it — that extra is the "risk premium." Understanding bonds isn't just about owning them; it's the yardstick you measure every other investment against.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 7 ===================== -->
+  <section id="ch7">
+    <div class="wrap">
+      <div class="chapnum">Chapter 7</div>
+      <h2 class="chap">Options &amp; the Greeks</h2>
+      <p class="lede">Options are powerful, flexible, and the fastest way for a beginner to lose money they don't understand. But the core idea is simple: an option is a <em>choice</em> you buy. Master the two basic types and the handful of Greek letters that measure their behavior, and a whole layer of the market opens up — including how the pros manage risk.</p>
+
+      <h3>The two building blocks: calls and puts</h3>
+      <p>An <strong>option</strong> gives you the right — but not the obligation — to buy or sell a stock at a set price ("strike") before a set date ("expiration"). You pay a fee ("premium") for that right.</p>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--green)"><h5>Call option</h5><p>The right to <strong>buy</strong> at the strike price. You buy calls when you think the stock will <strong>go up</strong>. A $100 call lets you buy at $100 even if the stock rockets to $150.</p></div>
+        <div class="card" style="border-top-color:var(--red)"><h5>Put option</h5><p>The right to <strong>sell</strong> at the strike price. You buy puts when you think the stock will <strong>go down</strong> (or to insure stock you own). A $100 put lets you sell at $100 even if the stock crashes to $60.</p></div>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>An option is like a refundable deposit on a concert ticket. A <em>call</em> locks in a price to buy later — great if prices soar, and if they don't, you only lose the deposit (the premium). A <em>put</em> is like buying insurance: it pays off if the thing you own loses value.</p></div>
+
+      <h3>Why people use options</h3>
+      <ul>
+        <li><strong>Leverage:</strong> a small premium controls 100 shares' worth of upside. Big percentage gains possible — and total loss of the premium just as possible.</li>
+        <li><strong>Insurance (hedging):</strong> buy puts to protect a stock portfolio from a crash, like buying fire insurance on a house.</li>
+        <li><strong>Income:</strong> <em>selling</em> options to collect premiums (e.g. "covered calls") — picking up steady small income while taking on risk.</li>
+      </ul>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>A stock trades at $100. A call with a $105 strike costs $2 (premium). Each option contract covers 100 shares, so you pay $200. If the stock jumps to $115 by expiration, your call is worth at least $10 (115 − 105) × 100 = $1,000 — a <strong>5× gain on $200</strong>. If the stock stays at or below $105, the option expires worthless and you lose the whole $200. That asymmetry — limited loss, leveraged gain — is the appeal and the danger.</p></div>
+
+      <h3>The Greeks: the dials that measure an option's behavior</h3>
+      <p>An option's price moves for several reasons at once: the stock moves, time passes, fear rises or falls. The <strong>Greeks</strong> are numbers that isolate each of those forces, so you know exactly what you're exposed to. The five you'll meet:</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 7.1</p>
+        <p class="fig-sub">The five Greeks — what each one answers</p>
+        <svg viewBox="0 0 920 110" role="img" aria-label="Five Greek letters and their meanings">
+          <g font-family="inherit" text-anchor="middle">
+            <g><circle cx="100" cy="45" r="34" fill="#eef6ff" stroke="#2f7df6" stroke-width="2"/><text x="100" y="55" font-size="30" font-weight="800" fill="#2f7df6">Δ</text><text x="100" y="98" font-size="12" font-weight="700" fill="#0d1b2e">Delta</text></g>
+            <g><circle cx="285" cy="45" r="34" fill="#e9f9f1" stroke="#22b06b" stroke-width="2"/><text x="285" y="55" font-size="30" font-weight="800" fill="#22b06b">Γ</text><text x="285" y="98" font-size="12" font-weight="700" fill="#0d1b2e">Gamma</text></g>
+            <g><circle cx="470" cy="45" r="34" fill="#fdeeea" stroke="#e2563f" stroke-width="2"/><text x="470" y="55" font-size="30" font-weight="800" fill="#e2563f">Θ</text><text x="470" y="98" font-size="12" font-weight="700" fill="#0d1b2e">Theta</text></g>
+            <g><circle cx="655" cy="45" r="34" fill="#f3f1fb" stroke="#8a63e8" stroke-width="2"/><text x="655" y="55" font-size="28" font-weight="800" fill="#8a63e8">V</text><text x="655" y="98" font-size="12" font-weight="700" fill="#0d1b2e">Vega</text></g>
+            <g><circle cx="840" cy="45" r="34" fill="#fef3e0" stroke="#f5852a" stroke-width="2"/><text x="840" y="55" font-size="28" font-weight="800" fill="#f5852a">ρ</text><text x="840" y="98" font-size="12" font-weight="700" fill="#0d1b2e">Rho</text></g>
+          </g>
+        </svg>
+      </div>
+
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Greek</th><th>Answers the question…</th><th>Plain English</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Delta (Δ)</td><td>If the stock moves $1, how much does my option move?</td><td>Your "speed." A delta of 0.5 means the option gains ~$0.50 for each $1 the stock rises. Also roughly the chance the option finishes in-the-money.</td></tr>
+          <tr><td class="co-name">Gamma (Γ)</td><td>How fast does my delta itself change as the stock moves?</td><td>Your "acceleration." High gamma means your exposure shifts quickly — great when right, dangerous when wrong. Highest for near-the-money, near-expiry options.</td></tr>
+          <tr><td class="co-name">Theta (Θ)</td><td>How much value do I lose just from one day passing?</td><td>"Time decay." Options are melting ice cubes — every day that passes with no move costs the buyer money and pays the seller.</td></tr>
+          <tr><td class="co-name">Vega</td><td>If fear/volatility rises, how much does my option gain?</td><td>Sensitivity to <em>expected</em> volatility. When markets get scared (VIX up), option prices swell even if the stock hasn't moved yet.</td></tr>
+          <tr><td class="co-name">Rho (ρ)</td><td>If interest rates change, how much does my option move?</td><td>The least important for most; matters mainly for long-dated options.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Driving analogy: <strong>Delta</strong> is your speed, <strong>Gamma</strong> is how hard you're hitting the gas (acceleration), <strong>Theta</strong> is the fuel quietly burning whether you move or not, and <strong>Vega</strong> is how bumpy the road is expected to be. Pros don't just bet direction; they manage all these dials at once.</p></div>
+
+      <h3>Intrinsic vs. time value</h3>
+      <p>An option's premium has two parts. <strong>Intrinsic value</strong> is the profit if you exercised right now (a $100 call when the stock's at $108 has $8 of intrinsic value). <strong>Time value</strong> is the extra you pay for the <em>chance</em> things move further before expiration. As expiration nears, time value bleeds away to zero (that's theta in action) — which is why most options buyers lose: they're right on direction but run out of time.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Options are the most common way new traders blow up. Buying cheap, far-out-of-the-money "lottery ticket" calls feels exciting, but theta and the odds grind them to zero most of the time. And <em>selling</em> options naked (without owning the underlying) can lose far more than you put in. <strong>If you can't explain delta, gamma, and theta out loud, you're not ready to trade options with real money.</strong> Learn on paper first.</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Options aren't just for speculating — they're how the whole financial system prices and transfers <em>risk</em>. The math behind them (the Black–Scholes model, which won a Nobel Prize) connects an option's price to volatility, time, and interest rates. That same volatility input is what the VIX index measures (Chapter 9). Options are where "how risky is the future?" gets an actual price tag.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For a beginner, the highest-value use of options is <em>understanding</em> them, not trading them. They teach you to think in probabilities and risk dials rather than simple up/down bets. If you do use them, start with defined-risk strategies (buying a put as insurance, or selling a covered call on stock you own) where your worst case is known in advance.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== PART III ===================== -->
+  <section id="part3" class="part-head">
+    <div class="wrap">
+      <div class="num">III</div>
+      <div>
+        <h2>Risk &amp; Return</h2>
+        <p>The math that turns "I think this is good" into "here's exactly how much return I'm getting per unit of risk." Alpha, beta, Sharpe, VIX, Markowitz, and position sizing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 8 ===================== -->
+  <section id="ch8">
+    <div class="wrap">
+      <div class="chapnum">Chapter 8</div>
+      <h2 class="chap">Return, Alpha &amp; Beta</h2>
+      <p class="lede">Anyone can make money in a bull market — a rising tide lifts all boats. The hard question is: did you do better than just riding the wave? Alpha and beta are the two Greek letters that separate skill from luck, and market-driven returns from your own. Every serious investor measures themselves with them.</p>
+
+      <h3>First, what counts as "good" return?</h3>
+      <p>Making 10% sounds great — until you learn the whole market made 15% that year, in which case you actually <em>underperformed</em>. Return only means something <strong>relative to a benchmark</strong> (usually a broad index like the S&amp;P 500) and <strong>relative to the risk you took</strong>. That's the whole point of alpha and beta.</p>
+
+      <h3>Beta: how much you ride the market's waves</h3>
+      <p><strong>Beta (β)</strong> measures how much an investment moves <em>relative to the overall market</em>. The market itself has a beta of 1.0 by definition.</p>
+      <div class="moatscale">
+        <div class="moatrow"><span class="dots"><span class="dot f"></span><span class="dot f"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span><b>Beta &lt; 1</b> (e.g. 0.6) — less volatile than the market. Utility stocks, consumer staples. Moves only 0.6% when the market moves 1%.</span></div>
+        <div class="moatrow"><span class="dots"><span class="dot m"></span><span class="dot m"></span><span class="dot m"></span><span class="dot"></span><span class="dot"></span></span><span><b>Beta = 1</b> — moves in lockstep with the market. An index fund.</span></div>
+        <div class="moatrow"><span class="dots"><span class="dot w"></span><span class="dot w"></span><span class="dot w"></span><span class="dot w"></span><span class="dot"></span></span><span><b>Beta &gt; 1</b> (e.g. 1.8) — amplifies the market. High-growth tech. Up 1.8% when the market's up 1%, down 1.8% when it's down 1%.</span></div>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Beta is how "wild" a stock is compared to the market. Beta of 1 = same wildness as the crowd. Above 1 = a rollercoaster. Below 1 = a kiddie ride. It tells you how much of your stock's movement is just the whole market dragging it along.</p></div>
+
+      <h3>Alpha: the part that's actually you</h3>
+      <p><strong>Alpha (α)</strong> is the return you earned <em>above</em> what your beta (market exposure) would predict. It's the value added (or destroyed) by your skill, stock-picking, or strategy — the part that <em>isn't</em> explained by just riding the market.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>The market returned 10% this year. Your portfolio has a beta of 1.2, so just from market exposure you'd be <em>expected</em> to earn about 12% (1.2 × 10%). You actually earned <strong>15%</strong>. Your alpha is 15% − 12% = <strong>+3%</strong>. That 3% is the value you added beyond what the market handed you. If you'd earned only 11%, your alpha would be <strong>−1%</strong>: you took on extra risk and still lagged what that risk should have paid.</p></div>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 8.1</p>
+        <p class="fig-sub">Splitting a return into "the market" (beta) and "you" (alpha)</p>
+        <svg viewBox="0 0 920 170" role="img" aria-label="Stacked bar splitting return into beta and alpha">
+          <g font-family="inherit">
+            <text x="60" y="40" font-size="13" font-weight="800" fill="#0d1b2e">Your 15% return =</text>
+            <rect x="60" y="60" width="520" height="46" rx="8" fill="#39bdf8"/>
+            <text x="320" y="89" font-size="14" font-weight="800" fill="#06324a" text-anchor="middle">Beta contribution: 12% (the market did this)</text>
+            <rect x="580" y="60" width="130" height="46" rx="8" fill="#d6a52a"/>
+            <text x="645" y="89" font-size="13" font-weight="800" fill="#3d2c00" text-anchor="middle">Alpha: +3%</text>
+            <text x="60" y="140" font-size="12.5" fill="#5b6b82">The blue is luck/exposure — you'd get it from an index fund. The gold is the only part that's evidence of skill.</text>
+          </g>
+        </svg>
+      </div>
+
+      <h3>Why this matters so much</h3>
+      <p>Most active investors and fund managers, after fees, produce <strong>zero or negative alpha</strong> over the long run — they don't beat a cheap index fund. This is the single most important and humbling fact in investing, and it's why low-cost index funds have become the default smart-money advice for beginners. Generating real, persistent alpha is genuinely hard; pretending market-driven gains are your own skill is the road to overconfidence and blowup.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>In a bull market, everyone feels like a genius — they're confusing beta (the rising market) with alpha (their own skill). The test of skill is how you do in <em>bad</em> years and over a <em>full cycle</em>, net of fees, versus just buying the index. Don't mistake a rising tide for swimming ability.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Before chasing alpha, ask honestly: can I beat a free index fund after my mistakes, fees, taxes, and the spread? For most people, most of the time, the answer is no — and that's fine. Capturing beta cheaply (index funds) is a perfectly winning strategy. Reserve your alpha-hunting for areas where you have a genuine edge, and size those bets small (Chapter 11).</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 9 ===================== -->
+  <section id="ch9">
+    <div class="wrap">
+      <div class="chapnum">Chapter 9</div>
+      <h2 class="chap">Risk, the Sharpe Ratio &amp; the VIX</h2>
+      <p class="lede">"Risk" is a vague word until you can measure it. This chapter turns it into numbers: how to quantify how bumpy an investment is (volatility), how to judge whether its returns are worth that bumpiness (the Sharpe ratio), and how to read the market's collective fear gauge (the VIX).</p>
+
+      <h3>Volatility: putting a number on the bumpiness</h3>
+      <p>The standard measure of risk is <strong>volatility</strong> — how much returns bounce around their average, calculated as the <strong>standard deviation</strong> of returns. Low volatility = smooth, predictable. High volatility = wild swings in both directions. A savings account has ~0 volatility; a meme stock might swing 10% a day.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Standard deviation just measures how spread out things are. Two stocks can both average a 8% return, but one delivers a calm 6%–10% every year while the other lurches from −30% to +50%. Same average, wildly different experience — and the second is far "riskier" by this definition.</p></div>
+
+      <h4>A quick word on "normal" ranges</h4>
+      <p>If returns followed a perfect bell curve, about <strong>two-thirds</strong> of yearly results would land within one standard deviation of the average, and <strong>95%</strong> within two. So a stock averaging 8% with a 20% standard deviation will, in a typical year, land roughly between −12% and +28%. Real markets have "fatter tails" — extreme events happen more often than the bell curve predicts, which is why risk models that assume tidy normality blow up in crises.</p>
+
+      <h3>The Sharpe ratio: return <em>per unit of risk</em></h3>
+      <p>Here's the key insight: a higher return isn't automatically better if it came with wildly more risk. The <strong>Sharpe ratio</strong> measures how much <em>extra</em> return you earned for each unit of volatility you endured. It's the single most-cited number for comparing investments on a level playing field.</p>
+
+      <div class="formula">
+        <span class="big">Sharpe = ( Return − Risk-free rate ) ÷ Volatility</span>
+        <span class="note">Return = your portfolio's return · Risk-free rate = what a safe Treasury pays · Volatility = standard deviation of your returns</span>
+      </div>
+
+      <p>You subtract the risk-free rate because you should only get credit for return <em>above</em> what you could've earned doing nothing risky. Then you divide by risk. Higher is better. A rough scale: below 1 is mediocre, 1–2 is good, above 2 is excellent (and above 3 is rare and often too good to be true).</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>Fund A returns 12% with 20% volatility. Fund B returns 9% with 8% volatility. The risk-free rate is 4%.<br>
+      • Fund A Sharpe = (12 − 4) ÷ 20 = <strong>0.40</strong><br>
+      • Fund B Sharpe = (9 − 4) ÷ 8 = <strong>0.63</strong><br>
+      Fund B "wins" — it delivered more return <em>per unit of risk</em>, even though its headline return was lower. With leverage you could scale B up to match A's risk and earn more. This is why pros obsess over Sharpe, not raw return.</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>There are cousins of the Sharpe ratio worth knowing the names of: the <strong>Sortino ratio</strong> only counts <em>downside</em> volatility (punishing losses but not happy upside surprises), and <strong>maximum drawdown</strong> measures the worst peak-to-trough fall you'd have lived through. Together these answer "how much pain did I sign up for to get this return?"</p></div>
+
+      <h3>The VIX: the market's fear gauge</h3>
+      <p>The <strong>VIX</strong> is an index that measures the market's <em>expected</em> volatility over the next 30 days, derived from the prices people are paying for S&amp;P 500 options. Because people pay up for options (insurance) when they're scared, the VIX spikes during panics and sits low during calm. It's nicknamed the "fear index."</p>
+
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>VIX level</th><th>Market mood</th><th>What it usually means</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Below 15</td><td><span class="tag-pill pill-strong">Calm</span></td><td>Complacency, low expected swings, often steadily rising markets.</td></tr>
+          <tr><td class="co-name">15–25</td><td><span class="tag-pill pill-weak">Normal</span></td><td>Run-of-the-mill uncertainty. The everyday range.</td></tr>
+          <tr><td class="co-name">25–40</td><td><span class="tag-pill pill-mono">Anxious</span></td><td>Real worry — a selloff, bad news, rising stress.</td></tr>
+          <tr><td class="co-name">Above 40</td><td><span class="tag-pill pill-mono">Panic</span></td><td>Crisis. Crashes, capitulation. Historically near market bottoms.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The VIX is like a weather forecast for market storms. A low number means "calm seas expected"; a high number means "batten down the hatches." It doesn't predict <em>direction</em> (up or down) — only how big the waves are likely to be.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Don't confuse low volatility with low risk. The calmest, lowest-VIX periods often come right before the biggest blowups — calm breeds leverage and complacency. And you can't easily "buy the VIX": the products that track it (VIX ETNs) decay over time and have wiped out traders who treated them as a simple bet. The VIX is best used as a <em>thermometer to read</em>, not a thing to trade.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Risk-adjusted thinking is the upgrade that turns a gambler into an investor. Stop asking "how much did it make?" and start asking "how much did it make <em>for the risk it took</em>?" The Sharpe ratio gives you that number, volatility gives you the raw risk, and the VIX tells you the temperature of the whole market. Together they let you judge whether you're being paid enough for the bumpiness you're enduring.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 10 ===================== -->
+  <section id="ch10">
+    <div class="wrap">
+      <div class="chapnum">Chapter 10</div>
+      <h2 class="chap">Markowitz &amp; the Magic of Diversification</h2>
+      <p class="lede">In 1952 a grad student named Harry Markowitz proved something that sounds impossible: by combining risky assets the right way, you can build a portfolio that's <em>less</em> risky than its parts — without giving up return. It won him a Nobel Prize and became the foundation of modern investing. The intuition is more important than the math, and it's genuinely beautiful.</p>
+
+      <h3>The one free lunch in finance</h3>
+      <p>Markowitz's big idea (Modern Portfolio Theory) is that <strong>what matters isn't the risk of each investment alone, but how they move <em>together</em>.</strong> If you own two things that zig and zag at <em>different</em> times, their swings partly cancel out — the combo is smoother than either one. Diversification is famously "the only free lunch in investing": you reduce risk without necessarily reducing expected return.</p>
+
+      <div class="analogy"><span class="ic">☂️</span><div>Own a sunscreen company and an umbrella company. Sunny days, one thrives; rainy days, the other does. Each business alone is a wild ride dependent on weather — but owning both gives you steady income no matter the forecast. That's diversification: combining things that win under different conditions.</div></div>
+
+      <h3>Correlation: the key ingredient</h3>
+      <p><strong>Correlation</strong> measures whether two assets move together (+1, perfectly in sync), oppositely (−1, perfect mirror), or independently (0). The diversification magic is strongest when you combine assets with <em>low or negative</em> correlation. Two tech stocks (high correlation) barely diversify each other; stocks and bonds (often low/negative correlation) diversify beautifully.</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 10.1</p>
+        <p class="fig-sub">Why mixing uncorrelated assets smooths the ride</p>
+        <svg viewBox="0 0 920 200" role="img" aria-label="Two volatile lines combining into a smoother line">
+          <g font-family="inherit" fill="none" stroke-width="2.5">
+            <polyline points="40,60 120,140 200,40 280,150 360,70 440,130" stroke="#39bdf8"/>
+            <polyline points="40,140 120,60 200,150 280,50 360,140 440,70" stroke="#f5852a"/>
+          </g>
+          <text x="455" y="105" font-size="22" fill="#5b6b82">→</text>
+          <g font-family="inherit" fill="none" stroke-width="3.5">
+            <polyline points="500,100 580,100 660,95 740,105 820,98 880,102" stroke="#22b06b"/>
+          </g>
+          <g font-family="inherit" font-size="12" font-weight="700">
+            <text x="240" y="185" fill="#5b6b82" text-anchor="middle">Two bumpy assets that zig when the other zags…</text>
+            <text x="690" y="185" fill="#11814c" text-anchor="middle">…combine into a much smoother portfolio.</text>
+          </g>
+        </svg>
+        <p class="fig-cap">The green line (the blended portfolio) has the same average height but far smaller swings. That reduction in volatility — for free — is the heart of Markowitz's insight.</p>
+      </div>
+
+      <h3>The efficient frontier</h3>
+      <p>If you plot every possible mix of assets on a chart of risk (across) vs. return (up), the best possible combinations form a curve called the <strong>efficient frontier</strong>. Portfolios <em>on</em> the frontier are optimal — you can't get more return without taking more risk. Portfolios <em>below</em> it are foolish: you're taking risk you're not being paid for, and could get the same return more safely by diversifying better.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The efficient frontier is the "menu of best deals." For any level of risk you're willing to stomach, it tells you the most return you can squeeze out. Anything off the menu means you're overpaying in risk for what you're getting back.</p></div>
+
+      <h3>Two kinds of risk — and why one is "free" to remove</h3>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--green)"><h5>Specific (diversifiable) risk</h5><p>Risk unique to one company — a scandal, a bad product, a factory fire. You can <strong>diversify this away</strong> for free by owning many different stocks. The market won't pay you extra to take a risk you could've eliminated.</p></div>
+        <div class="card" style="border-top-color:var(--red)"><h5>Systematic (market) risk</h5><p>Risk that hits everything — recessions, wars, rate shocks. You <strong>can't</strong> diversify this away; it's the price of being in the market at all. This is the risk you actually get <em>paid</em> a return to bear (it's the "beta" of Chapter 8).</p></div>
+      </div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>This split is the foundation of the <strong>Capital Asset Pricing Model (CAPM)</strong> — the theory that says your expected return should depend only on your <em>systematic</em> risk (beta), because the market refuses to reward risk you could have diversified away for free. It's why a single concentrated bet is "inefficient": you're taking specific risk you won't get paid for.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Two diversification failures are common: <strong>(1) fake diversification</strong> — owning 10 tech stocks feels diversified but they all crash together (high correlation). <strong>(2) Over-diversification</strong> — owning 200 funds that overlap just gives you the index at higher cost. And beware: in a true panic, <em>correlations all rush toward 1</em> — everything falls together exactly when you most need diversification to work.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You don't need to compute an efficient frontier by hand — a cheap, broad index fund already hands you near-optimal diversification across hundreds of companies. The practical lesson is simple and powerful: <strong>don't put it all in one stock.</strong> Spread across many companies, across asset classes (stocks + bonds), and ideally across countries. Diversification is the closest thing to a free lunch you'll ever get, so eat it.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 11 ===================== -->
+  <section id="ch11">
+    <div class="wrap">
+      <div class="chapnum">Chapter 11</div>
+      <h2 class="chap">Position Sizing, Margin &amp; Leverage</h2>
+      <p class="lede">You can be right about <em>what</em> to buy and still go broke by betting too much on it, or by borrowing to amplify it. How much to put into any one trade — "sizing" — is the most underrated skill in investing. And leverage, the act of investing with borrowed money, is the single fastest way to turn a good investor into a former investor.</p>
+
+      <h3>Position sizing: survival first</h3>
+      <p><strong>Position sizing</strong> is deciding how much of your money goes into a single investment. The professional's first goal isn't to maximize gains — it's to <strong>survive long enough</strong> to let a good strategy play out. A common rule among traders: never risk more than 1–2% of your total account on any single trade. That way a string of losses (which <em>will</em> happen) can't wipe you out.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You have $10,000 and follow a "1% risk per trade" rule, so you'll risk at most $100 on a trade. You buy a stock at $50 and decide you'll sell if it drops to $45 (a $5 loss per share). $100 risk ÷ $5 per share = <strong>20 shares</strong>. So you buy 20 shares ($1,000 worth). If you're wrong, you lose $100 — just 1% of your account. The "size" came from the <em>risk</em>, not from how confident you felt.</p></div>
+
+      <h3>The brutal math of recovering from losses</h3>
+      <p>Here's why protecting your capital matters so much: losses and the gains needed to recover them are <em>not</em> symmetric. The deeper the hole, the steeper the climb out.</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 11.1</p>
+        <p class="fig-sub">The gain you need just to get back to even</p>
+        <svg viewBox="0 0 920 200" role="img" aria-label="Bar chart of loss vs gain needed to recover">
+          <g font-family="inherit">
+            <line x1="120" y1="170" x2="880" y2="170" stroke="#c7d0dd" stroke-width="2"/>
+            <g text-anchor="middle" font-size="12" font-weight="700">
+              <rect x="150" y="150" width="60" height="20" fill="#e2563f"/><rect x="220" y="148" width="60" height="22" fill="#22b06b"/>
+              <text x="215" y="190" fill="#5b6b82">−10% → +11%</text>
+              <rect x="320" y="120" width="60" height="50" fill="#e2563f"/><rect x="390" y="116" width="60" height="54" fill="#22b06b"/>
+              <text x="385" y="190" fill="#5b6b82">−25% → +33%</text>
+              <rect x="490" y="90" width="60" height="80" fill="#e2563f"/><rect x="560" y="70" width="60" height="100" fill="#22b06b"/>
+              <text x="555" y="190" fill="#5b6b82">−50% → +100%</text>
+              <rect x="660" y="50" width="60" height="120" fill="#e2563f"/><rect x="730" y="20" width="60" height="150" fill="#22b06b"/>
+              <text x="725" y="190" fill="#5b6b82">−75% → +300%</text>
+            </g>
+            <text x="180" y="40" font-size="12" fill="#bf3c25" font-weight="700">red = loss</text>
+            <text x="180" y="58" font-size="12" fill="#11814c" font-weight="700">green = gain needed to recover</text>
+          </g>
+        </svg>
+        <p class="fig-cap">Lose 50% and you need to <em>double</em> (+100%) just to break even. This asymmetry is why avoiding big losses matters far more than chasing big gains.</p>
+      </div>
+
+      <h3>Margin &amp; leverage: investing with borrowed money</h3>
+      <p><strong>Leverage</strong> means using borrowed money to increase the size of your position. <strong>Margin</strong> is the specific form where your broker lends you money, using your existing investments as collateral. Leverage multiplies your gains <em>and</em> your losses by the same factor. It does not improve your odds — it just raises the stakes.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Leverage is like using a credit card to buy something you hope will go up in value. If it does, you keep the gain after paying back the loan — fantastic. If it drops, you still owe the full loan <em>plus</em> interest, and the loss eats your own money first. It magnifies both directions.</p></div>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You have $5,000 and borrow another $5,000 on margin to buy $10,000 of stock (2× leverage).<br>
+      • Stock rises 20% → position worth $12,000. Repay the $5,000 loan, keep $7,000. You turned $5,000 into $7,000 — a <strong>40% gain</strong> on your money. Leverage doubled it.<br>
+      • Stock <em>falls</em> 20% → position worth $8,000. Repay $5,000, keep $3,000. You lost <strong>40%</strong> of your money on a 20% move. And if it falls far enough, you get a margin call.</p></div>
+
+      <h3>The margin call: leverage's trap door</h3>
+      <p>When you trade on margin, your broker requires your equity to stay above a minimum (the "maintenance margin"). If your position drops too far, you get a <strong>margin call</strong>: deposit more cash immediately, or the broker <em>force-sells</em> your holdings — often at the worst possible moment, locking in your losses. Leverage doesn't just amplify losses; it can take the timing decision out of your hands entirely.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Leverage is the common thread in nearly every personal-finance blowup and most financial crises. The danger isn't just bigger losses — it's <strong>forced selling at the bottom</strong> and the psychological pressure that makes you panic. A beginner using high leverage is statistically very likely to be wiped out by ordinary volatility, even with a winning strategy. <strong>Learn for years before using leverage, if ever.</strong> Note that buying options (Chapter 7) is itself a form of built-in leverage.</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Sizing connects to a famous formula called the <strong>Kelly Criterion</strong>, which mathematically derives the optimal bet size given your edge and odds. Its surprising lesson: even with a genuine edge, betting too big leads to ruin, and the optimal size is usually smaller than your gut wants. Most pros bet a fraction of even what Kelly suggests, precisely because survival compounds and ruin is forever.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The order of operations for a real investor is: <strong>(1) don't go broke, (2) then try to grow.</strong> Size every position so that being wrong is survivable, diversify so no single loss is fatal, and treat leverage as a power tool that removes fingers from beginners. Brilliant stock-picking can't save you from bad sizing — but careful sizing can save you from mediocre stock-picking.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== PART IV ===================== -->
+  <section id="part4" class="part-head">
+    <div class="wrap">
+      <div class="num">IV</div>
+      <div>
+        <h2>Strategy &amp; Analysis</h2>
+        <p>Putting it together: how to profit when prices fall, how to actually judge whether a company is any good, and how to read the signals the market sends through price and volume.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 12 ===================== -->
+  <section id="ch12">
+    <div class="wrap">
+      <div class="chapnum">Chapter 12</div>
+      <h2 class="chap">Going Long, Going Short</h2>
+      <p class="lede">Most people only know how to make money when prices rise. But the market lets you profit from falling prices too — by "shorting." The mechanics feel backwards at first (sell something you don't own?), so let's walk through it slowly, then look at how the pros combine longs and shorts into strategies.</p>
+
+      <h3>Long: the normal way</h3>
+      <p>Being <strong>long</strong> simply means you own something and profit if it goes up. Buy at $100, sell at $120, keep the $20. Your maximum loss is your investment (the stock goes to $0); your maximum gain is theoretically unlimited (it can rise forever). This is how the vast majority of investing works.</p>
+
+      <h3>Short: profiting when things fall</h3>
+      <p><strong>Short selling</strong> flips it: you profit when a price <em>falls</em>. The mechanics:</p>
+      <ol>
+        <li>You <strong>borrow</strong> shares from your broker (who borrows them from another investor who owns them).</li>
+        <li>You immediately <strong>sell</strong> those borrowed shares at today's price, say $100. Now you have $100 cash but owe one share.</li>
+        <li>Later, if the price drops to $70, you <strong>buy</strong> a share back ("cover") for $70 and <strong>return</strong> it to the lender.</li>
+        <li>You keep the difference: $100 − $70 = <strong>$30 profit.</strong></li>
+      </ol>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Shorting is like borrowing your friend's bike, selling it for $100 because you think bike prices are about to crash, then buying an identical one back for $70 next week to return to your friend — pocketing $30. You profit because you sold high and bought back low, in that order.</p></div>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 12.1</p>
+        <p class="fig-sub">The four steps of a short sale</p>
+        <svg viewBox="0 0 920 150" role="img" aria-label="Four steps of shorting">
+          <g font-family="inherit">
+            <g><rect x="20" y="40" width="200" height="70" rx="10" fill="#eef6ff" stroke="#2f7df6"/>
+              <text x="120" y="68" font-size="13" font-weight="800" fill="#0d1b2e" text-anchor="middle">1. Borrow</text>
+              <text x="120" y="90" font-size="11.5" fill="#43576f" text-anchor="middle">a share from broker</text></g>
+            <g><rect x="250" y="40" width="200" height="70" rx="10" fill="#e9f9f1" stroke="#22b06b"/>
+              <text x="350" y="68" font-size="13" font-weight="800" fill="#0d1b2e" text-anchor="middle">2. Sell high</text>
+              <text x="350" y="90" font-size="11.5" fill="#43576f" text-anchor="middle">at $100 → get cash</text></g>
+            <g><rect x="480" y="40" width="200" height="70" rx="10" fill="#fef3e0" stroke="#f5852a"/>
+              <text x="580" y="68" font-size="13" font-weight="800" fill="#0d1b2e" text-anchor="middle">3. Buy back low</text>
+              <text x="580" y="90" font-size="11.5" fill="#43576f" text-anchor="middle">at $70 later</text></g>
+            <g><rect x="710" y="40" width="200" height="70" rx="10" fill="#f3f1fb" stroke="#8a63e8"/>
+              <text x="810" y="68" font-size="13" font-weight="800" fill="#0d1b2e" text-anchor="middle">4. Return + keep $30</text>
+              <text x="810" y="90" font-size="11.5" fill="#43576f" text-anchor="middle">give share back</text></g>
+          </g>
+        </svg>
+      </div>
+
+      <h3>Why shorting is dangerous: the math is upside-down</h3>
+      <p>When you're long, the worst case is the stock goes to zero — you lose 100%, and that's the floor. When you're <strong>short</strong>, it's reversed and far scarier: a stock can rise to <em>any</em> price, so your potential loss is <strong>unlimited</strong>. If you short at $100 and it rockets to $300, you've lost $200 — more than you'd have made if it went to zero. Your gains are capped (the stock can only fall to $0); your losses are not.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>The <strong>short squeeze.</strong> When a heavily-shorted stock starts rising, short sellers rush to buy back shares to cap their losses — but their buying pushes the price <em>up further</em>, forcing more shorts to cover, in a vicious upward spiral. GameStop in 2021 is the famous example: shorts lost billions in days. Add in <strong>borrowing fees</strong> (you pay to borrow the shares) and the risk of being forced to return them at the worst time, and shorting is strictly for experienced traders.</p></div>
+
+      <h3>Long/short strategies: the hedge fund toolkit</h3>
+      <p>The pros rarely just bet "the market goes up." They combine longs and shorts to isolate specific bets:</p>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--sky)"><h5>Long/short equity</h5><p>Buy the companies you think will outperform, short the ones you think will lag. If you're right about <em>relative</em> winners and losers, you profit even in a flat market.</p></div>
+        <div class="card" style="border-top-color:var(--teal)"><h5>Market-neutral</h5><p>Balance longs and shorts so your net market exposure (beta) is ~zero. You strip out the market's moves and bet purely on your stock-picking skill — pure alpha (Chapter 8).</p></div>
+        <div class="card" style="border-top-color:var(--gold)"><h5>Pairs trade</h5><p>Long one stock, short a similar competitor (e.g. long Coke, short Pepsi). You profit from the <em>gap</em> between them, regardless of what the sector does overall.</p></div>
+        <div class="card" style="border-top-color:var(--purple)"><h5>Hedging</h5><p>Short an index (or buy puts) against your long portfolio to dampen losses in a downturn — paying a little expected return for insurance.</p></div>
+      </div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Short sellers are controversial but serve a real function: they're the market's skeptics, often the first to expose frauds and overpriced bubbles (many famous accounting scandals were uncovered by short sellers doing deep research). By betting against hype, they help keep prices honest — even though they're widely disliked when they're right.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You don't have to short anything — most successful long-term investors never do. But understanding it unlocks how hedge funds think, why "short interest" (the % of a stock sold short) is a signal worth watching, and how to <em>hedge</em> your own portfolio if you ever want to. If you do short, respect the asymmetry: define your exit in advance, because unlimited loss is not a figure of speech.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 13 ===================== -->
+  <section id="ch13">
+    <div class="wrap">
+      <div class="chapnum">Chapter 13</div>
+      <h2 class="chap">Reading a Company</h2>
+      <p class="lede">Behind every stock is a real business, and businesses leave a paper trail: financial statements filed every quarter. Learning to read them — and to use a couple of clever scoring systems — lets you judge whether a company is healthy, growing, and fairly priced, instead of just guessing from the chart.</p>
+
+      <h3>The three financial statements</h3>
+      <p>Every public company reports three documents. Together they answer: is it making money, what does it own and owe, and is real cash actually coming in?</p>
+      <div class="grid g3">
+        <div class="card" style="border-top-color:var(--green)"><h5>Income statement</h5><p>The scoreboard for a period. Revenue (sales) at the top, minus all costs, equals <strong>net income (profit)</strong> at the bottom — the "bottom line." Shows if the business is profitable.</p></div>
+        <div class="card" style="border-top-color:var(--sky)"><h5>Balance sheet</h5><p>A snapshot in time. What it <strong>owns</strong> (assets) vs. what it <strong>owes</strong> (liabilities). The difference is shareholders' equity — the net worth of the business.</p></div>
+        <div class="card" style="border-top-color:var(--gold)"><h5>Cash flow statement</h5><p>Tracks actual cash in and out. Crucial because profit on paper can be faked or timing-distorted, but <strong>cash is hard to fake.</strong> "Cash is king."</p></div>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Think of a lemonade stand. The <strong>income statement</strong> says "I sold $50, spent $30, kept $20." The <strong>balance sheet</strong> says "I own a $40 stand and $20 cash, and owe Mom $10." The <strong>cash flow statement</strong> says "$20 actually landed in my pocket this week." All three together tell the real story; any one alone can mislead.</p></div>
+
+      <h3>Earnings: the number that moves stocks</h3>
+      <p>Four times a year companies report <strong>earnings</strong> (their profits), and these reports are the biggest scheduled events for a stock. What matters isn't just the number but how it compares to <strong>analyst expectations</strong>. A company can report record profits and <em>fall</em> if it missed expectations or gave weak guidance — remember, the good news was already "priced in." This is why stocks often move violently the morning after earnings.</p>
+
+      <div class="kv">
+        <dt>EPS</dt><dd>Earnings per share = net income ÷ shares. The per-slice profit.</dd>
+        <dt>Beat / miss</dt><dd>Whether EPS came in above or below what analysts expected.</dd>
+        <dt>Guidance</dt><dd>Management's forecast for upcoming quarters — often moves the stock more than the actual results.</dd>
+        <dt>Revenue growth</dt><dd>Is the top line expanding? Growth investors care most about this.</dd>
+        <dt>Margins</dt><dd>What % of revenue becomes profit. Rising margins = a strengthening business.</dd>
+      </div>
+
+      <h3>Valuation ratios: cheap or expensive?</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Ratio</th><th>What it compares</th><th>Rough read</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">P/E (price / earnings)</td><td>Price vs. annual profit per share.</td><td>"Years of profit you're paying for." High = expensive or high-growth expectations.</td></tr>
+          <tr><td class="co-name">P/B (price / book)</td><td>Price vs. net asset value.</td><td>Below 1 can signal a bargain — or a troubled company.</td></tr>
+          <tr><td class="co-name">P/S (price / sales)</td><td>Price vs. revenue.</td><td>Useful for fast-growers not yet profitable.</td></tr>
+          <tr><td class="co-name">Debt / equity</td><td>Borrowed money vs. owners' money.</td><td>High = riskier, more fragile in a downturn.</td></tr>
+          <tr><td class="co-name">ROE</td><td>Profit vs. shareholders' equity.</td><td>How efficiently it turns owners' money into profit. Higher is better.</td></tr>
+          <tr><td class="co-name">Free cash flow</td><td>Cash left after running &amp; investing in the business.</td><td>The real fuel for dividends, buybacks, and growth.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>The Piotroski F-Score: a 9-point health checkup</h3>
+      <p>Accounting professor Joseph Piotroski created a simple <strong>9-point checklist</strong> to separate financially strong companies from weak ones. The company earns one point for passing each test across profitability, debt/liquidity, and efficiency. A score of <strong>8–9 is strong</strong>; <strong>0–2 is weak.</strong> It's a fast, objective way to screen for quality.</p>
+      <div class="grid g3">
+        <div class="card" style="border-top-color:var(--green)"><h5>Profitability (4 pts)</h5><p>Positive net income; positive cash flow; rising return on assets; cash flow exceeds reported profit (quality of earnings).</p></div>
+        <div class="card" style="border-top-color:var(--orange)"><h5>Leverage &amp; liquidity (3 pts)</h5><p>Less debt than last year; better ability to pay short-term bills; no dilution (didn't issue lots of new shares).</p></div>
+        <div class="card" style="border-top-color:var(--sky)"><h5>Efficiency (2 pts)</h5><p>Improving profit margins; using assets more productively to generate sales.</p></div>
+      </div>
+
+      <h3>The Altman Z-Score: a bankruptcy early-warning</h3>
+      <p>Edward Altman built a formula that combines five ratios into a single score predicting how likely a company is to go <strong>bankrupt</strong> within two years. It weighs profitability, leverage, liquidity, and efficiency together. The interpretation (for manufacturers):</p>
+      <div class="moatscale">
+        <div class="moatrow"><span class="dots"><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span></span><span><b>Z &gt; 3.0 — "Safe zone."</b> Low bankruptcy risk; financially solid.</span></div>
+        <div class="moatrow"><span class="dots"><span class="dot m"></span><span class="dot m"></span><span class="dot m"></span><span class="dot"></span><span class="dot"></span></span><span><b>1.8 – 3.0 — "Grey zone."</b> Caution; watch closely.</span></div>
+        <div class="moatrow"><span class="dots"><span class="dot w"></span><span class="dot w"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span><b>Z &lt; 1.8 — "Distress zone."</b> Elevated risk of failure.</span></div>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The Piotroski score asks "<em>is this company getting healthier?</em>" The Altman Z-Score asks "<em>is this company at risk of dying?</em>" Both turn a pile of financial statements into a single, glanceable number — perfect for quickly screening out the junk before you dig deeper.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>No single ratio or score tells the whole story, and they can be gamed or misleading for certain industries (a bank's balance sheet looks nothing like a software firm's; the Z-Score was built for manufacturers). Use these as <em>screens and red-flag detectors</em>, not buy buttons. And always check: is this profit backed by real <strong>cash flow</strong>, or just accounting entries?</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Two grand schools of analysis exist. <strong>Fundamental analysis</strong> (this chapter) studies the business itself to estimate what it's truly worth, then buys when price &lt; value — the approach of Warren Buffett. <strong>Technical analysis</strong> (next chapter) ignores the business and studies price and volume patterns instead. Most investors blend a little of both; purists swear by one.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You don't need an accounting degree. Start with five things: is revenue growing, is it actually profitable, is free cash flow positive, is debt manageable, and is the P/E sane for the growth? Run a Piotroski check for quality and an Altman Z for survival risk. That 10-minute routine puts you ahead of the majority of people who buy a stock because it "feels like it'll go up."</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 14 ===================== -->
+  <section id="ch14">
+    <div class="wrap">
+      <div class="chapnum">Chapter 14</div>
+      <h2 class="chap">Momentum, Volume &amp; Market Signals</h2>
+      <p class="lede">Some investors barely look at the company at all — they study the price chart and the volume, hunting for patterns in crowd behavior. This is technical analysis, and while it's more controversial than reading financial statements, two of its core ideas — momentum and volume — are backed by real evidence and worth every investor's attention.</p>
+
+      <h3>Momentum: the trend is (often) your friend</h3>
+      <p><strong>Momentum</strong> is the well-documented tendency for things that have been going up to keep going up for a while (and losers to keep losing). It seems to violate "buy low, sell high," yet it's one of the most robust patterns ever found in markets — it shows up across centuries, countries, and asset classes. The likely cause is human psychology: investors are slow to react to news, then pile in as a trend becomes obvious, creating self-reinforcing waves.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Momentum is the market's version of a snowball rolling downhill. Once a stock gets moving in a direction, the crowd's herd behavior tends to keep it moving that way for a while — until it eventually runs out of steam and reverses.</p></div>
+
+      <h3>Volume: the conviction behind a move</h3>
+      <p><strong>Volume</strong> is the number of shares traded in a period, and it tells you <em>how much conviction</em> is behind a price move. The rule of thumb: <strong>price moves on high volume are meaningful; moves on low volume are suspect.</strong></p>
+      <ul>
+        <li>A breakout to new highs on <em>huge</em> volume = lots of buyers committing real money. More likely to stick.</li>
+        <li>A rally on <em>thin</em> volume = few participants, easily reversed. "No conviction."</li>
+        <li>A spike in volume can mark a turning point — capitulation at a bottom or euphoria at a top.</li>
+      </ul>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>Two stocks both jump 5% today. Stock A trades 10× its normal volume — institutions are clearly piling in, and the move has weight behind it. Stock B jumps 5% on <em>half</em> its usual volume — a few small trades pushed a quiet stock around, and it may well drift right back tomorrow. <strong>Same price move, completely different meaning</strong> once you add volume.</p></div>
+
+      <h3>A few common technical tools</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tool</th><th>What it shows</th><th>How people use it</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Moving average</td><td>Average price over the last N days (e.g. 50-day, 200-day), smoothing out noise.</td><td>Trend direction; price crossing above/below is read as a signal.</td></tr>
+          <tr><td class="co-name">Support / resistance</td><td>Price levels where buying or selling has repeatedly clustered.</td><td>Floors and ceilings where moves tend to pause or reverse.</td></tr>
+          <tr><td class="co-name">RSI</td><td>A 0–100 gauge of how "overbought" (&gt;70) or "oversold" (&lt;30) a stock is.</td><td>Spotting moves that may have gone too far, too fast.</td></tr>
+          <tr><td class="co-name">52-week high/low</td><td>The price range over the past year.</td><td>Momentum traders watch new highs; value hunters watch new lows.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>It's easy to fool yourself with chart patterns — the human brain sees "head and shoulders" and "cup and handle" shapes in random noise, the same way we see animals in clouds. Much of technical analysis has weak evidence; momentum and volume are the parts with the strongest backing. <strong>Don't bet real money on a pattern just because it looks compelling on a chart.</strong> Beware also that chasing momentum means you'll be late and exposed when the trend snaps.</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>The deepest debate in finance is the <strong>Efficient Market Hypothesis</strong>: the claim that prices already reflect all known information, so you <em>can't</em> reliably beat the market. If it's fully true, both fundamental and technical analysis are futile and you should just buy an index fund. Reality sits in between — markets are <em>mostly</em> efficient, with exploitable pockets of inefficiency (like momentum) that are hard to capture after costs. This tension is why both index investors and active traders can each claim to be the realists.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Even die-hard fundamental investors benefit from a glance at momentum and volume — to time an entry, to gauge whether a move has real conviction, or to avoid catching a "falling knife." But treat technicals as a supporting tool, not a crystal ball. The strongest edge for a beginner remains owning good businesses (or just the index), sized sensibly, held patiently — with momentum and volume as tiebreakers, not the whole thesis.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== GLOSSARY ===================== -->
+  <section id="glossary">
+    <div class="wrap">
+      <div class="chapnum">Reference</div>
+      <h2 class="chap">Plain-English Glossary</h2>
+      <p class="lede">Every term in this guide, in one sentence each.</p>
+      <dl class="kv" style="grid-template-columns:200px 1fr">
+        <dt>Equity / stock</dt><dd>A share of ownership in a company.</dd>
+        <dt>Bond</dt><dd>A loan you make to a company or government in return for interest.</dd>
+        <dt>Option</dt><dd>The right (not obligation) to buy or sell a stock at a set price by a set date.</dd>
+        <dt>Call / put</dt><dd>An option to buy (call) or sell (put) at the strike price.</dd>
+        <dt>Broker</dt><dd>The licensed company whose app you use to access the market.</dd>
+        <dt>Exchange</dt><dd>The venue (NYSE, Nasdaq) that matches buyers and sellers and sets prices.</dd>
+        <dt>Market maker</dt><dd>A firm always willing to buy and sell, earning the spread for providing liquidity.</dd>
+        <dt>Clearing house</dt><dd>The middleman that guarantees both sides of a trade so strangers can trade safely.</dd>
+        <dt>Settlement</dt><dd>When shares and cash actually change hands (T+1 in the US).</dd>
+        <dt>PFOF</dt><dd>Payment for order flow — brokers selling your orders to trading firms.</dd>
+        <dt>Bid / ask</dt><dd>The highest price buyers offer / lowest price sellers accept, right now.</dd>
+        <dt>Spread</dt><dd>The gap between bid and ask — a cost you pay every round trip.</dd>
+        <dt>Liquidity</dt><dd>How easily you can trade without moving the price against yourself.</dd>
+        <dt>Slippage</dt><dd>The difference between the price you expected and the price you got.</dd>
+        <dt>Order book</dt><dd>The live, sorted list of all resting buy and sell orders.</dd>
+        <dt>Market order</dt><dd>Trade now at whatever the going price is.</dd>
+        <dt>Limit order</dt><dd>Trade only at your specified price or better.</dd>
+        <dt>Market cap</dt><dd>Share price × shares outstanding = the company's total value.</dd>
+        <dt>Dividend</dt><dd>A cash payout of profits to shareholders.</dd>
+        <dt>P/E ratio</dt><dd>Price ÷ earnings per share; a rough expensive-vs-cheap gauge.</dd>
+        <dt>IPO</dt><dd>A company's first sale of shares to the public.</dd>
+        <dt>Coupon</dt><dd>A bond's fixed annual interest payment.</dd>
+        <dt>Yield</dt><dd>Your actual return given the price you paid.</dd>
+        <dt>Duration</dt><dd>How much a bond's price moves when interest rates change.</dd>
+        <dt>Credit risk</dt><dd>The chance a borrower fails to pay you back.</dd>
+        <dt>Delta</dt><dd>How much an option moves when the stock moves $1.</dd>
+        <dt>Gamma</dt><dd>How fast delta itself changes — the option's "acceleration."</dd>
+        <dt>Theta</dt><dd>How much value an option loses each day (time decay).</dd>
+        <dt>Vega</dt><dd>How much an option moves when expected volatility changes.</dd>
+        <dt>Rho</dt><dd>How much an option moves when interest rates change.</dd>
+        <dt>Premium</dt><dd>The price you pay to buy an option.</dd>
+        <dt>Strike</dt><dd>The set price at which an option lets you buy or sell.</dd>
+        <dt>Alpha</dt><dd>Return earned above what your market exposure (beta) would predict — the "skill" part.</dd>
+        <dt>Beta</dt><dd>How much an investment moves relative to the overall market.</dd>
+        <dt>Volatility</dt><dd>How much returns bounce around their average (standard deviation).</dd>
+        <dt>Sharpe ratio</dt><dd>Return above the risk-free rate, per unit of volatility — risk-adjusted return.</dd>
+        <dt>Risk-free rate</dt><dd>The return on a safe asset (Treasuries); the baseline everything's measured against.</dd>
+        <dt>VIX</dt><dd>The market's expected 30-day volatility — the "fear index."</dd>
+        <dt>Correlation</dt><dd>Whether two assets move together (+1), oppositely (−1), or independently (0).</dd>
+        <dt>Diversification</dt><dd>Combining assets that move differently to reduce risk for free.</dd>
+        <dt>Efficient frontier</dt><dd>The set of portfolios with the most return for each level of risk.</dd>
+        <dt>CAPM</dt><dd>The model that says expected return depends on systematic (non-diversifiable) risk.</dd>
+        <dt>Position sizing</dt><dd>Deciding how much money to put into a single trade.</dd>
+        <dt>Leverage</dt><dd>Using borrowed money to amplify gains — and losses.</dd>
+        <dt>Margin</dt><dd>Borrowing from your broker using your investments as collateral.</dd>
+        <dt>Margin call</dt><dd>A demand to add cash or have your positions force-sold.</dd>
+        <dt>Long</dt><dd>Owning something; you profit when it rises.</dd>
+        <dt>Short</dt><dd>Borrowing and selling something; you profit when it falls.</dd>
+        <dt>Short squeeze</dt><dd>A rising stock forcing shorts to buy back, spiking the price further.</dd>
+        <dt>Market-neutral</dt><dd>Balancing longs and shorts to remove market exposure and isolate skill.</dd>
+        <dt>Income statement</dt><dd>The report of revenue, costs, and profit over a period.</dd>
+        <dt>Balance sheet</dt><dd>A snapshot of what a company owns vs. owes.</dd>
+        <dt>Cash flow statement</dt><dd>The report of actual cash moving in and out.</dd>
+        <dt>EPS</dt><dd>Earnings per share — profit divided by share count.</dd>
+        <dt>Free cash flow</dt><dd>Cash left after running and investing in the business.</dd>
+        <dt>Piotroski F-Score</dt><dd>A 0–9 checklist scoring a company's financial health.</dd>
+        <dt>Altman Z-Score</dt><dd>A formula estimating bankruptcy risk over two years.</dd>
+        <dt>Momentum</dt><dd>The tendency for recent winners to keep winning for a while.</dd>
+        <dt>Volume</dt><dd>Shares traded in a period — a gauge of conviction behind a move.</dd>
+        <dt>Moving average</dt><dd>Average price over N days, used to smooth out noise and read trend.</dd>
+        <dt>Efficient Market Hypothesis</dt><dd>The claim that prices already reflect all known info, making the market hard to beat.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div>
+        <b>How Markets Actually Work</b><br>
+        A beginner investor's field guide to market microstructure.
+      </div>
+      <div style="text-align:right">
+        Educational use only — not investment advice.<br>
+        Figures are illustrative approximations. Tip: print to PDF with your browser (Ctrl/Cmd + P).
+      </div>
+    </div>
+  </footer>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  var bar=document.querySelector('#progress>div');
+  var links=[].slice.call(document.querySelectorAll('#toc a'));
+  var sections=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var h=document.documentElement;
+    var sc=h.scrollTop||document.body.scrollTop;
+    var max=(h.scrollHeight-h.clientHeight)||1;
+    bar.style.width=(sc/max*100)+'%';
+    var cur=null;
+    for(var i=0;i<sections.length;i++){
+      if(sections[i].getBoundingClientRect().top<=120) cur=sections[i].id;
+    }
+    links.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href')==='#'+cur);
+    });
+  }
+  document.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  document.querySelectorAll('.sidebar nav a').forEach(function(a){
+    a.addEventListener('click',function(){document.querySelector('.sidebar').classList.remove('open');});
+  });
+  onScroll();
+})();
+</script>
+</body>
+</html>
