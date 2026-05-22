@@ -288,6 +288,9 @@ footer b{color:#dce7f6}
       <a href="#ch28">28 · The Matching Engine Floor</a>
       <a href="#ch29">29 · Auction Theory & Value Area</a>
       <a href="#ch30">30 · Options Gamma & Wedges</a>
+      <a href="#ch31">31 · The Macro Trigger Layer</a>
+      <a href="#ch32">32 · Currency & Central Bank Cascades</a>
+      <a href="#ch33">33 · Keyword & Sentiment Scraping</a>
       <a href="#glossary">Glossary</a>
     </nav>
   </aside>
@@ -2683,6 +2686,168 @@ footer b{color:#dce7f6}
     </div>
   </section>
 
+  <!-- ===================== CHAPTER 31 ===================== -->
+  <section id="ch31">
+    <div class="wrap">
+      <div class="chapnum">Chapter 31</div>
+      <h2 class="chap">The Macro Trigger Layer: Scheduled News Volatility</h2>
+      <p class="lede">A handful of pre-scheduled government data releases — the Fed decision, the inflation report, the jobs number — are the biggest, most predictable volatility events on the calendar. They aren't just "news"; they're <em>structural liquidity events</em> that the whole market positions around. Understanding what these numbers measure, and the order-book trap that springs the moment they print, is essential macro-to-micro knowledge.</p>
+
+      <h3>What it does: the key scheduled releases</h3>
+      <p>These are the macro measurements that move markets most. Each is released on a fixed schedule, which is exactly why traders coil around them. Here's what each measures, how, and why the market cares:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Release</th><th>What &amp; how it's measured</th><th>What it means / market tie-in</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">FOMC decision</td><td>The Federal Reserve's interest-rate vote (8×/year), plus its statement and the Chair's press conference.</td><td>Sets the risk-free rate (Chapter 15) — the gravity of all assets. The single biggest scheduled mover; stocks, bonds, and the dollar all reprice instantly.</td></tr>
+          <tr><td class="co-name">CPI (Consumer Price Index)</td><td>Monthly. A government survey of the price of a fixed "basket" of goods &amp; services; reported as month-over-month and year-over-year % change.</td><td>The headline inflation gauge. Hot CPI ⇒ fear of higher rates ⇒ stocks/bonds fall; cool CPI ⇒ relief rally.</td></tr>
+          <tr><td class="co-name">PCE</td><td>Monthly. A broader inflation measure that adjusts for what people actually substitute toward — the <strong>Fed's preferred</strong> gauge.</td><td>What the Fed actually targets (~2%). Often moves rate expectations even more than CPI.</td></tr>
+          <tr><td class="co-name">Non-Farm Payrolls (the "jobs report")</td><td>Monthly (first Friday). A survey estimating how many jobs the economy added/lost, plus the unemployment rate and wage growth.</td><td>The pulse of the economy. Strong jobs = growth but maybe higher-for-longer rates; weak jobs = slowdown fears. Huge, immediate moves.</td></tr>
+          <tr><td class="co-name">GDP</td><td>Quarterly. The total value of everything the economy produced, annualized %.</td><td>The broadest scorecard of growth. Confirms expansion or recession (Chapter 25's business cycle).</td></tr>
+          <tr><td class="co-name">ISM / PMI surveys</td><td>Monthly. Surveys of purchasing managers; a reading above 50 = expansion, below 50 = contraction.</td><td>A fast, forward-looking read on manufacturing &amp; services activity — often turns before the hard data.</td></tr>
+          <tr><td class="co-name">Retail sales · jobless claims</td><td>Monthly / weekly. Consumer spending and new unemployment filings.</td><td>Real-time gauges of consumer health and the labor market between the big reports.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>The trigger: consensus vs. the actual print</h3>
+      <p>Here's the crucial mechanic that ties straight back to "markets are forward-looking" (Chapter 20): the market has <em>already priced in</em> the <strong>consensus expectation</strong> — economists' average forecast — before the number comes out. Price moves on the <strong>surprise</strong>: the gap between the <em>actual printed number</em> and that consensus. A "good" number that's <em>worse than expected</em> sells off; a "bad" number that's <em>better than feared</em> rallies. The headline alone tells you nothing; the headline <em>versus expectations</em> is everything.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>It's like a school report card when everyone already guessed your grade. If the class expected you to get a 90 and you got an 85, you're "in trouble" even though 85 is good — because reality came in below the bet. Markets trade the <em>difference</em> between the guess and the result, not the result itself.</p></div>
+
+      <h3>The players: who's racing the release</h3>
+      <p>Government data is distributed at a precise instant. <strong>Algorithmic news-scrapers</strong> and quantitative HFT desks (Chapter 28) are built to ingest the machine-readable release and fire orders in <em>microseconds</em> — far faster than any human can read the headline. They effectively race the transmission of the text from the government's servers to the exchange's matching engine. (Regulators have tightened "lock-up" distribution rules over the years precisely to stop anyone getting an unfair early peek.) By the time you read "CPI comes in hot" on your screen, the move has already happened.</p>
+
+      <h3>The trap: the passive liquidity sweep</h3>
+      <p>This is the macro-to-micro punchline. In the minutes <em>before</em> a major release, market-making algorithms protect themselves from the coming uncertainty (and from informed "toxic" flow) by <strong>widening their spreads or pulling their resting limit orders off the book entirely</strong> (recall passive liquidity and liquidity holes, Chapter 4). The book goes thin. When the number hits, retail traders trying to "trade the breakout" fire <em>market orders into a near-empty book</em> — getting severe slippage and often buying the very top tick — right before the market makers step back in and price snaps the other way.</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 31.1</p>
+        <p class="fig-sub">Why the book becomes a trap at the moment of release</p>
+        <svg viewBox="0 0 920 250" role="img" aria-label="Pre-news liquidity depth versus the news-impact liquidity hole">
+          <g font-family="inherit" text-anchor="middle">
+            <text x="235" y="28" font-size="12.5" font-weight="800" fill="#11814c">PRE-NEWS LIQUIDITY DEPTH</text>
+            <text x="685" y="28" font-size="12.5" font-weight="800" fill="#bf3c25">NEWS-IMPACT LIQUIDITY HOLE</text>
+            <line x1="460" y1="40" x2="460" y2="230" stroke="#dde3ec"/>
+
+            <!-- left: thick safe -->
+            <rect x="110" y="50"  width="250" height="44" rx="6" fill="#e2563f" fill-opacity=".22" stroke="#e2563f"/><text x="235" y="77" font-size="11.5" font-weight="700" fill="#bf3c25">Passive ASK limits</text>
+            <rect x="110" y="100" width="250" height="40" rx="6" fill="#243d28" stroke="#d6a52a"/><text x="235" y="125" font-size="11.5" font-weight="800" fill="#f4e6bd">CURRENT PRICE</text>
+            <rect x="110" y="146" width="250" height="44" rx="6" fill="#22b06b" fill-opacity=".22" stroke="#22b06b"/><text x="235" y="173" font-size="11.5" font-weight="700" fill="#11814c">Passive BID limits</text>
+            <text x="235" y="212" font-size="11" fill="#5b6b82">Thick book · tight, safe spread</text>
+
+            <!-- right: thin dangerous -->
+            <rect x="560" y="50"  width="250" height="44" rx="6" fill="none" stroke="#e2563f" stroke-dasharray="4 3"/><text x="685" y="77" font-size="11" fill="#bf3c25">↑ limit orders PULLED</text>
+            <rect x="560" y="100" width="250" height="40" rx="6" fill="#fdeeea" stroke="#e2563f" stroke-width="1.5"/><text x="685" y="118" font-size="11" font-weight="800" fill="#bf3c25">⚡ MARKET-ORDER GAP</text><text x="685" y="133" font-size="9.5" fill="#bf3c25">retail slips straight through</text>
+            <rect x="560" y="146" width="250" height="44" rx="6" fill="none" stroke="#22b06b" stroke-dasharray="4 3"/><text x="685" y="173" font-size="11" fill="#11814c">↓ spreads widen extremely</text>
+            <text x="685" y="212" font-size="11" fill="#5b6b82">Thin book · dangerous void</text>
+          </g>
+        </svg>
+        <p class="fig-cap">Same stock, seconds apart. Makers vacate the book ahead of the print to dodge toxicity; the retail "breakout" order then falls through the void, and price often reverses once liquidity returns.</p>
+      </div>
+
+      <div class="callout disrupt"><span class="lab">🚀 Emerging Disruption — Systematic De-Risking</span><p>A growing share of capital sits in <strong>risk-parity and volatility-targeting funds</strong> — multi-billion-dollar strategies that are <em>hardcoded</em> to hold less when volatility rises. When a macro surprise spikes the <strong>VIX</strong> (Chapter 15), these funds automatically <strong>market-sell their exposure all at once</strong>, regardless of any single company's fundamentals. The result can be a <em>systematic flash crash</em>: a self-reinforcing cascade of forced, mechanical selling that has nothing to do with the businesses being sold — and everything to do with a volatility number crossing a programmed threshold.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>"Trading the news" by firing a market order the instant the number drops is one of the fastest ways to donate money to the algos. You're slower than the machines (Chapter 28) <em>and</em> trading into the thinnest, most treacherous book of the day. The professional move is usually the opposite: <strong>do nothing</strong> through the release, let the whipsaw and reversal play out, and act only once liquidity and a real trend re-establish — if at all.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For a long-term investor, these events are noise to be endured, not traded — but knowing the calendar explains the otherwise-baffling 2% lurches on "no real news." For anyone tempted to trade around them, the lesson is humbling: the number itself matters less than (1) the surprise versus consensus and (2) the liquidity trap that surrounds the print. Respect both, or sit them out.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 32 ===================== -->
+  <section id="ch32">
+    <div class="wrap">
+      <div class="chapnum">Chapter 32</div>
+      <h2 class="chap">The Currency Choke Point: Central Bank Capital Cascades</h2>
+      <p class="lede">Underneath the stock market sits an even bigger ocean: the global flow of money chasing interest rates across countries. When central banks shift their policy rates, they don't just nudge bonds — they force trillions of dollars to rotate between currencies and markets, and that capital moves in violent cascades through a tiny set of mega-bank gatekeepers. This is the deepest macro plumbing of all.</p>
+
+      <h3>What it does: rate differentials move global capital</h3>
+      <p>Money flows toward where it's paid most for its risk. When the US Federal Reserve sets a higher rate than, say, the European Central Bank or the Bank of Japan, capital is pulled toward dollar assets. These <strong>interest-rate differentials</strong> between central banks force global macro funds to rotate enormous sums across international bond and equity "corridors" — and shifts in those differentials are among the most powerful forces in all of finance.</p>
+
+      <h3>The carry trade</h3>
+      <p>The classic expression of this is the <strong>carry trade</strong>: borrow money cheaply in a low-rate currency (for years, the Japanese yen), convert it, and invest it in a higher-rate currency or asset, pocketing the difference. It works smoothly — until a central bank moves. When the low-rate country unexpectedly <em>raises</em> rates (or the high-rate one cuts), the trade reverses: funds must buy back the borrowed currency all at once, and the unwind cascades across markets worldwide.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The carry trade is like borrowing money at 0% on one credit card to stick it in a savings account paying 5% — easy profit, until the 0% card suddenly charges interest and everyone scrambles to pay it back at the same moment. When a giant, crowded carry trade unwinds, the rush for the exit shakes markets far beyond the two currencies involved (the August 2024 yen unwind is a recent example).</p></div>
+
+      <h3>The mechanics: capital cascades, not smooth flows</h3>
+      <p>Capital doesn't glide between markets — it <strong>cascades</strong>. A central-bank policy shift ripples through institutional <strong>dark pools</strong> (Chapter 2) and dealer networks, repricing <strong>index futures</strong> before the cash stock market even opens. Because so much of this flow is leveraged and crowded into the same trades, the moves are lumpy and self-reinforcing: a repricing in rates triggers currency moves, which trigger futures repricing, which triggers equity and bond rotation — a chain reaction, not a gentle drift.</p>
+
+      <h3>The choke point: the primary dealers</h3>
+      <p>Here's the gatekeeper. The flow between central banks and the broader market doesn't happen directly — it's funneled through a small club of <strong>primary dealers</strong>: mega-banks (JPMorgan, Goldman Sachs, Barclays, Citi, and a handful of others) that are <em>legally designated and obligated</em> to intermediate. They're required to bid at government bond auctions, and they're the counterparties through which central banks conduct policy (open-market operations). All that global capital is forced through this narrow door — making the primary dealers a genuine structural choke point with privileged information about the flow.</p>
+
+      <div class="callout disrupt"><span class="lab">🚀 Emerging Disruption — Sentiment Sweepers</span><p>Central-bank communication is now a machine-speed battlefield. <strong>Natural-language-processing (NLP) systems</strong> ingest Fed and ECB speeches, statements, and meeting minutes <em>in real time</em>, scoring each word for "hawkish" vs. "dovish" tone and executing millions of derivative hedges and currency trades <strong>before a human can finish reading the headline</strong> on a terminal. A single unexpected adjective from a central banker can now trigger an automated, cross-asset repricing in milliseconds — collapsing the old advantage of the analyst who "reads the statement carefully."</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>This is why a rate decision in Tokyo or a phrase in a Frankfurt press conference can sink US tech stocks overnight: global markets are one interconnected capital system, wired together by rate differentials and the dealer networks that intermediate them. The "stock market" you watch is the surface; these currency and rate cascades are the deep currents moving underneath it.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You can't trade against trillion-dollar capital flows or front-run central banks — but understanding this layer explains the "why" behind market-wide moves that have nothing to do with any company's earnings. When everything falls together on a foreign rate surprise or a carry-trade unwind, that's the macro choke point at work, not a flaw in your portfolio. The seasoned response is the recurring one in this guide: stay diversified, avoid leverage that a cascade could margin-call, and don't mistake a global capital rotation for a verdict on the businesses you own.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 33 ===================== -->
+  <section id="ch33">
+    <div class="wrap">
+      <div class="chapnum">Chapter 33</div>
+      <h2 class="chap">The Informational Vector: Keyword Harvesting &amp; Sentiment Scraping</h2>
+      <p class="lede">Forget "sentiment" as some fuzzy mood indicator on a chart. At the institutional level, sentiment is a <em>microsecond electronic race to ingest unstructured text</em> — to read a government report or a central-bank sentence and convert it into buy and sell orders before any human has finished the headline. This chapter shows the final link in the chain: exactly how a word becomes a price tick.</p>
+
+      <h3>What it does: turning words into a number</h3>
+      <p>This layer converts <strong>qualitative human language</strong> — government reports, central-bank speeches, newswires, even social-media text — into a <strong>binary quantitative signal</strong> (+1 bullish, −1 bearish, 0 neutral) inside an algorithm, within <em>microseconds</em> of the text going public. The machine doesn't "understand" the news the way you do; it scores it and trades it, faster than a human can blink.</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 33.1</p>
+        <p class="fig-sub">How a sentence becomes an order: the informational vector</p>
+        <svg viewBox="0 0 920 250" role="img" aria-label="Pipeline from unstructured text to parsing engine to matching engine">
+          <defs><marker id="iv" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#0e8073"/></marker></defs>
+          <g font-family="inherit" text-anchor="middle">
+            <rect x="210" y="20" width="500" height="46" rx="9" fill="#fbf4e2" stroke="#d6a52a"/>
+            <text x="460" y="40" font-size="12.5" font-weight="800" fill="#0d1b2e">① UNSTRUCTURED TEXT EVENT</text>
+            <text x="460" y="57" font-size="11" fill="#43576f">e.g. "Fed cuts interest rates by 50bps"</text>
+            <path d="M460 66 V92" stroke="#0e8073" stroke-width="2.5" marker-end="url(#iv)"/><text x="560" y="84" font-size="9.5" fill="#5b6b82">machine-readable wire feed</text>
+
+            <rect x="210" y="96" width="500" height="46" rx="9" fill="#e3f8fa" stroke="#13b6a6"/>
+            <text x="460" y="116" font-size="12.5" font-weight="800" fill="#0d1b2e">② NLP PARSING ENGINE</text>
+            <text x="460" y="133" font-size="11" fill="#43576f">tokenizes &amp; scores the text instantly</text>
+            <path d="M460 142 V168" stroke="#0e8073" stroke-width="2.5" marker-end="url(#iv)"/><text x="560" y="160" font-size="9.5" fill="#5b6b82">binary state: +1 bullish</text>
+
+            <rect x="210" y="172" width="500" height="46" rx="9" fill="#16263f"/>
+            <text x="460" y="192" font-size="12.5" font-weight="800" fill="#fff">③ EXCHANGE MATCHING ENGINE</text>
+            <text x="460" y="209" font-size="11" fill="#aebfd8">aggressor market orders hit the passive limit layers</text>
+          </g>
+        </svg>
+        <p class="fig-cap">Text → number → order, in millionths of a second. The "sentiment" never touches a human; it's a wire feed parsed into an aggressor order (Chapter 4) before the headline reaches your screen.</p>
+      </div>
+
+      <h3>The players</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Role</th><th>Who</th><th>What they provide</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Aggregators &amp; wholesalers</td><td>Bloomberg · Thomson Reuters · Dow Jones</td><td>Sell <strong>low-latency, machine-readable</strong> news feeds, pre-formatted for direct algorithm ingestion (not for human reading).</td></tr>
+          <tr><td class="co-name">Execution desks</td><td>Citadel Securities · Jump Trading · XTX Markets</td><td>Build custom <strong>NLP models</strong> (rule-based <em>VADER</em>, or finance-tuned <em>BERT</em>) running on <strong>FPGA hardware</strong> co-located (Chapter 28) right beside the matching engines.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Two industries make this work: companies that sell the news in a format <em>computers</em> can read instantly (not the version on a website), and trading firms that build robots to read that feed and fire orders. The robot isn't smart about the economy — it just recognizes "rate cut = buy" and acts in a millionth of a second, long before you could.</p></div>
+
+      <h3>The trigger: a linguistic mismatch</h3>
+      <p>The signal that fires the trade is the <strong>mismatch between market consensus and the raw text</strong> on the wire (the same surprise-vs-expectation logic as Chapter 31). The algorithm scans for hardcoded string identifiers — words like "<em>hawkish</em>," "<em>dovish</em>," "<em>worse than expected</em>" — tokenizes the sentences, scores the combined word values, and compares the result against a pre-set <strong>execution threshold</strong> (for example: fire a buy if the sentiment score is ≥ 0.25). Cross the threshold, and the order is already gone.</p>
+
+      <h3>The trap: phantom liquidity &amp; the execution squeeze</h3>
+      <p>This is where the macro layer crashes straight into order-book physics. It's a two-step ambush:</p>
+      <ol>
+        <li><strong>The phantom liquidity vacuum.</strong> Just before a scheduled high-impact text event (a jobs print, FOMC minutes), market-making algorithms <em>withdraw their passive limit orders</em> to avoid getting run over — opening a liquidity hole (Chapter 4) exactly as in the macro liquidity sweep (Chapter 31).</li>
+        <li><strong>The execution squeeze.</strong> The instant the text hits, sentiment-parsing algos fire <em>high-volume aggressor market orders</em> into that thinned book. With no passive layers to absorb them, price gaps violently through multiple ticks. A retail trader entering manually "on the news" is filled at extreme slippage — buying the absolute top (or selling the absolute bottom) of the gap — right before the market makers re-enter to harvest the now-widened spread.</li>
+      </ol>
+
+      <div class="callout disrupt"><span class="lab">🚀 Emerging Disruption — Multi-Modal LLMs &amp; the Photonic Limit</span><p><strong>Smarter parsing:</strong> early sentiment algos used crude rule-based dictionaries (VADER) hunting standalone words like "good" or "bad." The field is pivoting to <strong>generative-AI sweepers (FinBERT and custom LLMs)</strong> that read full <em>context</em> — sarcasm, hedged central-bank phrasing, conditional clauses — turning text that used to be un-modelable noise into tradeable edge. <strong>Faster transit:</strong> as parsing latency approaches zero, the remaining edge is pure physics — firms deploy <strong>photonic links and ultra-low-jitter interconnects</strong> to arbitrage the microsecond transit difference between where the text is physically released (e.g. Washington, D.C.) and where the matching engines sit (New York / Chicago). The race is shifting from "who reads fastest" to "whose <em>photons</em> arrive first."</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Reading the same headline a human-readable second later and clicking buy is the losing end of this race by design. You are competing against context-aware models on FPGA hardware reading a machine feed you don't even have — and trading into the emptiest book of the day. "The news is good, so I'll buy" ignores that the news was converted to orders and the easy move was captured before your screen even updated.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>This chapter closes the loop of the whole book: it shows precisely how a <em>word</em> becomes a <em>price tick</em> — macro environment → text → sentiment score → aggressor order → order-book gap. The lesson for a normal investor isn't to compete (you can't), but to <strong>understand why the first move on news is so often a violent head-fake that reverses.</strong> Let the machines fight over the millisecond. Your edge was never speed or headline-reading — it's judgment, patience, and a time horizon measured in years, where none of this microsecond warfare matters at all.</p></div>
+    </div>
+  </section>
+
   <!-- ===================== GLOSSARY ===================== -->
   <section id="glossary">
     <div class="wrap">
@@ -2887,6 +3052,26 @@ footer b{color:#dce7f6}
         <dt>Gamma squeeze</dt><dd>Dealer hedging of bought calls forcing them to buy stock, driving a self-fulfilling spike.</dd>
         <dt>0DTE options</dt><dd>Zero-days-to-expiration options; their hedging concentrates flow into the session's final hours.</dd>
         <dt>Gamma exposure (GEX)</dt><dd>Whether dealers are net long gamma (dampening moves) or short gamma (amplifying them).</dd>
+        <dt>FOMC</dt><dd>The Federal Reserve committee that sets US interest rates; its decisions are the biggest scheduled market mover.</dd>
+        <dt>CPI</dt><dd>Consumer Price Index — the headline inflation gauge, measured from the price of a fixed basket of goods.</dd>
+        <dt>PCE</dt><dd>The broader inflation measure the Fed actually targets (~2%).</dd>
+        <dt>Non-Farm Payrolls</dt><dd>The monthly US jobs report — added/lost jobs, unemployment rate, and wages; a major mover.</dd>
+        <dt>GDP</dt><dd>Gross Domestic Product — the total value of everything an economy produces.</dd>
+        <dt>PMI / ISM</dt><dd>Purchasing-manager surveys; above 50 = expansion, below 50 = contraction.</dd>
+        <dt>Consensus / surprise</dt><dd>The forecast already priced in; markets move on the gap between the actual number and consensus.</dd>
+        <dt>Liquidity sweep</dt><dd>Market makers pulling orders before a news release, thinning the book into a trap.</dd>
+        <dt>Risk-parity / vol-targeting</dt><dd>Funds hardcoded to sell when volatility rises, which can cause systematic flash crashes.</dd>
+        <dt>Interest-rate differential</dt><dd>The gap between two central banks' rates, which pulls global capital toward the higher one.</dd>
+        <dt>Carry trade</dt><dd>Borrowing in a low-rate currency to invest in a higher-rate one; violent when it unwinds.</dd>
+        <dt>Primary dealer</dt><dd>A mega-bank legally obligated to intermediate between the central bank and the market.</dd>
+        <dt>Capital cascade</dt><dd>The lumpy, self-reinforcing rotation of global money triggered by a central-bank shift.</dd>
+        <dt>NLP (sentiment analysis)</dt><dd>Algorithms that score text as bullish/bearish and trade on it within microseconds.</dd>
+        <dt>Machine-readable feed</dt><dd>A news feed pre-formatted for algorithms (e.g. Bloomberg, Dow Jones), not for human reading.</dd>
+        <dt>Tokenize</dt><dd>Breaking text into units a model can score for sentiment.</dd>
+        <dt>VADER / FinBERT</dt><dd>A rule-based vs. a finance-tuned deep-learning model for scoring text sentiment.</dd>
+        <dt>FPGA</dt><dd>Specialized chips that let trading firms react in nanoseconds, faster than ordinary software.</dd>
+        <dt>Execution threshold</dt><dd>A pre-set sentiment score that automatically triggers a buy or sell order.</dd>
+        <dt>Phantom liquidity</dt><dd>Resting orders pulled just before a news event, leaving a deceptively empty book.</dd>
       </dl>
     </div>
   </section>
