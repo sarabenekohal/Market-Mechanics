@@ -937,7 +937,7 @@ footer b{color:#dce7f6}
       <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You buy a bond for $1,000 that pays a $50 coupon every year (a 5% yield). The next week, interest rates rise and brand-new bonds are issued paying $70/year (7%). Who wants <em>your</em> $50 bond now? Nobody — at $1,000. To sell it, you must drop the price until your $50 coupon represents a competitive 7% return. $50 ÷ 0.07 ≈ <strong>$714</strong>. Your bond's price <em>fell</em> because rates <em>rose</em>. Flip it: if new bonds only pay 3%, your 5% bond becomes a prize and its price rises above $1,000.</p></div>
 
       <div class="fig light">
-        <p class="fig-title">Figure 6.1</p>
+        <p class="fig-title">Figure 9.1</p>
         <p class="fig-sub">The see-saw: bond prices vs. interest rates</p>
         <svg viewBox="0 0 920 180" role="img" aria-label="See-saw showing rates up means prices down">
           <line x1="160" y1="140" x2="760" y2="140" stroke="#c7d0dd" stroke-width="3"/>
@@ -1004,7 +1004,7 @@ footer b{color:#dce7f6}
       <p>An option's price moves for several reasons at once: the stock moves, time passes, fear rises or falls. The <strong>Greeks</strong> are numbers that isolate each of those forces, so you know exactly what you're exposed to. The five you'll meet:</p>
 
       <div class="fig light">
-        <p class="fig-title">Figure 7.1</p>
+        <p class="fig-title">Figure 10.1</p>
         <p class="fig-sub">The five Greeks — what each one answers</p>
         <svg viewBox="0 0 920 110" role="img" aria-label="Five Greek letters and their meanings">
           <g font-family="inherit" text-anchor="middle">
@@ -1031,6 +1031,44 @@ footer b{color:#dce7f6}
       </div>
 
       <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Driving analogy: <strong>Delta</strong> is your speed, <strong>Gamma</strong> is how hard you're hitting the gas (acceleration), <strong>Theta</strong> is the fuel quietly burning whether you move or not, and <strong>Vega</strong> is how bumpy the road is expected to be. Pros don't just bet direction; they manage all these dials at once.</p></div>
+
+      <h3>How the Greeks are actually calculated</h3>
+      <p>You'll never compute these by hand — your trading platform shows them in real time — but knowing <em>where they come from</em> tells you what moves them. The Greeks fall out of an option-pricing model (the famous <strong>Black–Scholes model</strong>), which takes <strong>five inputs</strong> and produces a fair price:</p>
+      <div class="kv">
+        <dt>1. Stock price</dt><dd>Where the underlying trades now.</dd>
+        <dt>2. Strike price</dt><dd>The fixed price the option locks in.</dd>
+        <dt>3. Time to expiration</dt><dd>How long until the option dies.</dd>
+        <dt>4. Volatility</dt><dd>How much the stock is <em>expected</em> to swing — the one input you can't observe directly.</dd>
+        <dt>5. Interest rate</dt><dd>The risk-free rate (Chapter 15) over the option's life.</dd>
+      </div>
+      <p>Each Greek is simply the answer to "<em>if I nudge one input a little, how much does the option's price change?</em>" — in calculus terms, the rate of change (a partial derivative) of the price with respect to each input. That's why each Greek pairs with one input:</p>
+      <div class="formula">
+        <span class="big">Delta → stock price &nbsp;·&nbsp; Theta → time &nbsp;·&nbsp; Vega → volatility &nbsp;·&nbsp; Rho → interest rate</span>
+        <span class="note">Gamma is the odd one out: it's the rate of change of <em>Delta</em> (a "second-order" Greek — the change in the change). That's why it spikes for near-the-money options close to expiry, where delta flips fastest.</span>
+      </div>
+      <p>A few rules of thumb that follow directly from the math:</p>
+      <ul>
+        <li><strong>Delta</strong> runs 0 to 1 for calls (0 to −1 for puts). Deep in-the-money ≈ 1 (moves like the stock); far out-of-the-money ≈ 0 (barely reacts); at-the-money ≈ 0.5.</li>
+        <li><strong>Theta</strong> is small when expiration is far away and <em>accelerates</em> as expiry approaches — time decay is brutal in the final weeks.</li>
+        <li><strong>Vega</strong> is largest for at-the-money options with lots of time left, and shrinks to nothing near expiry.</li>
+        <li><strong>Volatility</strong> is the input traders fight over: plug in <em>implied</em> volatility (the market's guess baked into the price) and the Greeks shift with the market's mood, not just the stock.</li>
+      </ul>
+
+      <h3>How the Greeks factor into real trades</h3>
+      <p>Professionals don't just buy a call and hope. They read their <em>position's</em> combined Greeks and manage them deliberately:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Greek</th><th>How traders use it</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Delta</td><td><strong>Position sizing &amp; hedging.</strong> Delta × 100 shares tells you your true stock-equivalent exposure. A market maker who sells you a 0.40-delta call buys ~40 shares to become <em>delta-neutral</em> — flat to small moves, earning the spread instead of betting direction.</td></tr>
+          <tr><td class="co-name">Gamma</td><td><strong>Managing how fast risk changes.</strong> Long options = positive gamma (your delta helpfully grows in your favor). Short options = negative gamma (losses accelerate against you) — the hidden danger of selling options near expiry.</td></tr>
+          <tr><td class="co-name">Theta</td><td><strong>The income vs. cost decision.</strong> Buyers fight theta (it bleeds them daily); sellers harvest it (covered calls, Chapter 19, earn theta). Choosing to be a net buyer or seller of options is largely a bet on theta.</td></tr>
+          <tr><td class="co-name">Vega</td><td><strong>Trading volatility itself.</strong> Expecting a calm stock to get turbulent? Buy options for positive vega and profit if implied volatility rises — even if the stock goes nowhere. Selling premium before an event collects rich vega but risks a volatility spike.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You own 5 call contracts with a delta of 0.40. Each contract covers 100 shares, so your <strong>position delta</strong> = 5 × 100 × 0.40 = <strong>200</strong> — you're effectively long 200 shares. If the stock rises $1, you make ~$200. Now suppose gamma is 0.05: after that $1 move, your delta climbs to 0.45, so your exposure grows to 225 shares automatically. That's positive gamma working <em>for</em> you as a buyer — and exactly what an option <em>seller</em> dreads, because for them it compounds losses.</p></div>
 
       <h3>Intrinsic vs. time value</h3>
       <p>An option's premium has two parts. <strong>Intrinsic value</strong> is the profit if you exercised right now (a $100 call when the stock's at $108 has $8 of intrinsic value). <strong>Time value</strong> is the extra you pay for the <em>chance</em> things move further before expiration. As expiration nears, time value bleeds away to zero (that's theta in action) — which is why most options buyers lose: they're right on direction but run out of time.</p>
@@ -1078,7 +1116,7 @@ footer b{color:#dce7f6}
       <p>Here's the microstructure puzzle: an ETF trades like a stock, so its price is set by buyers and sellers — yet it somehow always stays almost exactly equal to the value of the stocks it holds. How? Through a behind-the-scenes arbitrage loop run by big firms called <strong>Authorized Participants (APs)</strong>.</p>
 
       <div class="fig light">
-        <p class="fig-title">Figure 9.1</p>
+        <p class="fig-title">Figure 11.1</p>
         <p class="fig-sub">How creation/redemption keeps an ETF priced to its holdings</p>
         <svg viewBox="0 0 920 250" role="img" aria-label="ETF creation and redemption arbitrage loop">
           <g font-family="inherit">
@@ -1117,9 +1155,23 @@ footer b{color:#dce7f6}
 
       <p>This same in-kind swapping (stocks for ETF shares, not cash) is <em>why ETFs are tax-efficient</em>: the fund can hand off its lowest-cost shares during redemptions without triggering a taxable sale, so it rarely passes capital-gains bills to you (more in Chapter 24).</p>
 
-      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Not all ETFs are cheap index funds. Watch out for (1) <strong>high expense ratios</strong> on niche or "thematic" ETFs, (2) <strong>leveraged/inverse ETFs</strong> (e.g. "3× daily") which decay over time and are <em>not</em> meant to be held for more than a day, and (3) thinly traded ETFs with wide spreads. The wrapper says "ETF"; the contents and costs vary wildly.</p></div>
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Not all ETFs are cheap index funds. Watch out for (1) <strong>high expense ratios</strong> on niche or "thematic" ETFs, (2) <strong>leveraged/inverse ETFs</strong> (covered next) which decay over time, and (3) thinly traded ETFs with wide spreads. The wrapper says "ETF"; the contents and costs vary wildly.</p></div>
 
-      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For the vast majority of investors, a low-cost, broad <strong>index ETF or index mutual fund</strong> is the single best starting point: instant diversification, tiny fees, and tax efficiency, all in one trade. It captures "beta" (Chapter 14) cheaply and sidesteps the near-impossible game of beating the market. If you remember one practical takeaway from this entire guide, it might be this one.</p></div>
+      <h3>Leveraged &amp; inverse ETFs: the ones that look like shortcuts</h3>
+      <p>Two special — and dangerous — types deserve their own warning, because their names make them sound simpler than they are:</p>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--red)"><h5>Leveraged ETF</h5><p>Aims to deliver a <em>multiple</em> of an index's <strong>daily</strong> move — e.g. a "3×" fund tries to go up 3% when the index rises 1% (and down 3% when it falls 1%). It uses derivatives and borrowing to amplify.</p></div>
+        <div class="card" style="border-top-color:var(--orange)"><h5>Inverse ETF</h5><p>Aims to move <em>opposite</em> the index — a "−1×" fund rises 1% when the index falls 1%. A "−3×" inverse-leveraged fund triples the opposite move. A way to bet on a decline without shorting.</p></div>
+      </div>
+
+      <h4>The hidden killer: daily reset and volatility decay</h4>
+      <p>The crucial word is <strong>daily</strong>. These funds reset every single day to hit their multiple for <em>that day only</em>. Over multiple days, the compounding of those daily resets means your return drifts — often badly — from the simple multiple you'd expect. In choppy, sideways markets this "<strong>volatility decay</strong>" steadily bleeds value, even if the index ends up flat.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>An index starts at 100. Day 1 it drops 10% to 90; Day 2 it rises 11.1% back to 100 — net <strong>flat</strong>. Now a 3× leveraged ETF, starting at $100: Day 1 it falls 30% to $70; Day 2 it rises 3 × 11.1% = 33.3%, reaching $93.30. The index is back to even — but the ETF is <strong>down 6.7%</strong>. The more the market chops around, the more these funds erode, purely from the daily-reset math. Hold one for weeks and you can lose money even if your market call was right.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Leveraged and inverse ETFs are designed as <strong>day-trading tools</strong>, and the fund companies say so in the fine print. Beginners buy a "3× tech" or "inverse market" ETF as a long-term bet, then are baffled when it lags the index for months. They also carry high expense ratios. <strong>Rule of thumb: if you're not watching it intraday, you shouldn't own it.</strong> For ordinary investors, these are almost always a mistake.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For the vast majority of investors, a low-cost, broad <strong>index ETF or index mutual fund</strong> is the single best starting point: instant diversification, tiny fees, and tax efficiency, all in one trade. It captures "beta" (Chapter 14) cheaply and sidesteps the near-impossible game of beating the market. Steer clear of the leveraged/inverse cousins. If you remember one practical takeaway from this entire guide, it might be this one.</p></div>
     </div>
   </section>
 
@@ -1249,7 +1301,7 @@ footer b{color:#dce7f6}
       <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>The market returned 10% this year. Your portfolio has a beta of 1.2, so just from market exposure you'd be <em>expected</em> to earn about 12% (1.2 × 10%). You actually earned <strong>15%</strong>. Your alpha is 15% − 12% = <strong>+3%</strong>. That 3% is the value you added beyond what the market handed you. If you'd earned only 11%, your alpha would be <strong>−1%</strong>: you took on extra risk and still lagged what that risk should have paid.</p></div>
 
       <div class="fig light">
-        <p class="fig-title">Figure 8.1</p>
+        <p class="fig-title">Figure 14.1</p>
         <p class="fig-sub">Splitting a return into "the market" (beta) and "you" (alpha)</p>
         <svg viewBox="0 0 920 170" role="img" aria-label="Stacked bar splitting return into beta and alpha">
           <g font-family="inherit">
@@ -1297,6 +1349,13 @@ footer b{color:#dce7f6}
 
       <p>You subtract the risk-free rate because you should only get credit for return <em>above</em> what you could've earned doing nothing risky. Then you divide by risk. Higher is better. A rough scale: below 1 is mediocre, 1–2 is good, above 2 is excellent (and above 3 is rare and often too good to be true).</p>
 
+      <h4>What exactly is the "risk-free rate"?</h4>
+      <p>The <strong>risk-free rate</strong> is the return you can earn with essentially <em>zero</em> risk of losing your money — the baseline reward for simply lending out cash safely. In practice it's the yield on short-term <strong>US Treasury bills</strong> (government IOUs of a few months), because the US government can always pay its own debt, so default risk is treated as near-zero. It's the floor every other investment is measured against: if you can get 4% risk-free, any risky bet has to offer enough <em>extra</em> expected return — the "risk premium" — to be worth the chance of loss.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The risk-free rate is "the rent money pays when it takes no risk at all." If a totally safe government bond pays 4%, then earning 4% on something risky is a bad deal — you took risk for nothing. Everything in finance is judged against this safe baseline, which is why it shows up in the Sharpe ratio, in alpha (Chapter 14), and in valuing companies (Chapter 20).</p></div>
+
+      <p>One subtlety: the risk-free rate is "free" of <em>default</em> risk, not of all risk — its purchasing power can still be eaten by inflation (Chapter 25). And because it's set largely by the Federal Reserve's interest-rate policy, it moves over time: it was near 0% for much of the 2010s and several percent in the mid-2020s. When the risk-free rate rises, the bar for every risky investment rises with it.</p>
+
       <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>Fund A returns 12% with 20% volatility. Fund B returns 9% with 8% volatility. The risk-free rate is 4%.<br>
       • Fund A Sharpe = (12 − 4) ÷ 20 = <strong>0.40</strong><br>
       • Fund B Sharpe = (9 − 4) ÷ 8 = <strong>0.63</strong><br>
@@ -1343,7 +1402,7 @@ footer b{color:#dce7f6}
       <p><strong>Correlation</strong> measures whether two assets move together (+1, perfectly in sync), oppositely (−1, perfect mirror), or independently (0). The diversification magic is strongest when you combine assets with <em>low or negative</em> correlation. Two tech stocks (high correlation) barely diversify each other; stocks and bonds (often low/negative correlation) diversify beautifully.</p>
 
       <div class="fig light">
-        <p class="fig-title">Figure 10.1</p>
+        <p class="fig-title">Figure 16.1</p>
         <p class="fig-sub">Why mixing uncorrelated assets smooths the ride</p>
         <svg viewBox="0 0 920 200" role="img" aria-label="Two volatile lines combining into a smoother line">
           <g font-family="inherit" fill="none" stroke-width="2.5">
@@ -1397,7 +1456,7 @@ footer b{color:#dce7f6}
       <p>Here's why protecting your capital matters so much: losses and the gains needed to recover them are <em>not</em> symmetric. The deeper the hole, the steeper the climb out.</p>
 
       <div class="fig light">
-        <p class="fig-title">Figure 11.1</p>
+        <p class="fig-title">Figure 17.1</p>
         <p class="fig-sub">The gain you need just to get back to even</p>
         <svg viewBox="0 0 920 200" role="img" aria-label="Bar chart of loss vs gain needed to recover">
           <g font-family="inherit">
@@ -1457,7 +1516,7 @@ footer b{color:#dce7f6}
       You contributed $10,000 once. The other ~$207,000 is compounding doing the work. Notice the jumps get <em>bigger</em> each decade — that's the curve bending upward. Most of the wealth arrives in the final years, which is exactly why <strong>starting early</strong> beats investing more later.</p></div>
 
       <div class="fig light">
-        <p class="fig-title">Figure 15.1</p>
+        <p class="fig-title">Figure 18.1</p>
         <p class="fig-sub">$10,000 at 8% — why the curve bends upward</p>
         <svg viewBox="0 0 920 240" role="img" aria-label="Exponential growth curve of compounding">
           <g font-family="inherit">
@@ -1526,7 +1585,7 @@ footer b{color:#dce7f6}
       <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Shorting is like borrowing your friend's bike, selling it for $100 because you think bike prices are about to crash, then buying an identical one back for $70 next week to return to your friend — pocketing $30. You profit because you sold high and bought back low, in that order.</p></div>
 
       <div class="fig light">
-        <p class="fig-title">Figure 12.1</p>
+        <p class="fig-title">Figure 19.1</p>
         <p class="fig-sub">The four steps of a short sale</p>
         <svg viewBox="0 0 920 150" role="img" aria-label="Four steps of shorting">
           <g font-family="inherit">
@@ -1631,6 +1690,14 @@ footer b{color:#dce7f6}
         <dt>Margins</dt><dd>What % of revenue becomes profit. Rising margins = a strengthening business.</dd>
       </div>
 
+      <h3>Why good news can sink a stock: markets are forward-looking</h3>
+      <p>This is one of the most counterintuitive — and important — ideas in all of investing. A stock's price doesn't reflect how the company is doing <em>today</em>; it reflects what the crowd <strong>already expects</strong> about the future. Markets are <strong>forward-looking</strong>: today's price has the next year or two of expected results baked in. So a stock moves not on the news itself, but on the news <em>versus what was already expected</em>.</p>
+      <p>That's why a company can post record profits and <em>drop</em>: if the market expected even better, the "great" result is actually a disappointment relative to the price. The good news was already <strong>"priced in."</strong> The flip side: a beaten-down stock can <em>rise</em> on terrible news, if the news is "less terrible than feared."</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Imagine everyone already knows the home team is great and bets accordingly. To <em>win the bet</em>, they don't just need to win — they need to win by <em>more</em> than everyone expected. A stock is the same: the price already contains the expected outcome, so only the <em>surprise</em> — the gap between reality and expectations — moves it. "Buy the rumor, sell the news" is this idea in action.</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Because prices are forward-looking, the market often turns <em>before</em> the real world does — stocks bottom while the news is still grim and peak while everything feels great (this is why the stock market is treated as a leading indicator of the economy, Chapter 25). It's also why simply buying "good companies" or selling on bad headlines doesn't reliably work: by the time you've read the news, it's already in the price. Your edge comes from being right about something the crowd's expectations have <em>wrong</em>.</p></div>
+
       <h3>Valuation ratios: cheap or expensive?</h3>
       <div class="tablewrap">
       <table>
@@ -1645,6 +1712,36 @@ footer b{color:#dce7f6}
         </tbody>
       </table>
       </div>
+
+      <h3>The DCF: valuing a company by its future cash</h3>
+      <p>Ratios are quick shortcuts. The most rigorous way to value a business is the <strong>discounted cash flow (DCF)</strong> model. Its logic flows straight from the time value of money (Chapter 18): a company is worth <em>all the cash it will generate in the future, converted into today's dollars.</em> Because a dollar arriving in 10 years is worth less than a dollar today, you "discount" each future year back to the present.</p>
+      <p>It's a three-step recipe:</p>
+      <ol>
+        <li><strong>Forecast the free cash flow</strong> the company will produce each year for, say, the next 5–10 years. (Free cash flow = the real cash left after running and investing in the business.)</li>
+        <li><strong>Discount each year back to today</strong> using a discount rate (the WACC, below). A cash flow <em>n</em> years out is worth FCF ÷ (1 + rate)<sup>n</sup> today.</li>
+        <li><strong>Add a terminal value</strong> — an estimate of all cash beyond the forecast window — discount that too, and sum everything. That total is your estimate of the company's fair value.</li>
+      </ol>
+
+      <div class="formula">
+        <span class="big">Value = Σ &nbsp;FCF<sub>year n</sub> ÷ (1 + WACC)<sup>n</sup> &nbsp; + &nbsp; Terminal value (discounted)</span>
+        <span class="note">Each future year's cash is shrunk by the discount rate; the further out, the more it's shrunk. Compare the result to the market cap: lower price than your DCF value = potentially undervalued.</span>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A DCF asks: "If I owned this whole business, how much cash would it hand me over its life — and what's that pile worth to me <em>today</em>?" Since money later is worth less than money now, you mark down each future year before adding it up. The bigger your discount rate, the harsher the markdown — so the discount rate matters enormously.</p></div>
+
+      <h3>WACC: the discount rate, and where it comes from</h3>
+      <p>What rate do you discount by? The <strong>WACC — Weighted Average Cost of Capital</strong>. It's the blended annual cost of <em>all</em> the money funding the company: the interest it pays on debt, and the return shareholders demand on equity, weighted by how much of each the company uses. It represents the minimum return the business must earn to satisfy everyone who funded it — and therefore the right rate to discount its cash flows.</p>
+      <div class="formula">
+        <span class="big">WACC = (E/V × Cost of equity) + (D/V × Cost of debt × (1 − tax rate))</span>
+        <span class="note">E = market value of equity · D = value of debt · V = E + D (total) · debt is after-tax because interest is tax-deductible</span>
+      </div>
+      <p>The two ingredients:</p>
+      <div class="kv">
+        <dt>Cost of debt</dt><dd>The interest rate the company pays to borrow — easy to observe. Reduced by the tax rate, since interest payments are tax-deductible.</dd>
+        <dt>Cost of equity</dt><dd>The return shareholders demand for the risk of owning the stock. Usually estimated with CAPM (Chapter 16): risk-free rate + beta × the market's risk premium. This is where the risk-free rate (Chapter 15) and beta (Chapter 14) feed in.</dd>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>A DCF feels precise, but it's "<strong>garbage in, garbage out</strong>." Tiny changes to your growth assumptions or the WACC swing the answer wildly — nudge the discount rate up 1% and a "cheap" stock can become "expensive." Analysts joke you can make a DCF say anything you want. Note too that when <em>interest rates rise</em>, the WACC rises, future cash gets discounted harder, and valuations fall — a big reason high-growth stocks (whose value sits far in the future) drop most when rates climb. Use a DCF to understand the <em>drivers</em> of value, not to pretend you've found a stock's exact worth.</p></div>
 
       <h3>The Piotroski F-Score: a 9-point health checkup</h3>
       <p>Accounting professor Joseph Piotroski created a <strong>9-point checklist</strong> to separate financially strong companies from weak ones. The company scores <strong>1 point for each test it passes</strong> and 0 for each it fails, across three areas. Add them up: <strong>8–9 is strong</strong> (a healthy, improving business), <strong>0–2 is weak</strong> (avoid). Here are the exact nine tests — each is just a yes/no comparison you can read off the financial statements:</p>
@@ -1732,12 +1829,19 @@ footer b{color:#dce7f6}
         <thead><tr><th>Tool</th><th>What it shows</th><th>How people use it</th></tr></thead>
         <tbody>
           <tr><td class="co-name">Moving average</td><td>Average price over the last N days (e.g. 50-day, 200-day), smoothing out noise.</td><td>Trend direction; price crossing above/below is read as a signal.</td></tr>
-          <tr><td class="co-name">Support / resistance</td><td>Price levels where buying or selling has repeatedly clustered.</td><td>Floors and ceilings where moves tend to pause or reverse.</td></tr>
+          <tr><td class="co-name">Support / resistance</td><td><strong>Support</strong> = a price floor where buyers repeatedly step in; <strong>resistance</strong> = a price ceiling where sellers repeatedly emerge.</td><td>Floors and ceilings where moves tend to pause or reverse; a "breakout" through resistance is watched closely.</td></tr>
+          <tr><td class="co-name">VWAP</td><td>Volume-Weighted Average Price — the average price over the day, weighted by how much volume traded at each price.</td><td>The benchmark for "fair" intraday price; big institutions try to buy below it and sell above it.</td></tr>
           <tr><td class="co-name">RSI</td><td>A 0–100 gauge of how "overbought" (&gt;70) or "oversold" (&lt;30) a stock is.</td><td>Spotting moves that may have gone too far, too fast.</td></tr>
           <tr><td class="co-name">52-week high/low</td><td>The price range over the past year.</td><td>Momentum traders watch new highs; value hunters watch new lows.</td></tr>
         </tbody>
       </table>
       </div>
+
+      <h4>A closer look: support, resistance &amp; VWAP</h4>
+      <p><strong>Support and resistance</strong> are the two most-watched levels on any chart. <em>Support</em> is a price where a falling stock has repeatedly found buyers and bounced — a "floor." <em>Resistance</em> is a price where a rising stock has repeatedly hit selling and stalled — a "ceiling." The theory is partly self-fulfilling: because so many traders place orders around these levels, the levels themselves become meaningful. When a stock pushes <em>through</em> resistance ("a breakout") or falls <em>below</em> support ("a breakdown"), it's read as a sign the trend may accelerate.</p>
+      <p><strong>VWAP (Volume-Weighted Average Price)</strong> is the average price a stock has traded at so far today, with each trade weighted by its size — so prices where lots of shares changed hands count more. It's less a prediction tool than a <em>benchmark</em>: a big institution buying millions of shares judges its execution by whether it bought <em>below</em> VWAP (good) or above it (bad), and many "smart" algorithms are built to trade along VWAP to avoid moving the market (Chapter 4). Short-term traders also treat VWAP as an intraday line in the sand — above it is "bullish," below it "bearish."</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p><strong>Support</strong> is the floor a ball keeps bouncing off; <strong>resistance</strong> is the ceiling it keeps bonking its head on. <strong>VWAP</strong> is the day's "typical" price, weighting the busy moments most — like a class's average grade where the big exams count more than the quizzes. Pros measure whether they got a better-than-average deal by comparing their price to VWAP.</p></div>
 
       <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>It's easy to fool yourself with chart patterns — the human brain sees "head and shoulders" and "cup and handle" shapes in random noise, the same way we see animals in clouds. Much of technical analysis has weak evidence; momentum and volume are the parts with the strongest backing. <strong>Don't bet real money on a pattern just because it looks compelling on a chart.</strong> Beware also that chasing momentum means you'll be late and exposed when the trend snaps.</p></div>
 
@@ -1812,6 +1916,23 @@ footer b{color:#dce7f6}
         <dt>Account fees</dt><dd>Maintenance, inactivity, or transfer fees. Read the fine print.</dd>
       </div>
 
+      <h3>Management fees: what you pay a fund to run your money</h3>
+      <p>The big one for fund investors is the <strong>management fee</strong> — the slice a fund's managers take each year for running it. It's the largest component of a fund's <strong>expense ratio</strong> (the all-in annual cost, quoted as a percent). You never get a bill; it's quietly skimmed from the fund's assets daily, so a "1.0% expense ratio" means roughly 1% of your money in that fund evaporates to the manager every year, win or lose.</p>
+      <p>The size of that fee is mostly a story of <strong>active vs. passive</strong>:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Fund type</th><th>Typical management fee</th><th>What you're paying for</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Passive index fund/ETF</td><td>~0.03% – 0.20%</td><td>A computer tracking a basket (S&amp;P 500). Almost no human judgment, so almost no fee.</td></tr>
+          <tr><td class="co-name">Active mutual fund</td><td>~0.50% – 1.50%</td><td>A manager and analysts trying to beat the market by picking stocks.</td></tr>
+          <tr><td class="co-name">Hedge fund</td><td>"2 and 20"</td><td>~2% of assets <em>plus</em> 20% of profits — the most expensive structure in finance.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The uncomfortable truth (Chapter 14): the large majority of active managers <em>fail</em> to beat a cheap index fund over the long run, especially <em>after</em> their fees. So you're often paying a premium management fee for below-index results. That's the core case for passive investing — not that managers aren't smart, but that their fee is a near-certain cost while their outperformance is not.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A management fee is the wage you pay the fund's "driver." A passive index fund is on cruise control — barely any driver needed, so the fee is tiny. An active fund pays a highly-paid driver promising to get there faster; sometimes they do, but most don't, and you pay them either way. Over decades, the cheap cruise-control usually wins the race.</p></div>
+
       <h3>Why "just 1%" is a giant number</h3>
       <p>A 1% fee doesn't mean you lose 1% of your wealth. It means you lose 1% <em>every year</em>, on a balance that compounding was supposed to grow — including on all the growth that fee dollars would have produced. Over decades, the drag snowballs.</p>
 
@@ -1821,7 +1942,7 @@ footer b{color:#dce7f6}
       That 0.95% difference quietly cost you about <strong>$44,000 — over 40% of your potential gains</strong> — for a fund that, on average, won't outperform the cheap one. The fee felt small; the lifetime bill was enormous.</p></div>
 
       <div class="fig light">
-        <p class="fig-title">Figure 20.1</p>
+        <p class="fig-title">Figure 23.1</p>
         <p class="fig-sub">Same investment, two fee levels, 40 years</p>
         <svg viewBox="0 0 920 200" role="img" aria-label="Bar chart comparing low-fee vs high-fee ending balances">
           <g font-family="inherit">
@@ -2116,7 +2237,6 @@ footer b{color:#dce7f6}
         <dt>Beta</dt><dd>How much an investment moves relative to the overall market.</dd>
         <dt>Volatility</dt><dd>How much returns bounce around their average (standard deviation).</dd>
         <dt>Sharpe ratio</dt><dd>Return above the risk-free rate, per unit of volatility — risk-adjusted return.</dd>
-        <dt>Risk-free rate</dt><dd>The return on a safe asset (Treasuries); the baseline everything's measured against.</dd>
         <dt>VIX</dt><dd>The market's expected 30-day volatility — the "fear index."</dd>
         <dt>Correlation</dt><dd>Whether two assets move together (+1), oppositely (−1), or independently (0).</dd>
         <dt>Diversification</dt><dd>Combining assets that move differently to reduce risk for free.</dd>
@@ -2150,7 +2270,6 @@ footer b{color:#dce7f6}
         <dt>NAV</dt><dd>Net asset value — the per-share value of a fund's underlying holdings.</dd>
         <dt>Authorized Participant</dt><dd>A big firm that creates/redeems ETF shares, keeping the ETF priced to its holdings.</dd>
         <dt>Expense ratio</dt><dd>The annual percentage fee a fund charges to run itself.</dd>
-        <dt>Leveraged ETF</dt><dd>An ETF amplifying daily moves (e.g. 3×); decays over time, not for holding.</dd>
         <dt>Stock split</dt><dd>Dividing each share into more shares; total value unchanged.</dd>
         <dt>Reverse split</dt><dd>Combining shares to raise the price, often a distress signal.</dd>
         <dt>Ex-dividend date</dt><dd>The cutoff to own a stock to receive its next dividend; price drops by the dividend that day.</dd>
@@ -2220,6 +2339,22 @@ footer b{color:#dce7f6}
         <dt>Fractional shares</dt><dd>Buying a small slice of one share, enabling tiny diversified investments.</dd>
         <dt>Tokenization</dt><dd>Representing a real-world asset (private shares, property) as a tradable blockchain token.</dd>
         <dt>Liquidity mismatch</dt><dd>A fund offering daily liquidity while holding assets that can't be sold quickly — a key risk of private/public ETFs.</dd>
+        <dt>Support</dt><dd>A price floor where a falling stock repeatedly finds buyers and bounces.</dd>
+        <dt>Resistance</dt><dd>A price ceiling where a rising stock repeatedly meets sellers and stalls.</dd>
+        <dt>Breakout</dt><dd>When price pushes through resistance (or below support), often read as a trend signal.</dd>
+        <dt>VWAP</dt><dd>Volume-Weighted Average Price — the day's average price weighted by volume; a benchmark for fair execution.</dd>
+        <dt>Risk-free rate</dt><dd>The return on a near-zero-risk asset (short-term US Treasuries); the baseline all returns are judged against.</dd>
+        <dt>Risk premium</dt><dd>The extra expected return a risky asset must offer above the risk-free rate.</dd>
+        <dt>DCF</dt><dd>Discounted cash flow — valuing a company as its future cash flows converted to today's dollars.</dd>
+        <dt>WACC</dt><dd>Weighted Average Cost of Capital — the blended cost of a company's debt and equity; the DCF discount rate.</dd>
+        <dt>Discount rate</dt><dd>The rate used to shrink future cash to its present value; higher rate = lower value today.</dd>
+        <dt>Terminal value</dt><dd>The estimated value of all of a company's cash flows beyond the explicit forecast period.</dd>
+        <dt>Management fee</dt><dd>The annual cut a fund's managers take, the main part of its expense ratio.</dd>
+        <dt>Leveraged ETF</dt><dd>A fund amplifying an index's daily move (e.g. 3×); decays in choppy markets, for day-trading only.</dd>
+        <dt>Inverse ETF</dt><dd>A fund that moves opposite an index, to bet on declines without shorting; also resets daily.</dd>
+        <dt>Volatility decay</dt><dd>The erosion of leveraged/inverse ETF value over time from daily resets in choppy markets.</dd>
+        <dt>Priced in</dt><dd>When known information or expectations are already reflected in the current price.</dd>
+        <dt>Forward-looking</dt><dd>The market prices expected future results, so it moves on surprises vs. expectations.</dd>
       </dl>
     </div>
   </section>
