@@ -254,19 +254,29 @@ footer b{color:#dce7f6}
       <a href="#ch2">2 · How a Trade Actually Works</a>
       <a href="#ch3">3 · Market Makers & the Spread</a>
       <a href="#ch4">4 · Liquidity, Slippage & the Order Book</a>
+      <a href="#ch5">5 · Auctions, Halts & Circuit Breakers</a>
       <a class="part" href="#part2">Part II · The Things You Trade</a>
-      <a href="#ch5">5 · Equities (Stocks)</a>
-      <a href="#ch6">6 · Bonds & Bond Pricing</a>
-      <a href="#ch7">7 · Options & the Greeks</a>
+      <a href="#ch6">6 · Equities (Stocks)</a>
+      <a href="#ch7">7 · Bonds & Bond Pricing</a>
+      <a href="#ch8">8 · Options & the Greeks</a>
+      <a href="#ch9">9 · Funds &amp; ETFs</a>
+      <a href="#ch10">10 · Corporate Actions</a>
+      <a href="#ch11">11 · Commodities &amp; REITs</a>
       <a class="part" href="#part3">Part III · Risk & Return</a>
-      <a href="#ch8">8 · Return, Alpha & Beta</a>
-      <a href="#ch9">9 · Risk, Sharpe & the VIX</a>
-      <a href="#ch10">10 · Markowitz & Diversification</a>
-      <a href="#ch11">11 · Sizing, Margin & Leverage</a>
+      <a href="#ch12">12 · Return, Alpha & Beta</a>
+      <a href="#ch13">13 · Risk, Sharpe & the VIX</a>
+      <a href="#ch14">14 · Markowitz & Diversification</a>
+      <a href="#ch15">15 · Sizing, Margin & Leverage</a>
+      <a href="#ch16">16 · Compounding & Time Value</a>
       <a class="part" href="#part4">Part IV · Strategy & Analysis</a>
-      <a href="#ch12">12 · Going Long, Going Short</a>
-      <a href="#ch13">13 · Reading a Company</a>
-      <a href="#ch14">14 · Momentum, Volume & Scores</a>
+      <a href="#ch17">17 · Going Long, Going Short</a>
+      <a href="#ch18">18 · Reading a Company</a>
+      <a href="#ch19">19 · Momentum, Volume & Signals</a>
+      <a class="part" href="#part5">Part V · The Investor's Edge</a>
+      <a href="#ch20">20 · Behavioral Finance</a>
+      <a href="#ch21">21 · Fees & the Cost of Investing</a>
+      <a href="#ch22">22 · Taxes & Account Types</a>
+      <a href="#ch23">23 · The Macro Backdrop</a>
       <a href="#glossary">Glossary</a>
     </nav>
   </aside>
@@ -445,7 +455,7 @@ footer b{color:#dce7f6}
       <ul>
         <li><strong>Payment for order flow (PFOF):</strong> instead of sending your order to a public exchange, the broker sells it to a big trading firm (a "wholesaler" market maker) who pays the broker for the right to fill it. This is how many "commission-free" apps make money. It's legal and disclosed, but it means your order is a product being sold.</li>
         <li><strong>Interest</strong> on the uninvested cash sitting in your account.</li>
-        <li><strong>Margin interest</strong> when you borrow money to trade (Chapter 11).</li>
+        <li><strong>Margin interest</strong> when you borrow money to trade (Chapter 15).</li>
         <li><strong>Fees</strong> for premium data, fancy order types, or fund management.</li>
       </ul>
 
@@ -470,7 +480,7 @@ footer b{color:#dce7f6}
       <div class="grid g3">
         <div class="card" style="border-top-color:var(--gold)"><h5>Retail investors</h5><p>Regular people like you, trading your own money. Individually small; collectively huge, especially in popular stocks.</p></div>
         <div class="card" style="border-top-color:var(--sky)"><h5>Institutions</h5><p>Pension funds, mutual funds, insurers, endowments. They manage other people's money in enormous size and dominate daily volume.</p></div>
-        <div class="card" style="border-top-color:var(--red)"><h5>Hedge funds</h5><p>Private funds that can go long and short, use leverage, and chase returns aggressively for wealthy clients (Chapter 12).</p></div>
+        <div class="card" style="border-top-color:var(--red)"><h5>Hedge funds</h5><p>Private funds that can go long and short, use leverage, and chase returns aggressively for wealthy clients (Chapter 17).</p></div>
         <div class="card" style="border-top-color:var(--teal)"><h5>Market makers / HFTs</h5><p>High-frequency trading firms providing liquidity and arbitraging tiny price differences in microseconds.</p></div>
         <div class="card" style="border-top-color:var(--purple)"><h5>Corporations</h5><p>Companies issuing new shares, buying back their own stock, or issuing bonds to raise money.</p></div>
         <div class="card" style="border-top-color:var(--green)"><h5>Regulators</h5><p>The referees (the SEC and FINRA in the US) who set and enforce the rules, but don't trade.</p></div>
@@ -647,7 +657,7 @@ footer b{color:#dce7f6}
 
       <h3>How to measure liquidity at a glance</h3>
       <div class="kv">
-        <dt>Volume</dt><dd>How many shares trade per day. High volume = liquid. (Also a key analysis signal — see Chapter 14.)</dd>
+        <dt>Volume</dt><dd>How many shares trade per day. High volume = liquid. (Also a key analysis signal — see Chapter 19.)</dd>
         <dt>Spread</dt><dd>Tight spread = liquid; wide spread = illiquid. The single fastest tell.</dd>
         <dt>Depth</dt><dd>How many shares are resting near the best price. Deep book = you can trade size without moving price.</dd>
         <dt>Market cap</dt><dd>Bigger companies are generally more liquid than tiny ones, all else equal.</dd>
@@ -659,21 +669,62 @@ footer b{color:#dce7f6}
     </div>
   </section>
 
+  <!-- ===================== CHAPTER 5 ===================== -->
+  <section id="ch5">
+    <div class="wrap">
+      <div class="chapnum">Chapter 5</div>
+      <h2 class="chap">Auctions, Halts &amp; Circuit Breakers</h2>
+      <p class="lede">The market isn't a smooth, continuous river of trading from open to close. It starts and ends with giant batched <em>auctions</em>, and when things get violent it slams on the brakes with <em>halts</em> and <em>circuit breakers</em>. These mechanisms explain the wild price swings at 9:30 and 4:00, why a stock sometimes "stops trading," and why your overnight order fills at a price you never saw.</p>
+
+      <h3>The opening and closing auctions: where the real volume prints</h3>
+      <p>Before the market opens, orders pile up overnight — people reacting to news, earnings, events. If those all hit one by one at 9:30, the price would whipsaw chaotically. Instead, the exchange runs an <strong>opening auction</strong>: it collects all the buy and sell orders, finds the single price that matches the most shares, and executes them all at that one price in a single batch. The <strong>closing auction</strong> at 4:00 PM does the same — and it's the single biggest liquidity event of the day, because index funds and ETFs trade there to get the "official" closing price.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>An auction is like everyone writing their bids on slips of paper, dropping them in a box, and the auctioneer finding the one price that satisfies the most people at once — instead of haggling one trade at a time. The open and close are run this way to absorb a flood of orders fairly.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>The first and last few minutes are the most volatile and least predictable of the day. Spreads are wide, prices gap around, and a market order can fill far from where you expected. Unless you specifically want the closing-auction price, avoid trading in the chaos right at the open and close — let the dust settle.</p></div>
+
+      <h3>Trading halts: hitting pause</h3>
+      <p>An exchange can <strong>halt</strong> trading in a single stock to protect investors. The two common reasons:</p>
+      <ul>
+        <li><strong>News pending halt:</strong> a company is about to release market-moving news (earnings, a buyout, an FDA decision). Trading pauses so everyone digests the information at the same time, instead of the fast players trading on it first.</li>
+        <li><strong>Volatility halt:</strong> the price is moving too far, too fast. A short pause (often 5 minutes) lets the frenzy cool and liquidity rebuild before trading resumes — usually via a re-opening auction.</li>
+      </ul>
+
+      <h3>Circuit breakers: pausing the <em>whole</em> market</h3>
+      <p>When the entire market crashes, exchanges trip <strong>market-wide circuit breakers</strong> — coordinated timeouts based on how far the S&amp;P 500 has fallen <em>in a single day</em>:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Level</th><th>S&amp;P 500 drop</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Level 1</td><td>−7%</td><td>15-minute halt of all trading (if before 3:25 PM).</td></tr>
+          <tr><td class="co-name">Level 2</td><td>−13%</td><td>Another 15-minute halt (if before 3:25 PM).</td></tr>
+          <tr><td class="co-name">Level 3</td><td>−20%</td><td>Trading stops for the rest of the day.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>These were created after the 1987 "Black Monday" crash and the 2010 "Flash Crash," where prices collapsed in minutes with no human able to react. The idea is to force a breather so panic-selling and runaway algorithms can't feed on themselves.</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Related guardrails work at the individual-stock level all day long: <strong>Limit Up–Limit Down (LULD)</strong> bands stop a stock from trading outside a moving price range, catching the kind of one-second glitches that briefly sent some stocks to a penny (or to $100,000) during the Flash Crash. Together, auctions and these brakes are the market's shock absorbers — invisible until the road gets rough.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Knowing these mechanisms keeps you calm when you see "HALTED" on a ticker (it's usually routine, not a disaster) and stops you from panicking — or from placing a careless market order — during the volatile open, close, or a fast selloff. If the whole market is limit-down, the worst move is to join the stampede. The brakes exist precisely to give you time to think.</p></div>
+    </div>
+  </section>
+
   <!-- ===================== PART II ===================== -->
   <section id="part2" class="part-head">
     <div class="wrap">
       <div class="num">II</div>
       <div>
         <h2>The Things You Trade</h2>
-        <p>The three core asset classes — stocks, bonds, and options — what each one actually is, how it's priced, and how you make or lose money on it.</p>
+        <p>The core asset classes — stocks, bonds, options, and the funds built from them — what each one is, how it's priced, and the corporate events that change what you own.</p>
       </div>
     </div>
   </section>
 
   <!-- ===================== CHAPTER 5 ===================== -->
-  <section id="ch5">
+  <section id="ch6">
     <div class="wrap">
-      <div class="chapnum">Chapter 5</div>
+      <div class="chapnum">Chapter 6</div>
       <h2 class="chap">Equities (Stocks)</h2>
       <p class="lede">A share of stock is the most famous financial instrument, and the most misunderstood. It is not a lottery ticket or a number on a screen — it's a tiny slice of ownership in a real business. Once you internalize that, everything from dividends to market cap to "the stock dropped on good earnings" starts to make sense.</p>
 
@@ -719,14 +770,14 @@ footer b{color:#dce7f6}
 
       <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Over the last century, a broad basket of US stocks has returned roughly <em>10% per year on average</em> before inflation — far more than bonds or cash — but with gut-wrenching drops of 30–50% along the way. That trade-off is the engine of long-term wealth-building: stocks pay you more <em>because</em> you have to endure the volatility. Indexes like the S&amp;P 500 (the 500 biggest US companies) let you own that whole basket cheaply.</p></div>
 
-      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Treat a stock as a business, not a ticker. Before buying, ask the four questions: what does this company do, who are its customers, how does it actually make money, and what could break it? That mindset — investing rather than gambling — is what separates people who build wealth in stocks from people who churn their accounts to zero. Chapter 13 gives you the toolkit to actually evaluate a company.</p></div>
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Treat a stock as a business, not a ticker. Before buying, ask the four questions: what does this company do, who are its customers, how does it actually make money, and what could break it? That mindset — investing rather than gambling — is what separates people who build wealth in stocks from people who churn their accounts to zero. Chapter 18 gives you the toolkit to actually evaluate a company.</p></div>
     </div>
   </section>
 
   <!-- ===================== CHAPTER 6 ===================== -->
-  <section id="ch6">
+  <section id="ch7">
     <div class="wrap">
-      <div class="chapnum">Chapter 6</div>
+      <div class="chapnum">Chapter 7</div>
       <h2 class="chap">Bonds &amp; Bond Pricing</h2>
       <p class="lede">If a stock is owning a slice of a company, a bond is <em>lending money</em> to one (or to a government). Bonds are less glamorous than stocks but they're a bigger market, and the way their prices move — especially the famous "prices fall when interest rates rise" — confuses almost every beginner. Let's fix that with one clear example.</p>
 
@@ -787,9 +838,9 @@ footer b{color:#dce7f6}
   </section>
 
   <!-- ===================== CHAPTER 7 ===================== -->
-  <section id="ch7">
+  <section id="ch8">
     <div class="wrap">
-      <div class="chapnum">Chapter 7</div>
+      <div class="chapnum">Chapter 8</div>
       <h2 class="chap">Options &amp; the Greeks</h2>
       <p class="lede">Options are powerful, flexible, and the fastest way for a beginner to lose money they don't understand. But the core idea is simple: an option is a <em>choice</em> you buy. Master the two basic types and the handful of Greek letters that measure their behavior, and a whole layer of the market opens up — including how the pros manage risk.</p>
 
@@ -848,9 +899,178 @@ footer b{color:#dce7f6}
 
       <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Options are the most common way new traders blow up. Buying cheap, far-out-of-the-money "lottery ticket" calls feels exciting, but theta and the odds grind them to zero most of the time. And <em>selling</em> options naked (without owning the underlying) can lose far more than you put in. <strong>If you can't explain delta, gamma, and theta out loud, you're not ready to trade options with real money.</strong> Learn on paper first.</p></div>
 
-      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Options aren't just for speculating — they're how the whole financial system prices and transfers <em>risk</em>. The math behind them (the Black–Scholes model, which won a Nobel Prize) connects an option's price to volatility, time, and interest rates. That same volatility input is what the VIX index measures (Chapter 9). Options are where "how risky is the future?" gets an actual price tag.</p></div>
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Options aren't just for speculating — they're how the whole financial system prices and transfers <em>risk</em>. The math behind them (the Black–Scholes model, which won a Nobel Prize) connects an option's price to volatility, time, and interest rates. That same volatility input is what the VIX index measures (Chapter 13). Options are where "how risky is the future?" gets an actual price tag.</p></div>
 
       <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For a beginner, the highest-value use of options is <em>understanding</em> them, not trading them. They teach you to think in probabilities and risk dials rather than simple up/down bets. If you do use them, start with defined-risk strategies (buying a put as insurance, or selling a covered call on stock you own) where your worst case is known in advance.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 9 ===================== -->
+  <section id="ch9">
+    <div class="wrap">
+      <div class="chapnum">Chapter 9</div>
+      <h2 class="chap">Funds &amp; ETFs</h2>
+      <p class="lede">Most people shouldn't — and don't — buy individual stocks one at a time. They buy <em>funds</em>: a single product that holds hundreds of stocks or bonds at once, giving you instant diversification for a few dollars. Understanding funds, and the clever machinery that keeps an ETF's price glued to the value of what it holds, is the most practical chapter in this whole guide.</p>
+
+      <h3>The big idea: buy the whole basket at once</h3>
+      <p>A <strong>fund</strong> pools money from many investors and buys a basket of securities chosen by a rule or a manager. Buy one share of the fund and you own a tiny slice of <em>everything</em> in it. This is how a beginner gets the diversification of Chapter 14 without needing $1 million or a spreadsheet.</p>
+
+      <div class="grid g3">
+        <div class="card" style="border-top-color:var(--gold)"><h5>Index fund</h5><p>Mechanically tracks a basket like the S&amp;P 500. No stock-picking, ultra-low fees. The default smart choice for most people.</p></div>
+        <div class="card" style="border-top-color:var(--sky)"><h5>Mutual fund</h5><p>Pooled fund priced <strong>once a day</strong> after the close. You buy/sell at that day's net asset value (NAV). Can be index or actively managed.</p></div>
+        <div class="card" style="border-top-color:var(--teal)"><h5>ETF</h5><p>Exchange-Traded Fund — a fund that <strong>trades like a stock</strong> all day long, with a live price. Usually cheap, tax-efficient, and index-based.</p></div>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A fund is a pre-made fruit basket. Instead of buying one apple, one orange, and one banana separately (and paying a fee each time), you buy the whole basket in one purchase. An <em>index fund</em> is a basket assembled by a fixed recipe; an <em>ETF</em> is that basket with a price tag that updates live, so you can trade it any time the market's open.</p></div>
+
+      <h3>Mutual fund vs. ETF: the practical differences</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Mutual fund</th><th>ETF</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">When you trade</td><td>Once daily, at the closing NAV.</td><td>Anytime during market hours, at a live price.</td></tr>
+          <tr><td class="co-name">Minimum buy</td><td>Often a dollar minimum ($1,000+).</td><td>As little as one share (or a fraction).</td></tr>
+          <tr><td class="co-name">Taxes</td><td>Can spit out taxable gains even if you didn't sell.</td><td>Usually more tax-efficient (see below).</td></tr>
+          <tr><td class="co-name">Cost</td><td>Ranges from cheap (index) to pricey (active).</td><td>Usually very low for index ETFs.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>The magic trick: creation and redemption</h3>
+      <p>Here's the microstructure puzzle: an ETF trades like a stock, so its price is set by buyers and sellers — yet it somehow always stays almost exactly equal to the value of the stocks it holds. How? Through a behind-the-scenes arbitrage loop run by big firms called <strong>Authorized Participants (APs)</strong>.</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 9.1</p>
+        <p class="fig-sub">How creation/redemption keeps an ETF priced to its holdings</p>
+        <svg viewBox="0 0 920 250" role="img" aria-label="ETF creation and redemption arbitrage loop">
+          <g font-family="inherit">
+            <rect x="40" y="40" width="240" height="170" rx="12" fill="#fdeeea" stroke="#e2563f"/>
+            <text x="160" y="68" font-size="13" font-weight="800" fill="#bf3c25" text-anchor="middle">ETF trades ABOVE its holdings</text>
+            <text x="160" y="98" font-size="12" fill="#43576f" text-anchor="middle">("premium")</text>
+            <text x="160" y="128" font-size="11.5" fill="#43576f" text-anchor="middle">AP buys the underlying</text>
+            <text x="160" y="146" font-size="11.5" fill="#43576f" text-anchor="middle">stocks, hands them to</text>
+            <text x="160" y="164" font-size="11.5" fill="#43576f" text-anchor="middle">the fund, gets new ETF</text>
+            <text x="160" y="182" font-size="11.5" fill="#43576f" text-anchor="middle">shares &amp; sells them →</text>
+            <text x="160" y="200" font-size="11.5" font-weight="700" fill="#bf3c25" text-anchor="middle">price pushed DOWN</text>
+
+            <rect x="340" y="85" width="240" height="80" rx="12" fill="#e9f9f1" stroke="#22b06b"/>
+            <text x="460" y="118" font-size="13" font-weight="800" fill="#11814c" text-anchor="middle">ETF price ≈ value of</text>
+            <text x="460" y="140" font-size="13" font-weight="800" fill="#11814c" text-anchor="middle">its holdings (NAV)</text>
+
+            <rect x="640" y="40" width="240" height="170" rx="12" fill="#eef6ff" stroke="#2f7df6"/>
+            <text x="760" y="68" font-size="13" font-weight="800" fill="#2f7df6" text-anchor="middle">ETF trades BELOW its holdings</text>
+            <text x="760" y="98" font-size="12" fill="#43576f" text-anchor="middle">("discount")</text>
+            <text x="760" y="128" font-size="11.5" fill="#43576f" text-anchor="middle">AP buys cheap ETF</text>
+            <text x="760" y="146" font-size="11.5" fill="#43576f" text-anchor="middle">shares, returns them to</text>
+            <text x="760" y="164" font-size="11.5" fill="#43576f" text-anchor="middle">the fund for the actual</text>
+            <text x="760" y="182" font-size="11.5" fill="#43576f" text-anchor="middle">stocks &amp; sells those →</text>
+            <text x="760" y="200" font-size="11.5" font-weight="700" fill="#2f7df6" text-anchor="middle">price pushed UP</text>
+
+            <path d="M340 125 H290" stroke="#e2563f" stroke-width="2" fill="none" marker-end="url(#are)"/>
+            <path d="M580 125 H630" stroke="#2f7df6" stroke-width="2" fill="none" marker-end="url(#arb)"/>
+            <defs>
+              <marker id="are" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#e2563f"/></marker>
+              <marker id="arb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2f7df6"/></marker>
+            </defs>
+          </g>
+        </svg>
+        <p class="fig-cap">Whenever the ETF drifts from the value of its holdings, an AP profits by trading the gap away — instantly nudging the price back. This free-market arbitrage, not a rule, is what keeps ETFs honest.</p>
+      </div>
+
+      <p>This same in-kind swapping (stocks for ETF shares, not cash) is <em>why ETFs are tax-efficient</em>: the fund can hand off its lowest-cost shares during redemptions without triggering a taxable sale, so it rarely passes capital-gains bills to you (more in Chapter 22).</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Not all ETFs are cheap index funds. Watch out for (1) <strong>high expense ratios</strong> on niche or "thematic" ETFs, (2) <strong>leveraged/inverse ETFs</strong> (e.g. "3× daily") which decay over time and are <em>not</em> meant to be held for more than a day, and (3) thinly traded ETFs with wide spreads. The wrapper says "ETF"; the contents and costs vary wildly.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For the vast majority of investors, a low-cost, broad <strong>index ETF or index mutual fund</strong> is the single best starting point: instant diversification, tiny fees, and tax efficiency, all in one trade. It captures "beta" (Chapter 12) cheaply and sidesteps the near-impossible game of beating the market. If you remember one practical takeaway from this entire guide, it might be this one.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 10 ===================== -->
+  <section id="ch10">
+    <div class="wrap">
+      <div class="chapnum">Chapter 10</div>
+      <h2 class="chap">Corporate Actions</h2>
+      <p class="lede">Companies don't stand still. They split their shares, pay dividends, buy back stock, and get bought out — and each of these "corporate actions" mechanically changes the number of shares you own or the price you see, often in ways that look alarming until you understand them. Here's how not to panic when your stock "drops 50%" overnight for no bad reason.</p>
+
+      <h3>Stock splits: same pizza, more slices</h3>
+      <p>In a <strong>stock split</strong>, a company divides each share into more shares. A 2-for-1 split turns your 10 shares at $200 into 20 shares at $100. <strong>Your total value is unchanged</strong> — $2,000 either way. Companies do it to make the share price look more affordable. A <strong>reverse split</strong> does the opposite (combining shares to raise the price), often a red flag that a struggling stock is trying to avoid being delisted.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A split is cutting the same pizza into more (or fewer) slices. Eight slices instead of four doesn't give you more pizza — each slice is just smaller. If you see a stock "crash" exactly in half overnight, check whether it just did a 2-for-1 split. Your account value didn't change at all.</p></div>
+
+      <h3>Dividends: getting paid to hold</h3>
+      <p>A <strong>dividend</strong> is a cash payment of profits to shareholders. The mechanics involve a few key dates:</p>
+      <div class="kv">
+        <dt>Declaration date</dt><dd>The company announces the dividend and its amount.</dd>
+        <dt>Ex-dividend date</dt><dd>The cutoff. Own the stock <em>before</em> this date to get the dividend; buy on or after and you don't. On this morning the stock price drops by roughly the dividend amount — because the cash is leaving the company.</dd>
+        <dt>Record date</dt><dd>The day the company checks its books for who owns shares.</dd>
+        <dt>Payment date</dt><dd>The day the cash actually lands in your account.</dd>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>The "dividend capture" temptation — buy just before the ex-date to grab the dividend, then sell. It doesn't work as free money: the stock price drops by the dividend amount on the ex-date, so you've just converted price into cash (and possibly created a tax bill). There's no free lunch here either.</p></div>
+
+      <h3>Buybacks: the company buying its own stock</h3>
+      <p>Instead of (or alongside) dividends, a company can return cash to shareholders by <strong>buying back its own shares</strong> on the open market. With fewer shares outstanding, each remaining share owns a bigger slice of the company, which tends to lift earnings-per-share and the price. Buybacks are a flexible, tax-deferred alternative to dividends — though critics argue they're sometimes used to flatter the numbers rather than invest in the business.</p>
+
+      <h3>Mergers &amp; acquisitions: when your company gets bought</h3>
+      <p>If a company you own is acquired, your shares get converted — usually into <strong>cash</strong> (you're bought out at an agreed price, often above the market price), into <strong>shares of the acquirer</strong>, or a mix. Target-company stocks typically jump on a buyout announcement toward the offer price. The small remaining gap between the market price and the offer reflects the risk the deal falls through — the playground of "merger arbitrage" specialists.</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Other corporate actions you'll meet: a <strong>spin-off</strong> (a company hands you shares of a division it's cutting loose into its own company), a <strong>rights issue</strong> (existing holders get first dibs to buy new shares, which dilutes those who don't participate), and <strong>bankruptcy</strong> (where, per Chapter 6, bondholders get paid before stockholders — who often get wiped out entirely). Each rearranges what you own without you clicking "buy" or "sell."</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Corporate actions are where beginners get needlessly scared (a split looks like a crash) or needlessly excited (a dividend looks like free money). Learn to recognize them so you react to the <em>real</em> economics, not the optical illusion. And know the order of priority in trouble: in a bankruptcy, bondholders stand ahead of shareholders — owning the stock is owning the <em>last</em> claim on the company.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 11 ===================== -->
+  <section id="ch11">
+    <div class="wrap">
+      <div class="chapnum">Chapter 11</div>
+      <h2 class="chap">Commodities &amp; REITs</h2>
+      <p class="lede">Stocks, bonds, and options aren't the whole menu. Two more asset classes round out a well-built portfolio: <em>commodities</em> — the raw physical stuff of the economy, like gold, oil, and wheat — and <em>REITs</em>, which let you own income-producing real estate without becoming a landlord. Both behave differently from stocks, which is exactly what makes them useful (remember diversification, coming up in Chapter 14).</p>
+
+      <h3>Commodities: trading the raw materials of the world</h3>
+      <p>A <strong>commodity</strong> is a basic, interchangeable physical good — one barrel of a given grade of oil is the same as any other, one ounce of pure gold equals any other ounce. Because they're standardized, they trade on global markets at a single world price. They fall into a few families:</p>
+      <div class="grid g4">
+        <div class="card" style="border-top-color:var(--gold)"><h5>Precious metals</h5><p>Gold, silver, platinum. Stores of value and "safe havens" in turmoil.</p></div>
+        <div class="card" style="border-top-color:var(--orange)"><h5>Energy</h5><p>Crude oil, natural gas, gasoline. The fuel of the entire economy.</p></div>
+        <div class="card" style="border-top-color:var(--teal)"><h5>Industrial metals</h5><p>Copper, aluminum, lithium. Demand tracks construction and manufacturing.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h5>Agriculture</h5><p>Wheat, corn, coffee, livestock. Weather and harvests drive prices.</p></div>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Commodities are the "ingredients" of everything around you — the metal in your phone, the fuel in a bus, the wheat in your bread. Investing in them is betting on the price of the raw stuff itself, rather than on a company that uses it.</p></div>
+
+      <h4>Gold &amp; silver: the "safe haven" trade</h4>
+      <p><strong>Gold</strong> is the classic crisis asset. It pays no dividend or interest and just sits there — but precisely because it's nobody's IOU and can't be printed, investors flock to it when they fear inflation, currency debasement, or financial panic. It often (not always) rises when stocks fall hard, which is why some investors hold a slice as insurance. <strong>Silver</strong> behaves like gold's more volatile cousin: it's part safe-haven, part industrial metal (used in electronics and solar panels), so it swings harder in both directions.</p>
+
+      <h4>Energy: oil &amp; gas</h4>
+      <p><strong>Oil</strong> is the most economically important commodity on Earth, and its price ripples into gasoline, shipping, plastics, and inflation itself. It's famously volatile, driven by global growth, OPEC production decisions, wars, and supply shocks. <strong>Natural gas</strong> powers electricity and heating and is even more jumpy, swinging on weather and storage levels.</p>
+
+      <h3>How you actually invest in commodities</h3>
+      <p>You rarely take delivery of a truckload of corn. Instead:</p>
+      <div class="kv">
+        <dt>Futures contracts</dt><dd>Agreements to buy/sell a commodity at a set price on a future date. The main professional venue — powerful, leveraged, and risky (see below).</dd>
+        <dt>Commodity ETFs</dt><dd>The easy retail route: a fund that tracks gold, oil, etc. (some hold the physical metal; others hold futures).</dd>
+        <dt>Producer stocks</dt><dd>Buying miners (gold/silver) or energy companies — an indirect bet, with company-specific risk layered on top.</dd>
+        <dt>Physical</dt><dd>Actual gold/silver coins or bars. No counterparty risk, but storage and wide buy/sell spreads.</dd>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Commodities (and especially commodity <em>futures</em>) produce no income — no dividends, no interest, no earnings. Their entire return is the price going up, which makes them speculative, not "investments" in the compounding sense of Chapter 16. Futures also carry built-in leverage and a quirk called "roll cost" that can bleed an oil ETF even when oil's price is flat. Treat commodities as a small diversifier or inflation hedge, not a core holding.</p></div>
+
+      <h3>REITs: owning real estate without being a landlord</h3>
+      <p>A <strong>REIT</strong> (Real Estate Investment Trust, say "reet") is a company that owns and operates income-producing real estate — apartments, malls, warehouses, data centers, cell towers, hospitals — and trades on the stock exchange like any other share. Buy one and you own a slice of a giant property portfolio, collecting your share of the rent, without a down payment, a mortgage, or a midnight call about a broken toilet.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A REIT is like a group of friends pooling money to buy an apartment building and splitting the rent — except it's a public company with thousands of buildings, and you can buy in (or sell out) with one click. You become a tiny landlord without any of the hassle.</p></div>
+
+      <h4>The defining rule</h4>
+      <p>In exchange for special tax treatment, a REIT must pay out <strong>at least 90% of its taxable income to shareholders as dividends.</strong> That makes REITs <em>income machines</em> — they typically offer higher dividend yields than ordinary stocks, prized by investors who want regular cash. The catch: those big dividends are usually taxed as <strong>ordinary (non-qualified) dividends</strong> (Chapter 22), so REITs are often best held inside a tax-advantaged account.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>A REIT trades at $40 and pays $2.40 a year in dividends. Its dividend yield is $2.40 ÷ $40 = <strong>6%</strong> — well above the ~1.5% of a typical stock index. If you hold $10,000 of it, that's about $600 a year in cash, paid quarterly. But note: because REITs borrow heavily to buy property, they're <em>sensitive to interest rates</em> — when rates rise, both their borrowing costs and the appeal of their dividends versus safe bonds work against the share price.</p></div>
+
+      <h3>Why these belong in a portfolio</h3>
+      <p>Commodities and REITs march to different drummers than stocks and bonds. Gold can rise in a crisis when stocks crash; commodities can rise with inflation when bonds suffer; real estate has its own cycle. Holding small slices of assets that <em>don't</em> all move together is the essence of diversification — the free lunch we'll formalize in Chapter 14.</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Other "alternative" asset classes exist beyond these — <strong>currencies/forex</strong> (trading one nation's money against another's), <strong>cryptocurrencies</strong> (digital assets like Bitcoin, extremely volatile and beyond this guide's scope), and <strong>collectibles</strong> (art, wine). They share a common trait: most produce no cash flow, so their value rests entirely on what the next buyer will pay — making them more speculative than a business that earns profits.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For most beginners, the sensible role of commodities and REITs is a <em>modest slice</em> — say a single-digit percentage each — for diversification and inflation protection, ideally via low-cost ETFs and held in tax-advantaged accounts where their tax-heavy income won't sting. They're seasoning, not the main dish. The compounding engine of long-term wealth is still owning productive businesses; these just smooth the ride.</p></div>
     </div>
   </section>
 
@@ -866,9 +1086,9 @@ footer b{color:#dce7f6}
   </section>
 
   <!-- ===================== CHAPTER 8 ===================== -->
-  <section id="ch8">
+  <section id="ch12">
     <div class="wrap">
-      <div class="chapnum">Chapter 8</div>
+      <div class="chapnum">Chapter 12</div>
       <h2 class="chap">Return, Alpha &amp; Beta</h2>
       <p class="lede">Anyone can make money in a bull market — a rising tide lifts all boats. The hard question is: did you do better than just riding the wave? Alpha and beta are the two Greek letters that separate skill from luck, and market-driven returns from your own. Every serious investor measures themselves with them.</p>
 
@@ -910,14 +1130,14 @@ footer b{color:#dce7f6}
 
       <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>In a bull market, everyone feels like a genius — they're confusing beta (the rising market) with alpha (their own skill). The test of skill is how you do in <em>bad</em> years and over a <em>full cycle</em>, net of fees, versus just buying the index. Don't mistake a rising tide for swimming ability.</p></div>
 
-      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Before chasing alpha, ask honestly: can I beat a free index fund after my mistakes, fees, taxes, and the spread? For most people, most of the time, the answer is no — and that's fine. Capturing beta cheaply (index funds) is a perfectly winning strategy. Reserve your alpha-hunting for areas where you have a genuine edge, and size those bets small (Chapter 11).</p></div>
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Before chasing alpha, ask honestly: can I beat a free index fund after my mistakes, fees, taxes, and the spread? For most people, most of the time, the answer is no — and that's fine. Capturing beta cheaply (index funds) is a perfectly winning strategy. Reserve your alpha-hunting for areas where you have a genuine edge, and size those bets small (Chapter 15).</p></div>
     </div>
   </section>
 
   <!-- ===================== CHAPTER 9 ===================== -->
-  <section id="ch9">
+  <section id="ch13">
     <div class="wrap">
-      <div class="chapnum">Chapter 9</div>
+      <div class="chapnum">Chapter 13</div>
       <h2 class="chap">Risk, the Sharpe Ratio &amp; the VIX</h2>
       <p class="lede">"Risk" is a vague word until you can measure it. This chapter turns it into numbers: how to quantify how bumpy an investment is (volatility), how to judge whether its returns are worth that bumpiness (the Sharpe ratio), and how to read the market's collective fear gauge (the VIX).</p>
 
@@ -970,9 +1190,9 @@ footer b{color:#dce7f6}
   </section>
 
   <!-- ===================== CHAPTER 10 ===================== -->
-  <section id="ch10">
+  <section id="ch14">
     <div class="wrap">
-      <div class="chapnum">Chapter 10</div>
+      <div class="chapnum">Chapter 14</div>
       <h2 class="chap">Markowitz &amp; the Magic of Diversification</h2>
       <p class="lede">In 1952 a grad student named Harry Markowitz proved something that sounds impossible: by combining risky assets the right way, you can build a portfolio that's <em>less</em> risky than its parts — without giving up return. It won him a Nobel Prize and became the foundation of modern investing. The intuition is more important than the math, and it's genuinely beautiful.</p>
 
@@ -1012,7 +1232,7 @@ footer b{color:#dce7f6}
       <h3>Two kinds of risk — and why one is "free" to remove</h3>
       <div class="grid g2">
         <div class="card" style="border-top-color:var(--green)"><h5>Specific (diversifiable) risk</h5><p>Risk unique to one company — a scandal, a bad product, a factory fire. You can <strong>diversify this away</strong> for free by owning many different stocks. The market won't pay you extra to take a risk you could've eliminated.</p></div>
-        <div class="card" style="border-top-color:var(--red)"><h5>Systematic (market) risk</h5><p>Risk that hits everything — recessions, wars, rate shocks. You <strong>can't</strong> diversify this away; it's the price of being in the market at all. This is the risk you actually get <em>paid</em> a return to bear (it's the "beta" of Chapter 8).</p></div>
+        <div class="card" style="border-top-color:var(--red)"><h5>Systematic (market) risk</h5><p>Risk that hits everything — recessions, wars, rate shocks. You <strong>can't</strong> diversify this away; it's the price of being in the market at all. This is the risk you actually get <em>paid</em> a return to bear (it's the "beta" of Chapter 12).</p></div>
       </div>
 
       <div class="callout note"><span class="lab">🌍 Big Picture</span><p>This split is the foundation of the <strong>Capital Asset Pricing Model (CAPM)</strong> — the theory that says your expected return should depend only on your <em>systematic</em> risk (beta), because the market refuses to reward risk you could have diversified away for free. It's why a single concentrated bet is "inefficient": you're taking specific risk you won't get paid for.</p></div>
@@ -1024,9 +1244,9 @@ footer b{color:#dce7f6}
   </section>
 
   <!-- ===================== CHAPTER 11 ===================== -->
-  <section id="ch11">
+  <section id="ch15">
     <div class="wrap">
-      <div class="chapnum">Chapter 11</div>
+      <div class="chapnum">Chapter 15</div>
       <h2 class="chap">Position Sizing, Margin &amp; Leverage</h2>
       <p class="lede">You can be right about <em>what</em> to buy and still go broke by betting too much on it, or by borrowing to amplify it. How much to put into any one trade — "sizing" — is the most underrated skill in investing. And leverage, the act of investing with borrowed money, is the single fastest way to turn a good investor into a former investor.</p>
 
@@ -1073,11 +1293,65 @@ footer b{color:#dce7f6}
       <h3>The margin call: leverage's trap door</h3>
       <p>When you trade on margin, your broker requires your equity to stay above a minimum (the "maintenance margin"). If your position drops too far, you get a <strong>margin call</strong>: deposit more cash immediately, or the broker <em>force-sells</em> your holdings — often at the worst possible moment, locking in your losses. Leverage doesn't just amplify losses; it can take the timing decision out of your hands entirely.</p>
 
-      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Leverage is the common thread in nearly every personal-finance blowup and most financial crises. The danger isn't just bigger losses — it's <strong>forced selling at the bottom</strong> and the psychological pressure that makes you panic. A beginner using high leverage is statistically very likely to be wiped out by ordinary volatility, even with a winning strategy. <strong>Learn for years before using leverage, if ever.</strong> Note that buying options (Chapter 7) is itself a form of built-in leverage.</p></div>
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Leverage is the common thread in nearly every personal-finance blowup and most financial crises. The danger isn't just bigger losses — it's <strong>forced selling at the bottom</strong> and the psychological pressure that makes you panic. A beginner using high leverage is statistically very likely to be wiped out by ordinary volatility, even with a winning strategy. <strong>Learn for years before using leverage, if ever.</strong> Note that buying options (Chapter 8) is itself a form of built-in leverage.</p></div>
 
       <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Sizing connects to a famous formula called the <strong>Kelly Criterion</strong>, which mathematically derives the optimal bet size given your edge and odds. Its surprising lesson: even with a genuine edge, betting too big leads to ruin, and the optimal size is usually smaller than your gut wants. Most pros bet a fraction of even what Kelly suggests, precisely because survival compounds and ruin is forever.</p></div>
 
       <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The order of operations for a real investor is: <strong>(1) don't go broke, (2) then try to grow.</strong> Size every position so that being wrong is survivable, diversify so no single loss is fatal, and treat leverage as a power tool that removes fingers from beginners. Brilliant stock-picking can't save you from bad sizing — but careful sizing can save you from mediocre stock-picking.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 15 ===================== -->
+  <section id="ch16">
+    <div class="wrap">
+      <div class="chapnum">Chapter 16</div>
+      <h2 class="chap">Compounding &amp; the Time Value of Money</h2>
+      <p class="lede">If there's one idea that builds more wealth than every trading strategy combined, it's this one — and it's the simplest in the whole guide. Money grows on money. Given enough time, that snowball becomes an avalanche. Einstein supposedly called compound interest "the eighth wonder of the world." Whether or not he said it, the math is genuinely astonishing.</p>
+
+      <h3>Compounding: earning returns on your returns</h3>
+      <p><strong>Compounding</strong> means your gains start generating gains of their own. Year one, you earn a return on your money. Year two, you earn a return on your money <em>plus</em> last year's return. Each year the base gets bigger, so the growth accelerates — slowly at first, then explosively.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>Invest $10,000 at 8% per year and leave it alone:<br>
+      • After 10 years: ~$21,600 (a bit more than doubled)<br>
+      • After 20 years: ~$46,600<br>
+      • After 30 years: ~$100,600<br>
+      • After 40 years: ~$217,000<br>
+      You contributed $10,000 once. The other ~$207,000 is compounding doing the work. Notice the jumps get <em>bigger</em> each decade — that's the curve bending upward. Most of the wealth arrives in the final years, which is exactly why <strong>starting early</strong> beats investing more later.</p></div>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 15.1</p>
+        <p class="fig-sub">$10,000 at 8% — why the curve bends upward</p>
+        <svg viewBox="0 0 920 240" role="img" aria-label="Exponential growth curve of compounding">
+          <g font-family="inherit">
+            <line x1="70" y1="200" x2="880" y2="200" stroke="#c7d0dd" stroke-width="2"/>
+            <line x1="70" y1="200" x2="70" y2="20" stroke="#c7d0dd" stroke-width="2"/>
+            <path d="M70 195 Q 400 188 600 150 T 880 35" fill="none" stroke="#22b06b" stroke-width="3.5"/>
+            <g font-size="11" fill="#5b6b82" text-anchor="middle">
+              <text x="170" y="218">10 yrs</text><text x="400" y="218">20 yrs</text><text x="640" y="218">30 yrs</text><text x="855" y="218">40 yrs</text>
+            </g>
+            <g font-size="11.5" font-weight="700">
+              <circle cx="170" cy="190" r="4" fill="#22b06b"/><text x="180" y="182" fill="#11814c">$21.6k</text>
+              <circle cx="400" cy="170" r="4" fill="#22b06b"/><text x="410" y="162" fill="#11814c">$46.6k</text>
+              <circle cx="640" cy="120" r="4" fill="#22b06b"/><text x="650" y="112" fill="#11814c">$100.6k</text>
+              <circle cx="855" cy="38" r="4" fill="#22b06b"/><text x="800" y="32" fill="#11814c">$217k</text>
+            </g>
+          </g>
+        </svg>
+        <p class="fig-cap">The line isn't straight — it curves. Each year adds more than the last, because you're earning returns on an ever-larger pile. Time is the most powerful ingredient.</p>
+      </div>
+
+      <h3>The Rule of 72: compounding in your head</h3>
+      <p>A handy shortcut: divide 72 by your annual return to estimate how many years it takes your money to <strong>double</strong>. At 8%, that's 72 ÷ 8 = <strong>9 years</strong> to double. At 10%, about 7 years. At 3% (a savings account), 24 years. It works in reverse too: it shows how a 2% fee or 3% inflation quietly cuts your doubling speed.</p>
+
+      <h3>The dark side: compounding works against you too</h3>
+      <p>The same math that grows your investments grows your <strong>debts</strong>. Credit-card debt at 20% interest doubles what you owe in under 4 years (72 ÷ 20). And it silently erodes your returns: a 1% annual fee, compounded over 40 years, can eat a third or more of your final wealth (Chapter 21). Compounding is a force — it's just neutral about which direction it pushes.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Compounding is a snowball rolling downhill. It starts tiny and seems to barely move, so people give up too early. But it picks up snow (and speed) the longer it rolls, until it's unstoppable. The trick isn't a bigger push at the start — it's a longer hill. That's why time in the market beats timing the market.</p></div>
+
+      <h3>Time value of money: a dollar today &gt; a dollar tomorrow</h3>
+      <p>Because money can be invested to grow, a dollar in your hand today is worth more than a dollar promised next year — you could invest today's dollar and have more than a dollar by then. This is the <strong>time value of money</strong>, and it's the engine behind valuing almost everything: bonds, stocks, options, and a company's future profits all get "discounted" back to what they're worth today. It's also why inflation hurts: it makes <em>future</em> dollars buy even less.</p>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The practical playbook falls out of the math: <strong>start as early as you possibly can</strong> (time is the biggest lever), <strong>reinvest your dividends and gains</strong> (don't interrupt the snowball), <strong>keep fees and high-interest debt low</strong> (they compound against you), and <strong>be patient</strong> (the explosive growth is back-loaded). A modest, boring, automatic investment held for decades routinely beats a clever trader who keeps interrupting the compounding. This single chapter, taken seriously, is worth more than all the rest.</p></div>
     </div>
   </section>
 
@@ -1093,9 +1367,9 @@ footer b{color:#dce7f6}
   </section>
 
   <!-- ===================== CHAPTER 12 ===================== -->
-  <section id="ch12">
+  <section id="ch17">
     <div class="wrap">
-      <div class="chapnum">Chapter 12</div>
+      <div class="chapnum">Chapter 17</div>
       <h2 class="chap">Going Long, Going Short</h2>
       <p class="lede">Most people only know how to make money when prices rise. But the market lets you profit from falling prices too — by "shorting." The mechanics feel backwards at first (sell something you don't own?), so let's walk through it slowly, then look at how the pros combine longs and shorts into strategies.</p>
 
@@ -1139,11 +1413,18 @@ footer b{color:#dce7f6}
 
       <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>The <strong>short squeeze.</strong> When a heavily-shorted stock starts rising, short sellers rush to buy back shares to cap their losses — but their buying pushes the price <em>up further</em>, forcing more shorts to cover, in a vicious upward spiral. GameStop in 2021 is the famous example: shorts lost billions in days. Add in <strong>borrowing fees</strong> (you pay to borrow the shares) and the risk of being forced to return them at the worst time, and shorting is strictly for experienced traders.</p></div>
 
+      <h3>Securities lending: where the borrowed shares come from</h3>
+      <p>Step one of shorting is "borrow shares" — but borrow them from <em>whom</em>? This is the hidden market of <strong>securities lending</strong>. Big long-term holders (index funds, pension funds) own millions of shares just sitting there. They <strong>lend</strong> those shares to short sellers in exchange for a fee, earning a little extra income on holdings they weren't going to sell anyway. Your broker arranges the loan and posts collateral to the lender to guarantee the shares come back.</p>
+
+      <p>The fee to borrow varies with demand. A normal, plentiful stock costs almost nothing to borrow. A stock everyone wants to short — but few want to lend — becomes "<strong>hard to borrow</strong>," and the fee can spike to double-digit annual rates. That borrowing cost is a real, ongoing drag on every short position, and a sky-high borrow fee is itself a warning sign that a short is crowded and squeeze-prone.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>If you hold popular stocks in a <em>margin</em> account, your broker may be <strong>lending your shares out</strong> to short sellers — and pocketing most of the fee. Usually harmless, but while your shares are on loan you can lose your voting rights and the protection of owning the actual security. Some brokers offer to share the lending income with you; it's worth knowing it's happening.</p></div>
+
       <h3>Long/short strategies: the hedge fund toolkit</h3>
       <p>The pros rarely just bet "the market goes up." They combine longs and shorts to isolate specific bets:</p>
       <div class="grid g2">
         <div class="card" style="border-top-color:var(--sky)"><h5>Long/short equity</h5><p>Buy the companies you think will outperform, short the ones you think will lag. If you're right about <em>relative</em> winners and losers, you profit even in a flat market.</p></div>
-        <div class="card" style="border-top-color:var(--teal)"><h5>Market-neutral</h5><p>Balance longs and shorts so your net market exposure (beta) is ~zero. You strip out the market's moves and bet purely on your stock-picking skill — pure alpha (Chapter 8).</p></div>
+        <div class="card" style="border-top-color:var(--teal)"><h5>Market-neutral</h5><p>Balance longs and shorts so your net market exposure (beta) is ~zero. You strip out the market's moves and bet purely on your stock-picking skill — pure alpha (Chapter 12).</p></div>
         <div class="card" style="border-top-color:var(--gold)"><h5>Pairs trade</h5><p>Long one stock, short a similar competitor (e.g. long Coke, short Pepsi). You profit from the <em>gap</em> between them, regardless of what the sector does overall.</p></div>
         <div class="card" style="border-top-color:var(--purple)"><h5>Hedging</h5><p>Short an index (or buy puts) against your long portfolio to dampen losses in a downturn — paying a little expected return for insurance.</p></div>
       </div>
@@ -1155,9 +1436,9 @@ footer b{color:#dce7f6}
   </section>
 
   <!-- ===================== CHAPTER 13 ===================== -->
-  <section id="ch13">
+  <section id="ch18">
     <div class="wrap">
-      <div class="chapnum">Chapter 13</div>
+      <div class="chapnum">Chapter 18</div>
       <h2 class="chap">Reading a Company</h2>
       <p class="lede">Behind every stock is a real business, and businesses leave a paper trail: financial statements filed every quarter. Learning to read them — and to use a couple of clever scoring systems — lets you judge whether a company is healthy, growing, and fairly priced, instead of just guessing from the chart.</p>
 
@@ -1198,22 +1479,54 @@ footer b{color:#dce7f6}
       </div>
 
       <h3>The Piotroski F-Score: a 9-point health checkup</h3>
-      <p>Accounting professor Joseph Piotroski created a simple <strong>9-point checklist</strong> to separate financially strong companies from weak ones. The company earns one point for passing each test across profitability, debt/liquidity, and efficiency. A score of <strong>8–9 is strong</strong>; <strong>0–2 is weak.</strong> It's a fast, objective way to screen for quality.</p>
-      <div class="grid g3">
-        <div class="card" style="border-top-color:var(--green)"><h5>Profitability (4 pts)</h5><p>Positive net income; positive cash flow; rising return on assets; cash flow exceeds reported profit (quality of earnings).</p></div>
-        <div class="card" style="border-top-color:var(--orange)"><h5>Leverage &amp; liquidity (3 pts)</h5><p>Less debt than last year; better ability to pay short-term bills; no dilution (didn't issue lots of new shares).</p></div>
-        <div class="card" style="border-top-color:var(--sky)"><h5>Efficiency (2 pts)</h5><p>Improving profit margins; using assets more productively to generate sales.</p></div>
+      <p>Accounting professor Joseph Piotroski created a <strong>9-point checklist</strong> to separate financially strong companies from weak ones. The company scores <strong>1 point for each test it passes</strong> and 0 for each it fails, across three areas. Add them up: <strong>8–9 is strong</strong> (a healthy, improving business), <strong>0–2 is weak</strong> (avoid). Here are the exact nine tests — each is just a yes/no comparison you can read off the financial statements:</p>
+
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>#</th><th>Test (score 1 if true)</th><th>What it checks</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Profitability</td><td colspan="2"><em>(4 points)</em></td></tr>
+          <tr><td>1</td><td>Net income is positive</td><td>The company actually made a profit.</td></tr>
+          <tr><td>2</td><td>Operating cash flow is positive</td><td>It generated real cash, not just paper profit.</td></tr>
+          <tr><td>3</td><td>Return on assets rose vs. last year</td><td>It's getting more profitable over time.</td></tr>
+          <tr><td>4</td><td>Cash flow &gt; net income</td><td>Earnings are backed by cash (high quality, not accounting tricks).</td></tr>
+          <tr><td class="co-name">Leverage &amp; liquidity</td><td colspan="2"><em>(3 points)</em></td></tr>
+          <tr><td>5</td><td>Long-term debt ratio fell vs. last year</td><td>It's taking on less debt — getting safer.</td></tr>
+          <tr><td>6</td><td>Current ratio rose vs. last year</td><td>Better able to pay short-term bills.</td></tr>
+          <tr><td>7</td><td>No new shares issued</td><td>It didn't dilute existing owners to raise cash.</td></tr>
+          <tr><td class="co-name">Efficiency</td><td colspan="2"><em>(2 points)</em></td></tr>
+          <tr><td>8</td><td>Gross margin rose vs. last year</td><td>It keeps more profit per dollar of sales.</td></tr>
+          <tr><td>9</td><td>Asset turnover rose vs. last year</td><td>It squeezes more sales out of its assets.</td></tr>
+        </tbody>
+      </table>
       </div>
+      <p>Notice most tests are "<em>better than last year?</em>" — the F-Score rewards <strong>improvement and momentum in the fundamentals</strong>, not just absolute size. Piotroski's original research found that buying high-scoring cheap stocks and avoiding low-scoring ones meaningfully beat the market.</p>
 
       <h3>The Altman Z-Score: a bankruptcy early-warning</h3>
-      <p>Edward Altman built a formula that combines five ratios into a single score predicting how likely a company is to go <strong>bankrupt</strong> within two years. It weighs profitability, leverage, liquidity, and efficiency together. The interpretation (for manufacturers):</p>
-      <div class="moatscale">
-        <div class="moatrow"><span class="dots"><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span></span><span><b>Z &gt; 3.0 — "Safe zone."</b> Low bankruptcy risk; financially solid.</span></div>
-        <div class="moatrow"><span class="dots"><span class="dot m"></span><span class="dot m"></span><span class="dot m"></span><span class="dot"></span><span class="dot"></span></span><span><b>1.8 – 3.0 — "Grey zone."</b> Caution; watch closely.</span></div>
-        <div class="moatrow"><span class="dots"><span class="dot w"></span><span class="dot w"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span><b>Z &lt; 1.8 — "Distress zone."</b> Elevated risk of failure.</span></div>
+      <p>Edward Altman built a formula in 1968 that blends <strong>five ratios</strong> into one number predicting the odds a company goes <strong>bankrupt within two years</strong>. Unlike the F-Score's checklist, the Z-Score is a weighted sum — each ratio is multiplied by a coefficient and added up:</p>
+
+      <div class="formula">
+        <span class="big">Z = 1.2·A + 1.4·B + 3.3·C + 0.6·D + 1.0·E</span>
+        <span class="note">A = Working capital ÷ Total assets &nbsp;(short-term financial cushion)<br>
+        B = Retained earnings ÷ Total assets &nbsp;(lifetime accumulated profits / age &amp; strength)<br>
+        C = EBIT ÷ Total assets &nbsp;(how productively assets generate operating profit) — the heaviest weight<br>
+        D = Market value of equity ÷ Total liabilities &nbsp;(how big a cushion before debt swamps the company)<br>
+        E = Sales ÷ Total assets &nbsp;(how efficiently assets generate revenue)</span>
       </div>
 
-      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The Piotroski score asks "<em>is this company getting healthier?</em>" The Altman Z-Score asks "<em>is this company at risk of dying?</em>" Both turn a pile of financial statements into a single, glanceable number — perfect for quickly screening out the junk before you dig deeper.</p></div>
+      <p>The biggest coefficient sits on <strong>C (operating profitability)</strong>, so a company bleeding operating losses gets punished hardest. Plug the five ratios in, sum them, and read the result against these zones (the classic thresholds for manufacturers):</p>
+      <div class="moatscale">
+        <div class="moatrow"><span class="dots"><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span><span class="dot f"></span></span><span><b>Z &gt; 3.0 — "Safe zone."</b> Low bankruptcy risk; financially solid.</span></div>
+        <div class="moatrow"><span class="dots"><span class="dot m"></span><span class="dot m"></span><span class="dot m"></span><span class="dot"></span><span class="dot"></span></span><span><b>1.8 – 3.0 — "Grey zone."</b> Caution; elevated uncertainty — watch closely.</span></div>
+        <div class="moatrow"><span class="dots"><span class="dot w"></span><span class="dot w"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span><span><b>Z &lt; 1.8 — "Distress zone."</b> High risk of failure within two years.</span></div>
+      </div>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>A manufacturer has: working capital/assets = 0.20, retained earnings/assets = 0.30, EBIT/assets = 0.12, market equity/liabilities = 1.5, sales/assets = 1.1.<br>
+      Z = 1.2(0.20) + 1.4(0.30) + 3.3(0.12) + 0.6(1.5) + 1.0(1.1)<br>
+      Z = 0.24 + 0.42 + 0.396 + 0.90 + 1.10 = <strong>3.06 → "Safe zone."</strong><br>
+      Now imagine operating profit collapses so EBIT/assets goes negative (−0.10) and the stock falls so market equity/liabilities drops to 0.4: Z sinks to roughly <strong>1.3 → "Distress zone."</strong> You can see how quickly falling profitability and a sliding share price drag the score toward danger.</p></div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The Piotroski score asks "<em>is this company getting healthier?</em>" — a checklist of 9 yes/no improvements. The Altman Z-Score asks "<em>is this company at risk of dying?</em>" — a weighted recipe of 5 ratios. Both crunch a pile of financial statements into a single, glanceable number, perfect for quickly screening out the junk before you dig deeper.</p></div>
 
       <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>No single ratio or score tells the whole story, and they can be gamed or misleading for certain industries (a bank's balance sheet looks nothing like a software firm's; the Z-Score was built for manufacturers). Use these as <em>screens and red-flag detectors</em>, not buy buttons. And always check: is this profit backed by real <strong>cash flow</strong>, or just accounting entries?</p></div>
 
@@ -1224,9 +1537,9 @@ footer b{color:#dce7f6}
   </section>
 
   <!-- ===================== CHAPTER 14 ===================== -->
-  <section id="ch14">
+  <section id="ch19">
     <div class="wrap">
-      <div class="chapnum">Chapter 14</div>
+      <div class="chapnum">Chapter 19</div>
       <h2 class="chap">Momentum, Volume &amp; Market Signals</h2>
       <p class="lede">Some investors barely look at the company at all — they study the price chart and the volume, hunting for patterns in crowd behavior. This is technical analysis, and while it's more controversial than reading financial statements, two of its core ideas — momentum and volume — are backed by real evidence and worth every investor's attention.</p>
 
@@ -1263,6 +1576,195 @@ footer b{color:#dce7f6}
       <div class="callout note"><span class="lab">🌍 Big Picture</span><p>The deepest debate in finance is the <strong>Efficient Market Hypothesis</strong>: the claim that prices already reflect all known information, so you <em>can't</em> reliably beat the market. If it's fully true, both fundamental and technical analysis are futile and you should just buy an index fund. Reality sits in between — markets are <em>mostly</em> efficient, with exploitable pockets of inefficiency (like momentum) that are hard to capture after costs. This tension is why both index investors and active traders can each claim to be the realists.</p></div>
 
       <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Even die-hard fundamental investors benefit from a glance at momentum and volume — to time an entry, to gauge whether a move has real conviction, or to avoid catching a "falling knife." But treat technicals as a supporting tool, not a crystal ball. The strongest edge for a beginner remains owning good businesses (or just the index), sized sensibly, held patiently — with momentum and volume as tiebreakers, not the whole thesis.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== PART V ===================== -->
+  <section id="part5" class="part-head">
+    <div class="wrap">
+      <div class="num">V</div>
+      <div>
+        <h2>The Investor's Edge</h2>
+        <p>The forces that quietly decide your real-world results: your own psychology, the fees you pay, the taxes you owe, and the macro tide that lifts or sinks everything.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 19 ===================== -->
+  <section id="ch20">
+    <div class="wrap">
+      <div class="chapnum">Chapter 20</div>
+      <h2 class="chap">Behavioral Finance</h2>
+      <p class="lede">The math in this guide assumes a calm, rational investor. You are not one — nobody is. Decades of research (and a couple of Nobel Prizes) show that predictable quirks in human psychology are the single biggest reason real people underperform the very funds they own. Your worst enemy in the market is usually the face in the mirror.</p>
+
+      <h3>The behavior gap</h3>
+      <p>Studies repeatedly find that the average investor earns <em>less</em> than the average fund they invest in. How is that possible? Because people buy after things have gone up (greed/FOMO) and sell after they've gone down (fear/panic) — they self-inflict "buy high, sell low." The gap between the fund's return and the investor's actual return is called the <strong>behavior gap</strong>, and it's caused entirely by emotional timing.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Imagine a roller coaster that ends exactly where it started, plus a bit higher. The ride (the fund) made money. But a passenger who jumps off at the scary bottom and only climbs back on at the exciting top gets hurt on every drop and misses every climb. That passenger is most investors. The ride was fine; the <em>rider's behavior</em> was the problem.</p></div>
+
+      <h3>The biases that cost you money</h3>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Bias</th><th>What it is</th><th>How it hurts you</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Loss aversion</td><td>Losses feel about twice as painful as equal gains feel good.</td><td>You sell winners too early and clutch losers too long, hoping to "get back to even."</td></tr>
+          <tr><td class="co-name">Herding / FOMO</td><td>The urge to do what the crowd is doing.</td><td>You pile into bubbles near the top and flee at the bottom — the worst possible timing.</td></tr>
+          <tr><td class="co-name">Recency bias</td><td>Assuming the recent past will continue forever.</td><td>You expect a hot streak to last (or a crash to never end), and bet accordingly.</td></tr>
+          <tr><td class="co-name">Confirmation bias</td><td>Seeking info that agrees with you, ignoring the rest.</td><td>You fall in love with a stock and dismiss every red flag.</td></tr>
+          <tr><td class="co-name">Anchoring</td><td>Fixating on an irrelevant number, like your purchase price.</td><td>"I'll sell when it gets back to what I paid" — the stock doesn't know or care what you paid.</td></tr>
+          <tr><td class="co-name">Overconfidence</td><td>Overrating your own skill and knowledge.</td><td>You trade too much, concentrate too hard, and confuse a bull market (beta) with talent (alpha).</td></tr>
+          <tr><td class="co-name">Sunk-cost fallacy</td><td>Throwing good money after bad to justify a past choice.</td><td>You average down into a failing position because you've "already committed."</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>Two systems in your head</h3>
+      <p>Psychologist Daniel Kahneman described the mind as two systems: <strong>System 1</strong> (fast, emotional, instinctive) and <strong>System 2</strong> (slow, deliberate, logical). Markets are engineered to trigger System 1 — flashing red numbers, breaking news, the dopamine of a green day. Good investing is mostly about <strong>building rules and habits that let slow, rational System 2 stay in charge</strong> when your gut is screaming.</p>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>The most expensive sentence in investing is "<em>this time is different.</em>" It's what people tell themselves at the top of every bubble and the bottom of every crash to justify abandoning their plan. Feeling certain is not the same as being right — and the moments you feel the <em>most</em> emotional certainty are exactly when you're most likely to be wrong.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You can't delete your emotions, so you defend against them with structure: <strong>automate your investing</strong> (regular auto-deposits remove the timing decision), <strong>write down your reason for buying</strong> (so you can check it later instead of rationalizing), <strong>set rules in advance</strong> (sizing, when you'd sell), and <strong>do less</strong> (every action is a chance for a bias to bite). The dull, automatic, rules-based investor reliably beats the brilliant, emotional one. Temperament beats IQ in this game.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 20 ===================== -->
+  <section id="ch21">
+    <div class="wrap">
+      <div class="chapnum">Chapter 21</div>
+      <h2 class="chap">Fees &amp; the Cost of Investing</h2>
+      <p class="lede">Fees feel tiny — "just 1%" — which is exactly why they're so dangerous. Thanks to compounding (Chapter 16), a small annual fee doesn't cost you a small amount; it quietly siphons off a <em>huge</em> slice of your lifetime wealth. Costs are the one variable you can control with near-certainty, so controlling them is among the highest-return things you can do.</p>
+
+      <h3>The fees hiding in your portfolio</h3>
+      <div class="kv">
+        <dt>Expense ratio</dt><dd>The annual % a fund charges to run itself, skimmed automatically. Index funds: ~0.03–0.20%. Active funds: often 0.5–1.5%.</dd>
+        <dt>Commissions</dt><dd>Per-trade fees. Mostly $0 for US stocks/ETFs now — but watch options and other products.</dd>
+        <dt>The spread</dt><dd>The bid-ask cost you pay on every trade (Chapter 3) — an invisible fee.</dd>
+        <dt>Advisory fee</dt><dd>What a human or robo-advisor charges to manage your money, often ~0.25–1% per year.</dd>
+        <dt>Loads</dt><dd>Sales charges on some mutual funds (front-end or back-end). Avoidable — just say no.</dd>
+        <dt>Account fees</dt><dd>Maintenance, inactivity, or transfer fees. Read the fine print.</dd>
+      </div>
+
+      <h3>Why "just 1%" is a giant number</h3>
+      <p>A 1% fee doesn't mean you lose 1% of your wealth. It means you lose 1% <em>every year</em>, on a balance that compounding was supposed to grow — including on all the growth that fee dollars would have produced. Over decades, the drag snowballs.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You invest $10,000 for 40 years and earn 7% per year before fees.<br>
+      • With a <strong>0.05%</strong> index-fund fee: you end with roughly <strong>$147,000</strong>.<br>
+      • With a <strong>1.0%</strong> fee: you end with roughly <strong>$103,000</strong>.<br>
+      That 0.95% difference quietly cost you about <strong>$44,000 — over 40% of your potential gains</strong> — for a fund that, on average, won't outperform the cheap one. The fee felt small; the lifetime bill was enormous.</p></div>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 20.1</p>
+        <p class="fig-sub">Same investment, two fee levels, 40 years</p>
+        <svg viewBox="0 0 920 200" role="img" aria-label="Bar chart comparing low-fee vs high-fee ending balances">
+          <g font-family="inherit">
+            <line x1="90" y1="170" x2="880" y2="170" stroke="#c7d0dd" stroke-width="2"/>
+            <rect x="200" y="35" width="150" height="135" rx="6" fill="#22b06b"/>
+            <text x="275" y="25" font-size="13" font-weight="800" fill="#11814c" text-anchor="middle">$147k</text>
+            <text x="275" y="190" font-size="12" fill="#5b6b82" text-anchor="middle">0.05% fee</text>
+            <rect x="560" y="76" width="150" height="94" rx="6" fill="#e2563f"/>
+            <text x="635" y="66" font-size="13" font-weight="800" fill="#bf3c25" text-anchor="middle">$103k</text>
+            <text x="635" y="190" font-size="12" fill="#5b6b82" text-anchor="middle">1.0% fee</text>
+            <text x="455" y="120" font-size="12" font-weight="700" fill="#a07a13" text-anchor="middle">−$44k</text>
+            <text x="455" y="138" font-size="11" fill="#5b6b82" text-anchor="middle">lost to fees</text>
+          </g>
+        </svg>
+        <p class="fig-cap">The high-fee fund has to <em>beat</em> the cheap one by ~1% every single year just to break even with it — a bar the large majority of active funds fail to clear over the long run.</p>
+      </div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>This is the core argument behind the index-fund revolution led by Vanguard's Jack Bogle: since costs are certain and outperformance is not, <em>minimizing what you pay</em> is the most reliable way to maximize what you keep. "In investing, you get what you <strong>don't</strong> pay for." It's one of the few near-guarantees in a field full of uncertainty.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>Before buying any fund, find its expense ratio (it's always disclosed) and ask whether you're getting something worth the cost. For most people the answer is to favor ultra-low-cost index funds, avoid loads and high advisory fees, and trade rarely to minimize spreads and taxes. Every fee you eliminate is a guaranteed, risk-free boost to your return — the only one you'll ever find.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 21 ===================== -->
+  <section id="ch22">
+    <div class="wrap">
+      <div class="chapnum">Chapter 22</div>
+      <h2 class="chap">Taxes &amp; Account Types</h2>
+      <p class="lede">It's not what you earn — it's what you <em>keep</em>. Taxes are the other big, controllable drag on returns, and the single most powerful move available to an ordinary investor isn't a clever trade: it's putting investments in the right <em>type</em> of account. Get this right and the government effectively hands you a permanent boost.</p>
+
+      <div class="disclaimer"><strong>Heads up:</strong> tax rules vary by country and change over time; the examples below describe the US system as a representative model. This is education, not tax advice — confirm specifics for your situation with a professional.</div>
+
+      <h3>How investment gains are taxed</h3>
+      <p>You generally owe tax in two situations: when you <strong>sell</strong> for a profit, and when you <strong>receive income</strong> like dividends or interest. The key insight beginners miss: <em>how long you held</em> dramatically changes the rate.</p>
+
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--red)"><h5>Short-term capital gains</h5><p>Profit on something held <strong>one year or less</strong>. Taxed at your ordinary income tax rate — the <em>high</em> one. Frequent trading triggers this.</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h5>Long-term capital gains</h5><p>Profit on something held <strong>longer than one year</strong>. Taxed at lower, preferential rates. Patience is literally rewarded by the tax code.</p></div>
+      </div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>That one-year line is a built-in incentive to be a long-term investor: holding 366 days instead of 364 can meaningfully cut your tax bill on the same gain. It's one more reason the frantic trader is fighting uphill against the patient one — who pays lower fees, lower spreads, <em>and</em> lower taxes.</p></div>
+
+      <h3>Two kinds of dividends</h3>
+      <p>Dividends (Chapter 10) aren't all taxed the same — and the distinction matters:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Type</th><th>What it is</th><th>How it's taxed</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Qualified dividends</td><td>The common kind — paid by US (and many foreign) corporations on stock you've held for a required minimum period (generally 60+ days around the payout).</td><td>The <strong>lower</strong> long-term capital-gains rates. Tax-friendly.</td></tr>
+          <tr><td class="co-name">Ordinary (non-qualified) dividends</td><td>Dividends that don't meet those rules — e.g. from REITs, money-market funds, some foreign stocks, or shares you held only briefly.</td><td>Your <strong>ordinary income</strong> rate — the same high rate as your paycheck.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>So two investors collecting "$1,000 in dividends" can owe very different amounts depending on whether those dividends are qualified. Holding quality dividend stocks for the long term tends to keep you in the friendlier "qualified" bucket; chasing high-yield REITs and exotic payouts often lands you in the "ordinary" one.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Think of two lines at the tax counter. <strong>Qualified</strong> dividends and <strong>long-term</strong> gains stand in the cheap line (lower rates) — a reward for patience and owning real companies. <strong>Ordinary</strong> dividends and <strong>short-term</strong> gains stand in the expensive line, taxed like wages. Same dollars, different line, different bill.</p></div>
+
+      <h3>The account types that change everything</h3>
+      <p><em>Where</em> you hold investments matters as much as what you hold. Accounts come in three tax flavors:</p>
+      <div class="grid g3">
+        <div class="card" style="border-top-color:var(--gold)"><h5>Taxable (brokerage)</h5><p>A regular account. Flexible — withdraw anytime — but you owe tax on gains, dividends, and interest as you go.</p></div>
+        <div class="card" style="border-top-color:var(--sky)"><h5>Tax-deferred (e.g. 401(k), Traditional IRA)</h5><p>Contributions often reduce taxable income <em>now</em>; investments grow untaxed; you pay ordinary tax on withdrawals in retirement. "Tax later."</p></div>
+        <div class="card" style="border-top-color:var(--green)"><h5>Tax-free (e.g. Roth IRA)</h5><p>You contribute already-taxed money, but all growth and withdrawals in retirement are <strong>completely tax-free.</strong> "Tax now, never again."</p></div>
+      </div>
+
+      <p>Inside a tax-advantaged account, your investments compound <em>without</em> the annual tax drag — which, over decades, is worth a fortune (compounding again, Chapter 16). Many employers even <strong>match</strong> 401(k) contributions, which is the closest thing to free money in all of finance.</p>
+
+      <h3>A couple of useful tax moves</h3>
+      <div class="kv">
+        <dt>Tax-loss harvesting</dt><dd>Selling a losing investment to "realize" the loss, which can offset gains elsewhere and lower your tax bill — while staying invested in something similar.</dd>
+        <dt>Wash-sale rule</dt><dd>The catch: if you buy back the <em>same</em> security within 30 days, the IRS disallows the loss. Don't accidentally trip it.</dd>
+        <dt>Asset location</dt><dd>Put tax-inefficient things (bonds, REITs, ordinary dividends) in tax-advantaged accounts, and tax-efficient ones (index ETFs) in taxable accounts.</dd>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Don't let the tax tail wag the investment dog — refusing to ever sell a winner purely to dodge taxes can leave you dangerously concentrated. But the bigger beginner error is the opposite: trading actively in a <em>taxable</em> account, racking up short-term gains taxed at the highest rate and turning a decent strategy into a mediocre after-tax one. Use the tax-advantaged accounts first.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The priority order for most people is remarkably consistent: <strong>(1)</strong> grab any employer 401(k) match (free money), <strong>(2)</strong> fund tax-advantaged accounts (Roth/IRA/401(k)), <strong>(3)</strong> hold long-term to get the lower rates, and <strong>(4)</strong> only then invest in a taxable account, favoring tax-efficient index funds. None of this requires picking a single winning stock — it's free performance available to everyone who knows the rules.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 22 ===================== -->
+  <section id="ch23">
+    <div class="wrap">
+      <div class="chapnum">Chapter 23</div>
+      <h2 class="chap">The Macro Backdrop</h2>
+      <p class="lede">No stock trades in a vacuum. Above every company sits a giant tide — interest rates, inflation, the economic cycle, the central bank — that lifts or sinks nearly everything at once. You don't need to forecast the economy (almost nobody can), but you do need to understand the handful of macro forces that explain why "good companies" sometimes fall and "the market" moves as one.</p>
+
+      <h3>Interest rates: the price of money, and the gravity of everything</h3>
+      <p>We met the risk-free rate in Chapter 7. Zoom out and it's the master dial of finance. When rates are <strong>low</strong>, borrowing is cheap, safe bonds pay little, and investors pile into stocks and risky assets chasing returns — prices rise. When rates are <strong>high</strong>, safe bonds suddenly pay a decent return, borrowing is expensive, and money drains out of risky assets — prices fall. As legendary investor Warren Buffett put it, interest rates act on asset prices like gravity.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Interest rates are the "rent" on money. When rent is cheap, everyone borrows and spends and bids prices up. When rent is expensive, people pull back and prices cool. Almost every big market move you'll read about traces back, somehow, to what rates are doing or are expected to do.</p></div>
+
+      <h3>The Federal Reserve: the hand on the dial</h3>
+      <p>The <strong>Federal Reserve</strong> (the "Fed") is the US central bank, and it steers short-term interest rates to pursue two goals: stable prices (low inflation) and maximum employment. When the economy overheats and inflation rises, the Fed <em>raises</em> rates to cool it down. When the economy weakens, it <em>cuts</em> rates to stimulate it. Markets hang on the Fed's every word because it effectively sets the gravity the whole market operates under. Other countries have their own central banks (the ECB, Bank of England, etc.) doing the same job.</p>
+
+      <h3>Inflation: the silent tax, and real vs. nominal returns</h3>
+      <p><strong>Inflation</strong> is the gradual rise in prices over time — the reason a candy bar costs more than it did when your parents were kids. It quietly eats the value of money, which forces a crucial distinction:</p>
+      <div class="formula">
+        <span class="big">Real return ≈ Nominal return − Inflation</span>
+        <span class="note">Nominal = the headline number your account shows · Real = what you actually gained in <em>purchasing power</em></span>
+      </div>
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>Your savings earned <strong>4%</strong> last year — sounds like a gain. But inflation ran <strong>5%</strong>. Your <em>real</em> return was about <strong>−1%</strong>: the dollars grew, but they each buy less, so you actually went backwards in what your money can purchase. This is why simply hoarding cash is risky over the long run — inflation guarantees a slow loss — and why investors accept the volatility of stocks, which have historically <em>beaten</em> inflation over time.</p></div>
+
+      <h3>The business cycle</h3>
+      <p>Economies breathe in and out: <strong>expansion</strong> (growth, hiring, optimism) → <strong>peak</strong> → <strong>contraction/recession</strong> (slowdown, layoffs, fear) → <strong>trough</strong> → expansion again. Different investments shine in different phases — stocks generally love expansions, while bonds and cash feel safer in recessions. Markets are forward-looking, so they often move <em>ahead</em> of the actual economy, which is why stocks can rally while the news is still gloomy (they're pricing the recovery everyone expects next).</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Other macro forces ripple through markets too: <strong>employment</strong> data (a health check on the economy), <strong>GDP growth</strong> (the economy's overall size and speed), <strong>currency exchange rates</strong> (which move the profits of global companies), and <strong>commodity prices</strong> like oil. You'll see these in the headlines as "the data." Collectively they shape the Fed's decisions — which loop right back to interest rates, the master dial.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Don't try to <em>time</em> the macro cycle — "I'll get out before the recession and back in at the bottom." The pros can't reliably do it, and the market's best days cluster shockingly close to its worst ones, often during the scary periods you'd be sitting in cash. Missing just a handful of the best days over decades can gut your returns. Understanding macro is for <em>context and staying calm</em>, not for jumping in and out.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You can't control or predict the tide, but understanding it stops you from panicking when it turns. When you grasp that a rate hike — not a flaw in your companies — is why everything dropped, you're far less likely to make the emotional mistakes of Chapter 20. The seasoned investor's response to macro is usually the same boring, powerful one: stay diversified, keep buying on a schedule, and let compounding ride out the cycles. Macro awareness is the antidote to macro panic.</p></div>
     </div>
   </section>
 
@@ -1328,12 +1830,55 @@ footer b{color:#dce7f6}
         <dt>Cash flow statement</dt><dd>The report of actual cash moving in and out.</dd>
         <dt>EPS</dt><dd>Earnings per share — profit divided by share count.</dd>
         <dt>Free cash flow</dt><dd>Cash left after running and investing in the business.</dd>
-        <dt>Piotroski F-Score</dt><dd>A 0–9 checklist scoring a company's financial health.</dd>
-        <dt>Altman Z-Score</dt><dd>A formula estimating bankruptcy risk over two years.</dd>
         <dt>Momentum</dt><dd>The tendency for recent winners to keep winning for a while.</dd>
         <dt>Volume</dt><dd>Shares traded in a period — a gauge of conviction behind a move.</dd>
         <dt>Moving average</dt><dd>Average price over N days, used to smooth out noise and read trend.</dd>
         <dt>Efficient Market Hypothesis</dt><dd>The claim that prices already reflect all known info, making the market hard to beat.</dd>
+        <dt>Opening/closing auction</dt><dd>A batched single-price trade at the start and end of the day that absorbs piled-up orders.</dd>
+        <dt>Trading halt</dt><dd>A temporary pause in a single stock, for pending news or excess volatility.</dd>
+        <dt>Circuit breaker</dt><dd>A market-wide timeout triggered when the S&amp;P 500 falls 7% / 13% / 20% in a day.</dd>
+        <dt>Limit Up–Limit Down</dt><dd>Bands that stop an individual stock from trading outside a moving price range.</dd>
+        <dt>Fund</dt><dd>A pooled product holding a basket of securities, giving instant diversification in one buy.</dd>
+        <dt>Index fund</dt><dd>A fund that mechanically tracks a basket like the S&amp;P 500, with very low fees.</dd>
+        <dt>Mutual fund</dt><dd>A pooled fund priced once a day at its net asset value (NAV).</dd>
+        <dt>ETF</dt><dd>Exchange-Traded Fund — a fund that trades like a stock all day at a live price.</dd>
+        <dt>NAV</dt><dd>Net asset value — the per-share value of a fund's underlying holdings.</dd>
+        <dt>Authorized Participant</dt><dd>A big firm that creates/redeems ETF shares, keeping the ETF priced to its holdings.</dd>
+        <dt>Expense ratio</dt><dd>The annual percentage fee a fund charges to run itself.</dd>
+        <dt>Leveraged ETF</dt><dd>An ETF amplifying daily moves (e.g. 3×); decays over time, not for holding.</dd>
+        <dt>Stock split</dt><dd>Dividing each share into more shares; total value unchanged.</dd>
+        <dt>Reverse split</dt><dd>Combining shares to raise the price, often a distress signal.</dd>
+        <dt>Ex-dividend date</dt><dd>The cutoff to own a stock to receive its next dividend; price drops by the dividend that day.</dd>
+        <dt>Buyback</dt><dd>A company repurchasing its own shares, concentrating ownership.</dd>
+        <dt>Spin-off</dt><dd>A company splitting off a division into a separate, independently traded company.</dd>
+        <dt>Merger arbitrage</dt><dd>Trading the gap between a buyout offer price and the market price.</dd>
+        <dt>Commodity</dt><dd>A standardized raw physical good (gold, oil, wheat) traded at a world price.</dd>
+        <dt>Safe haven</dt><dd>An asset (like gold) investors flock to during crises.</dd>
+        <dt>Futures contract</dt><dd>An agreement to buy/sell an asset at a set price on a future date; leveraged.</dd>
+        <dt>REIT</dt><dd>Real Estate Investment Trust — a listed company owning income property, paying out 90%+ of income.</dd>
+        <dt>Securities lending</dt><dd>Long-term holders lending shares to short sellers for a fee.</dd>
+        <dt>Hard to borrow</dt><dd>A stock in high short demand, expensive to borrow — a squeeze warning.</dd>
+        <dt>Compounding</dt><dd>Earning returns on your past returns, so growth accelerates over time.</dd>
+        <dt>Rule of 72</dt><dd>72 ÷ annual return ≈ years for money to double.</dd>
+        <dt>Time value of money</dt><dd>A dollar today is worth more than a dollar later, because it can be invested.</dd>
+        <dt>Behavior gap</dt><dd>The return investors lose by buying high and selling low out of emotion.</dd>
+        <dt>Loss aversion</dt><dd>The bias that losses hurt about twice as much as equal gains feel good.</dd>
+        <dt>FOMO / herding</dt><dd>The urge to follow the crowd, often buying tops and selling bottoms.</dd>
+        <dt>Anchoring</dt><dd>Fixating on an irrelevant number, like your purchase price.</dd>
+        <dt>Capital gain</dt><dd>Profit from selling an investment for more than you paid.</dd>
+        <dt>Short-term gain</dt><dd>Profit on an asset held ≤1 year, taxed at the higher ordinary rate.</dd>
+        <dt>Long-term gain</dt><dd>Profit on an asset held &gt;1 year, taxed at lower preferential rates.</dd>
+        <dt>Qualified dividend</dt><dd>A dividend meeting holding rules, taxed at the lower long-term rate.</dd>
+        <dt>Ordinary dividend</dt><dd>A non-qualified dividend, taxed at your higher ordinary income rate.</dd>
+        <dt>Tax-advantaged account</dt><dd>An account (401(k), IRA, Roth) where investments grow with reduced or zero tax.</dd>
+        <dt>Tax-loss harvesting</dt><dd>Selling a loser to realize a loss that offsets taxable gains.</dd>
+        <dt>Wash-sale rule</dt><dd>Disallows a tax loss if you rebuy the same security within 30 days.</dd>
+        <dt>Federal Reserve</dt><dd>The US central bank, which sets short-term interest rates.</dd>
+        <dt>Inflation</dt><dd>The gradual rise in prices that erodes the value of money.</dd>
+        <dt>Real vs. nominal return</dt><dd>Real = nominal return minus inflation; your true gain in purchasing power.</dd>
+        <dt>Business cycle</dt><dd>The economy's repeating swing from expansion to recession and back.</dd>
+        <dt>Piotroski F-Score</dt><dd>A 0–9 checklist scoring whether a company's fundamentals are improving.</dd>
+        <dt>Altman Z-Score</dt><dd>A weighted formula of 5 ratios estimating bankruptcy risk within two years.</dd>
       </dl>
     </div>
   </section>
