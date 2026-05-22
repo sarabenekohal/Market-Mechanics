@@ -1429,6 +1429,36 @@ footer b{color:#dce7f6}
         <div class="card" style="border-top-color:var(--purple)"><h5>Hedging</h5><p>Short an index (or buy puts) against your long portfolio to dampen losses in a downturn — paying a little expected return for insurance.</p></div>
       </div>
 
+      <h3>Hedging in practice: insurance for your portfolio</h3>
+      <p><strong>Hedging</strong> means giving up a little potential gain (or paying a small cost) to reduce a specific risk — exactly like insurance on a car. You don't <em>expect</em> to crash, but you pay a premium so a crash won't ruin you. The core trade-off runs through every hedge: <strong>protection is never free.</strong> You always pay for it, either in cash (a premium) or in surrendered upside. The art is deciding whether the peace of mind is worth the price. Here are the most common hedges a regular investor can actually use:</p>
+
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Strategy</th><th>How it works</th><th>Pros</th><th>Cons</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Covered call</td><td>You own 100 shares and <em>sell</em> a call against them, collecting a premium.</td><td>Generates income now; lowers your effective cost; works great in flat/slightly-up markets.</td><td><strong>Caps your upside</strong> — if the stock soars past the strike, your gains stop there; full downside remains.</td></tr>
+          <tr><td class="co-name">Protective put</td><td>You own the stock and <em>buy</em> a put as a price floor.</td><td>Hard floor on losses; unlimited upside kept; sleep-at-night insurance.</td><td>Costs a premium that bleeds away (theta); over time the recurring cost drags returns.</td></tr>
+          <tr><td class="co-name">Collar</td><td>Buy a protective put <em>and</em> sell a covered call to pay for it.</td><td>Cheap or free downside protection; defined risk band.</td><td>Caps upside <em>and</em> floors downside — you've boxed in your outcome both ways.</td></tr>
+          <tr><td class="co-name">Index hedge</td><td>Buy puts on (or short) a broad index against your whole portfolio.</td><td>Hedges the <em>market</em> (systematic) risk of many holdings at once.</td><td>Costly to maintain; imperfect match to your exact stocks ("basis risk").</td></tr>
+          <tr><td class="co-name">Cash / bonds</td><td>Simply hold more cash and high-quality bonds.</td><td>The simplest hedge — no options, no fees, no expiry; dry powder for bargains.</td><td>Drags long-term returns; cash loses to inflation (Chapter 23).</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>The covered call, examined: income now, ceiling later</h4>
+      <p>The covered call is the most popular options strategy among regular investors, so it's worth dwelling on its central trade-off. You own 100 shares of a stock at $100 and sell a call with a $110 strike for a $3 premium. Three things can happen:</p>
+      <ul>
+        <li><strong>Stock stays flat (~$100):</strong> the call expires worthless, you keep the $3, and you still own your shares. You just earned 3% income on a stock that did nothing. This is the dream scenario.</li>
+        <li><strong>Stock falls to $90:</strong> the $3 premium cushions the blow — your loss is $7 instead of $10. A partial hedge, but you're still down.</li>
+        <li><strong>Stock rockets to $130:</strong> here's the pain. Your shares get "called away" at $110. You made $10 + $3 = $13 — but you <em>missed</em> the run to $130. You left $17 per share on the table.</li>
+      </ul>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>The covered call's hidden cost is <strong>opportunity cost</strong>, and it bites worst on your best stocks. By capping upside, you systematically clip the winners that would have driven most of your long-term returns — while keeping the <em>full</em> downside on the losers. Repeatedly writing calls on a high-growth stock can quietly turn a multi-bagger into a series of small, capped gains. Covered calls suit <em>flat, mature, dividend-type</em> holdings — not the rockets you'd hate to be forced out of.</p></div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>A covered call is like renting out a house you own. The rent (premium) is nice steady income. But if you've promised to <em>sell</em> the house at a fixed price and its value suddenly doubles, you're stuck selling cheap — you traded the jackpot for the rent. Great deal on a sleepy property; terrible deal on the one about to boom.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The universal lesson of hedging: <strong>you can reduce risk, but you'll pay for it — in premiums, in capped upside, or in lower long-run returns.</strong> For most beginners, the cheapest and most effective "hedge" isn't an options strategy at all — it's diversification (Chapter 14) and holding some bonds/cash. Reserve option hedges for specific, sized risks (e.g. protecting a large concentrated position you can't sell yet), and always ask: is the protection worth what I'm giving up to get it?</p></div>
+
       <div class="callout note"><span class="lab">🌍 Big Picture</span><p>Short sellers are controversial but serve a real function: they're the market's skeptics, often the first to expose frauds and overpriced bubbles (many famous accounting scandals were uncovered by short sellers doing deep research). By betting against hype, they help keep prices honest — even though they're widely disliked when they're right.</p></div>
 
       <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You don't have to short anything — most successful long-term investors never do. But understanding it unlocks how hedge funds think, why "short interest" (the % of a stock sold short) is a signal worth watching, and how to <em>hedge</em> your own portfolio if you ever want to. If you do short, respect the asymmetry: define your exit in advance, because unlimited loss is not a figure of speech.</p></div>
@@ -1728,7 +1758,31 @@ footer b{color:#dce7f6}
         <dt>Asset location</dt><dd>Put tax-inefficient things (bonds, REITs, ordinary dividends) in tax-advantaged accounts, and tax-efficient ones (index ETFs) in taxable accounts.</dd>
       </div>
 
-      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Don't let the tax tail wag the investment dog — refusing to ever sell a winner purely to dodge taxes can leave you dangerously concentrated. But the bigger beginner error is the opposite: trading actively in a <em>taxable</em> account, racking up short-term gains taxed at the highest rate and turning a decent strategy into a mediocre after-tax one. Use the tax-advantaged accounts first.</p></div>
+      <h3>Tax-advantaged strategies: weighing the trade-offs</h3>
+      <p>These accounts are powerful, but each comes with strings attached. The point isn't that tax-advantaged is "always best" — it's understanding what you give up in exchange for the tax break, so you choose the right tool.</p>
+
+      <h4>The big decision: Traditional ("tax later") vs. Roth ("tax now")</h4>
+      <p>This is the central tax-advantaged strategy question, and it boils down to one bet: <strong>are your tax rates higher now, or will they be higher when you retire?</strong></p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Account</th><th>The deal</th><th>Pros</th><th>Cons</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Traditional (tax-deferred)</td><td>Deduct contributions now; pay ordinary tax on withdrawals later.</td><td>Lowers your taxable income <em>today</em>; good if you're in a high bracket now and expect a lower one in retirement.</td><td>Every withdrawal is taxed as ordinary income; forced withdrawals (RMDs) later; you're betting future rates stay low.</td></tr>
+          <tr><td class="co-name">Roth (tax-free)</td><td>Pay tax now; all growth and withdrawals are tax-free.</td><td>Decades of gains escape tax entirely; no RMDs; great if you're young/low-bracket now or expect higher rates later.</td><td>No deduction today; you part with the tax money up front; benefit is lost if you actually retire in a much lower bracket.</td></tr>
+          <tr><td class="co-name">Employer 401(k) match</td><td>Employer adds money when you contribute.</td><td>An <strong>instant ~100% return</strong> — the best deal in finance. Always capture the full match first.</td><td>Vesting schedules may claw back the match if you leave early; limited investment menu.</td></tr>
+          <tr><td class="co-name">HSA (health account)</td><td>Triple tax-free: deductible in, grows tax-free, tax-free out for medical.</td><td>The most tax-efficient account that exists; doubles as a stealth retirement account.</td><td>Requires a high-deductible health plan; non-medical withdrawals are penalized before retirement age.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Traditional vs. Roth is "pay the tax later" vs. "pay the tax now." With a <em>Traditional</em> account you skip tax on the seed but pay tax on the whole grown tree. With a <em>Roth</em> you pay tax on the seed but harvest the entire tree tax-free. If you think your tax rate will be higher later, pay now (Roth); if lower later, pay later (Traditional).</p></div>
+
+      <h4>The universal cost: your money gets locked up</h4>
+      <p>The shared downside of every retirement account is <strong>access</strong>. In exchange for the tax break, the government generally locks the money until retirement age (about 59½ in the US); pull it out early and you typically owe both income tax <em>and</em> a 10% penalty. There are also annual <strong>contribution limits</strong> — you can't shovel unlimited money in. So tax-advantaged accounts are fantastic for long-term retirement money, but they're not where you keep your emergency fund or a house down payment.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You contribute $6,000/year to a Roth for 30 years (total $180,000 in) and it grows at 7%. You'd end with roughly <strong>$566,000</strong> — and because it's a Roth, <em>all</em> of the ~$386,000 in gains is yours tax-free. In a taxable account, that same growth could owe tens of thousands in taxes along the way and at sale. The "cost" was paying tax on the $180,000 of contributions up front; the payoff was shielding $386,000 of growth forever.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Two common mistakes: <strong>(1)</strong> leaving the employer match on the table — that's refusing free money. <strong>(2)</strong> Locking up money you'll need soon: if there's any chance you need the cash before retirement, the early-withdrawal penalty can wipe out years of tax savings. Match the account's lockup to your actual time horizon. Don't let the tax tail wag the investment dog — refusing to ever sell a winner purely to dodge taxes can leave you dangerously concentrated, and trading actively in a <em>taxable</em> account racks up high-rate short-term gains that turn a decent strategy into a mediocre after-tax one.</p></div>
 
       <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>The priority order for most people is remarkably consistent: <strong>(1)</strong> grab any employer 401(k) match (free money), <strong>(2)</strong> fund tax-advantaged accounts (Roth/IRA/401(k)), <strong>(3)</strong> hold long-term to get the lower rates, and <strong>(4)</strong> only then invest in a taxable account, favoring tax-efficient index funds. None of this requires picking a single winning stock — it's free performance available to everyone who knows the rules.</p></div>
     </div>
