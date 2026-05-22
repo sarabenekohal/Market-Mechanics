@@ -288,6 +288,8 @@ footer b{color:#dce7f6}
       <a href="#ch28">28 · The Matching Engine Floor</a>
       <a href="#ch29">29 · Auction Theory & Value Area</a>
       <a href="#ch30">30 · Options Gamma & Wedges</a>
+      <a href="#ch31">31 · The Macro Trigger Layer</a>
+      <a href="#ch32">32 · Currency & Central Bank Cascades</a>
       <a href="#glossary">Glossary</a>
     </nav>
   </aside>
@@ -2683,6 +2685,103 @@ footer b{color:#dce7f6}
     </div>
   </section>
 
+  <!-- ===================== CHAPTER 31 ===================== -->
+  <section id="ch31">
+    <div class="wrap">
+      <div class="chapnum">Chapter 31</div>
+      <h2 class="chap">The Macro Trigger Layer: Scheduled News Volatility</h2>
+      <p class="lede">A handful of pre-scheduled government data releases — the Fed decision, the inflation report, the jobs number — are the biggest, most predictable volatility events on the calendar. They aren't just "news"; they're <em>structural liquidity events</em> that the whole market positions around. Understanding what these numbers measure, and the order-book trap that springs the moment they print, is essential macro-to-micro knowledge.</p>
+
+      <h3>What it does: the key scheduled releases</h3>
+      <p>These are the macro measurements that move markets most. Each is released on a fixed schedule, which is exactly why traders coil around them. Here's what each measures, how, and why the market cares:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Release</th><th>What &amp; how it's measured</th><th>What it means / market tie-in</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">FOMC decision</td><td>The Federal Reserve's interest-rate vote (8×/year), plus its statement and the Chair's press conference.</td><td>Sets the risk-free rate (Chapter 15) — the gravity of all assets. The single biggest scheduled mover; stocks, bonds, and the dollar all reprice instantly.</td></tr>
+          <tr><td class="co-name">CPI (Consumer Price Index)</td><td>Monthly. A government survey of the price of a fixed "basket" of goods &amp; services; reported as month-over-month and year-over-year % change.</td><td>The headline inflation gauge. Hot CPI ⇒ fear of higher rates ⇒ stocks/bonds fall; cool CPI ⇒ relief rally.</td></tr>
+          <tr><td class="co-name">PCE</td><td>Monthly. A broader inflation measure that adjusts for what people actually substitute toward — the <strong>Fed's preferred</strong> gauge.</td><td>What the Fed actually targets (~2%). Often moves rate expectations even more than CPI.</td></tr>
+          <tr><td class="co-name">Non-Farm Payrolls (the "jobs report")</td><td>Monthly (first Friday). A survey estimating how many jobs the economy added/lost, plus the unemployment rate and wage growth.</td><td>The pulse of the economy. Strong jobs = growth but maybe higher-for-longer rates; weak jobs = slowdown fears. Huge, immediate moves.</td></tr>
+          <tr><td class="co-name">GDP</td><td>Quarterly. The total value of everything the economy produced, annualized %.</td><td>The broadest scorecard of growth. Confirms expansion or recession (Chapter 25's business cycle).</td></tr>
+          <tr><td class="co-name">ISM / PMI surveys</td><td>Monthly. Surveys of purchasing managers; a reading above 50 = expansion, below 50 = contraction.</td><td>A fast, forward-looking read on manufacturing &amp; services activity — often turns before the hard data.</td></tr>
+          <tr><td class="co-name">Retail sales · jobless claims</td><td>Monthly / weekly. Consumer spending and new unemployment filings.</td><td>Real-time gauges of consumer health and the labor market between the big reports.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>The trigger: consensus vs. the actual print</h3>
+      <p>Here's the crucial mechanic that ties straight back to "markets are forward-looking" (Chapter 20): the market has <em>already priced in</em> the <strong>consensus expectation</strong> — economists' average forecast — before the number comes out. Price moves on the <strong>surprise</strong>: the gap between the <em>actual printed number</em> and that consensus. A "good" number that's <em>worse than expected</em> sells off; a "bad" number that's <em>better than feared</em> rallies. The headline alone tells you nothing; the headline <em>versus expectations</em> is everything.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>It's like a school report card when everyone already guessed your grade. If the class expected you to get a 90 and you got an 85, you're "in trouble" even though 85 is good — because reality came in below the bet. Markets trade the <em>difference</em> between the guess and the result, not the result itself.</p></div>
+
+      <h3>The players: who's racing the release</h3>
+      <p>Government data is distributed at a precise instant. <strong>Algorithmic news-scrapers</strong> and quantitative HFT desks (Chapter 28) are built to ingest the machine-readable release and fire orders in <em>microseconds</em> — far faster than any human can read the headline. They effectively race the transmission of the text from the government's servers to the exchange's matching engine. (Regulators have tightened "lock-up" distribution rules over the years precisely to stop anyone getting an unfair early peek.) By the time you read "CPI comes in hot" on your screen, the move has already happened.</p>
+
+      <h3>The trap: the passive liquidity sweep</h3>
+      <p>This is the macro-to-micro punchline. In the minutes <em>before</em> a major release, market-making algorithms protect themselves from the coming uncertainty (and from informed "toxic" flow) by <strong>widening their spreads or pulling their resting limit orders off the book entirely</strong> (recall passive liquidity and liquidity holes, Chapter 4). The book goes thin. When the number hits, retail traders trying to "trade the breakout" fire <em>market orders into a near-empty book</em> — getting severe slippage and often buying the very top tick — right before the market makers step back in and price snaps the other way.</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 31.1</p>
+        <p class="fig-sub">Why the book becomes a trap at the moment of release</p>
+        <svg viewBox="0 0 920 250" role="img" aria-label="Pre-news liquidity depth versus the news-impact liquidity hole">
+          <g font-family="inherit" text-anchor="middle">
+            <text x="235" y="28" font-size="12.5" font-weight="800" fill="#11814c">PRE-NEWS LIQUIDITY DEPTH</text>
+            <text x="685" y="28" font-size="12.5" font-weight="800" fill="#bf3c25">NEWS-IMPACT LIQUIDITY HOLE</text>
+            <line x1="460" y1="40" x2="460" y2="230" stroke="#dde3ec"/>
+
+            <!-- left: thick safe -->
+            <rect x="110" y="50"  width="250" height="44" rx="6" fill="#e2563f" fill-opacity=".22" stroke="#e2563f"/><text x="235" y="77" font-size="11.5" font-weight="700" fill="#bf3c25">Passive ASK limits</text>
+            <rect x="110" y="100" width="250" height="40" rx="6" fill="#243d28" stroke="#d6a52a"/><text x="235" y="125" font-size="11.5" font-weight="800" fill="#f4e6bd">CURRENT PRICE</text>
+            <rect x="110" y="146" width="250" height="44" rx="6" fill="#22b06b" fill-opacity=".22" stroke="#22b06b"/><text x="235" y="173" font-size="11.5" font-weight="700" fill="#11814c">Passive BID limits</text>
+            <text x="235" y="212" font-size="11" fill="#5b6b82">Thick book · tight, safe spread</text>
+
+            <!-- right: thin dangerous -->
+            <rect x="560" y="50"  width="250" height="44" rx="6" fill="none" stroke="#e2563f" stroke-dasharray="4 3"/><text x="685" y="77" font-size="11" fill="#bf3c25">↑ limit orders PULLED</text>
+            <rect x="560" y="100" width="250" height="40" rx="6" fill="#fdeeea" stroke="#e2563f" stroke-width="1.5"/><text x="685" y="118" font-size="11" font-weight="800" fill="#bf3c25">⚡ MARKET-ORDER GAP</text><text x="685" y="133" font-size="9.5" fill="#bf3c25">retail slips straight through</text>
+            <rect x="560" y="146" width="250" height="44" rx="6" fill="none" stroke="#22b06b" stroke-dasharray="4 3"/><text x="685" y="173" font-size="11" fill="#11814c">↓ spreads widen extremely</text>
+            <text x="685" y="212" font-size="11" fill="#5b6b82">Thin book · dangerous void</text>
+          </g>
+        </svg>
+        <p class="fig-cap">Same stock, seconds apart. Makers vacate the book ahead of the print to dodge toxicity; the retail "breakout" order then falls through the void, and price often reverses once liquidity returns.</p>
+      </div>
+
+      <div class="callout disrupt"><span class="lab">🚀 Emerging Disruption — Systematic De-Risking</span><p>A growing share of capital sits in <strong>risk-parity and volatility-targeting funds</strong> — multi-billion-dollar strategies that are <em>hardcoded</em> to hold less when volatility rises. When a macro surprise spikes the <strong>VIX</strong> (Chapter 15), these funds automatically <strong>market-sell their exposure all at once</strong>, regardless of any single company's fundamentals. The result can be a <em>systematic flash crash</em>: a self-reinforcing cascade of forced, mechanical selling that has nothing to do with the businesses being sold — and everything to do with a volatility number crossing a programmed threshold.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>"Trading the news" by firing a market order the instant the number drops is one of the fastest ways to donate money to the algos. You're slower than the machines (Chapter 28) <em>and</em> trading into the thinnest, most treacherous book of the day. The professional move is usually the opposite: <strong>do nothing</strong> through the release, let the whipsaw and reversal play out, and act only once liquidity and a real trend re-establish — if at all.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For a long-term investor, these events are noise to be endured, not traded — but knowing the calendar explains the otherwise-baffling 2% lurches on "no real news." For anyone tempted to trade around them, the lesson is humbling: the number itself matters less than (1) the surprise versus consensus and (2) the liquidity trap that surrounds the print. Respect both, or sit them out.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CHAPTER 32 ===================== -->
+  <section id="ch32">
+    <div class="wrap">
+      <div class="chapnum">Chapter 32</div>
+      <h2 class="chap">The Currency Choke Point: Central Bank Capital Cascades</h2>
+      <p class="lede">Underneath the stock market sits an even bigger ocean: the global flow of money chasing interest rates across countries. When central banks shift their policy rates, they don't just nudge bonds — they force trillions of dollars to rotate between currencies and markets, and that capital moves in violent cascades through a tiny set of mega-bank gatekeepers. This is the deepest macro plumbing of all.</p>
+
+      <h3>What it does: rate differentials move global capital</h3>
+      <p>Money flows toward where it's paid most for its risk. When the US Federal Reserve sets a higher rate than, say, the European Central Bank or the Bank of Japan, capital is pulled toward dollar assets. These <strong>interest-rate differentials</strong> between central banks force global macro funds to rotate enormous sums across international bond and equity "corridors" — and shifts in those differentials are among the most powerful forces in all of finance.</p>
+
+      <h3>The carry trade</h3>
+      <p>The classic expression of this is the <strong>carry trade</strong>: borrow money cheaply in a low-rate currency (for years, the Japanese yen), convert it, and invest it in a higher-rate currency or asset, pocketing the difference. It works smoothly — until a central bank moves. When the low-rate country unexpectedly <em>raises</em> rates (or the high-rate one cuts), the trade reverses: funds must buy back the borrowed currency all at once, and the unwind cascades across markets worldwide.</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>The carry trade is like borrowing money at 0% on one credit card to stick it in a savings account paying 5% — easy profit, until the 0% card suddenly charges interest and everyone scrambles to pay it back at the same moment. When a giant, crowded carry trade unwinds, the rush for the exit shakes markets far beyond the two currencies involved (the August 2024 yen unwind is a recent example).</p></div>
+
+      <h3>The mechanics: capital cascades, not smooth flows</h3>
+      <p>Capital doesn't glide between markets — it <strong>cascades</strong>. A central-bank policy shift ripples through institutional <strong>dark pools</strong> (Chapter 2) and dealer networks, repricing <strong>index futures</strong> before the cash stock market even opens. Because so much of this flow is leveraged and crowded into the same trades, the moves are lumpy and self-reinforcing: a repricing in rates triggers currency moves, which trigger futures repricing, which triggers equity and bond rotation — a chain reaction, not a gentle drift.</p>
+
+      <h3>The choke point: the primary dealers</h3>
+      <p>Here's the gatekeeper. The flow between central banks and the broader market doesn't happen directly — it's funneled through a small club of <strong>primary dealers</strong>: mega-banks (JPMorgan, Goldman Sachs, Barclays, Citi, and a handful of others) that are <em>legally designated and obligated</em> to intermediate. They're required to bid at government bond auctions, and they're the counterparties through which central banks conduct policy (open-market operations). All that global capital is forced through this narrow door — making the primary dealers a genuine structural choke point with privileged information about the flow.</p>
+
+      <div class="callout disrupt"><span class="lab">🚀 Emerging Disruption — Sentiment Sweepers</span><p>Central-bank communication is now a machine-speed battlefield. <strong>Natural-language-processing (NLP) systems</strong> ingest Fed and ECB speeches, statements, and meeting minutes <em>in real time</em>, scoring each word for "hawkish" vs. "dovish" tone and executing millions of derivative hedges and currency trades <strong>before a human can finish reading the headline</strong> on a terminal. A single unexpected adjective from a central banker can now trigger an automated, cross-asset repricing in milliseconds — collapsing the old advantage of the analyst who "reads the statement carefully."</p></div>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture</span><p>This is why a rate decision in Tokyo or a phrase in a Frankfurt press conference can sink US tech stocks overnight: global markets are one interconnected capital system, wired together by rate differentials and the dealer networks that intermediate them. The "stock market" you watch is the surface; these currency and rate cascades are the deep currents moving underneath it.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>You can't trade against trillion-dollar capital flows or front-run central banks — but understanding this layer explains the "why" behind market-wide moves that have nothing to do with any company's earnings. When everything falls together on a foreign rate surprise or a carry-trade unwind, that's the macro choke point at work, not a flaw in your portfolio. The seasoned response is the recurring one in this guide: stay diversified, avoid leverage that a cascade could margin-call, and don't mistake a global capital rotation for a verdict on the businesses you own.</p></div>
+    </div>
+  </section>
+
   <!-- ===================== GLOSSARY ===================== -->
   <section id="glossary">
     <div class="wrap">
@@ -2887,6 +2986,19 @@ footer b{color:#dce7f6}
         <dt>Gamma squeeze</dt><dd>Dealer hedging of bought calls forcing them to buy stock, driving a self-fulfilling spike.</dd>
         <dt>0DTE options</dt><dd>Zero-days-to-expiration options; their hedging concentrates flow into the session's final hours.</dd>
         <dt>Gamma exposure (GEX)</dt><dd>Whether dealers are net long gamma (dampening moves) or short gamma (amplifying them).</dd>
+        <dt>FOMC</dt><dd>The Federal Reserve committee that sets US interest rates; its decisions are the biggest scheduled market mover.</dd>
+        <dt>CPI</dt><dd>Consumer Price Index — the headline inflation gauge, measured from the price of a fixed basket of goods.</dd>
+        <dt>PCE</dt><dd>The broader inflation measure the Fed actually targets (~2%).</dd>
+        <dt>Non-Farm Payrolls</dt><dd>The monthly US jobs report — added/lost jobs, unemployment rate, and wages; a major mover.</dd>
+        <dt>GDP</dt><dd>Gross Domestic Product — the total value of everything an economy produces.</dd>
+        <dt>PMI / ISM</dt><dd>Purchasing-manager surveys; above 50 = expansion, below 50 = contraction.</dd>
+        <dt>Consensus / surprise</dt><dd>The forecast already priced in; markets move on the gap between the actual number and consensus.</dd>
+        <dt>Liquidity sweep</dt><dd>Market makers pulling orders before a news release, thinning the book into a trap.</dd>
+        <dt>Risk-parity / vol-targeting</dt><dd>Funds hardcoded to sell when volatility rises, which can cause systematic flash crashes.</dd>
+        <dt>Interest-rate differential</dt><dd>The gap between two central banks' rates, which pulls global capital toward the higher one.</dd>
+        <dt>Carry trade</dt><dd>Borrowing in a low-rate currency to invest in a higher-rate one; violent when it unwinds.</dd>
+        <dt>Primary dealer</dt><dd>A mega-bank legally obligated to intermediate between the central bank and the market.</dd>
+        <dt>Capital cascade</dt><dd>The lumpy, self-reinforcing rotation of global money triggered by a central-bank shift.</dd>
       </dl>
     </div>
   </section>
