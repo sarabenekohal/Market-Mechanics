@@ -1417,7 +1417,20 @@ footer b{color:#dce7f6}
 
       <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Leveraged and inverse ETFs are designed as <strong>day-trading tools</strong>, and the fund companies say so in the fine print. Beginners buy a "3× tech" or "inverse market" ETF as a long-term bet, then are baffled when it lags the index for months. They also carry high expense ratios. <strong>Rule of thumb: if you're not watching it intraday, you shouldn't own it.</strong> For ordinary investors, these are almost always a mistake.</p></div>
 
-      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For the vast majority of investors, a low-cost, broad <strong>index ETF or index mutual fund</strong> is the single best starting point: instant diversification, tiny fees, and tax efficiency, all in one trade. It captures "beta" (Chapter 14) cheaply and sidesteps the near-impossible game of beating the market. Steer clear of the leveraged/inverse cousins. If you remember one practical takeaway from this entire guide, it might be this one.</p></div>
+      <h3>The other decay: roll cost &amp; contango</h3>
+      <p>A second, completely different kind of decay hits ETFs that hold <strong>futures contracts</strong> instead of the real asset — most commodity ETFs (oil, natural gas) and volatility products (VIX ETNs). The cause isn't a daily reset; it's <strong>rolling</strong>. Futures expire every month, so to stay invested the fund must constantly <em>sell</em> the expiring contract and <em>buy</em> a later-dated one. When the later contract is <strong>more expensive</strong> than the expiring one — a normal state called <strong>contango</strong> — the fund is repeatedly selling low and buying high. Each roll loses a sliver, and those slivers compound into a steady bleed, <em>even if the spot price never moves.</em></p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Imagine you can't store oil, so to "own" it you keep buying month-long rain checks. Each month your old rain check expires and the new one costs a bit more. You keep paying that premium over and over — slowly losing money on the rain checks even if the price of oil stays exactly the same. That recurring cost is roll decay, and it's why a "flat" oil price can still leave an oil ETF down for the year.</p></div>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>An oil ETF holds a contract expiring this month at $80. To stay invested it must roll into next month's contract, which trades at $82 (contango). It sells at $80 and rebuys exposure at $82 — paying a ~2.5% premium just to roll. Do that every month with oil going nowhere and the fund quietly bleeds ~2–3% a month from rolling alone. (The reverse, <strong>backwardation</strong> — later contracts cheaper — actually <em>helps</em> the fund, but contango is the more common drag.)</p></div>
+
+      <p>So there are two structural decays to watch for, and they hit different products:</p>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--red)"><h5>Volatility decay</h5><p>Leveraged/inverse ETFs — from the <strong>daily reset</strong> compounding in choppy markets.</p></div>
+        <div class="card" style="border-top-color:var(--orange)"><h5>Roll / contango decay</h5><p>Futures-based commodity &amp; volatility ETFs — from <strong>rolling</strong> expiring contracts into pricier ones.</p></div>
+      </div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For the vast majority of investors, a low-cost, broad <strong>index ETF or index mutual fund</strong> is the single best starting point: instant diversification, tiny fees, and tax efficiency, all in one trade. It captures "beta" (Chapter 14) cheaply and sidesteps the near-impossible game of beating the market. Steer clear of the leveraged/inverse and futures-based cousins for long-term holding — the decay is baked into the <em>wrapper</em>, not bad luck. If you remember one practical takeaway from this entire guide, it might be this one.</p></div>
     </div>
   </section>
 
@@ -3157,6 +3170,9 @@ footer b{color:#dce7f6}
         <dt>Leveraged ETF</dt><dd>A fund amplifying an index's daily move (e.g. 3×); decays in choppy markets, for day-trading only.</dd>
         <dt>Inverse ETF</dt><dd>A fund that moves opposite an index, to bet on declines without shorting; also resets daily.</dd>
         <dt>Volatility decay</dt><dd>The erosion of leveraged/inverse ETF value over time from daily resets in choppy markets.</dd>
+        <dt>Roll decay</dt><dd>The bleed in futures-based ETFs from repeatedly rolling expiring contracts into pricier later ones.</dd>
+        <dt>Contango</dt><dd>When later-dated futures cost more than nearer ones — the usual cause of roll decay.</dd>
+        <dt>Backwardation</dt><dd>When later-dated futures cost less than nearer ones — roll actually adds value.</dd>
         <dt>Priced in</dt><dd>When known information or expectations are already reflected in the current price.</dd>
         <dt>Forward-looking</dt><dd>The market prices expected future results, so it moves on surprises vs. expectations.</dd>
         <dt>Short interest</dt><dd>The total number of a stock's shares currently sold short.</dd>
