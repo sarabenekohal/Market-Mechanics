@@ -1809,6 +1809,27 @@ footer b{color:#dce7f6}
 
       <p>The fee to borrow varies with demand. A normal, plentiful stock costs almost nothing to borrow. A stock everyone wants to short — but few want to lend — becomes "<strong>hard to borrow</strong>," and the fee can spike to double-digit annual rates. That borrowing cost is a real, ongoing drag on every short position, and a sky-high borrow fee is itself a warning sign that a short is crowded and squeeze-prone.</p>
 
+      <h4>Two different charges: the locate fee vs. the borrow fee</h4>
+      <p>Beginners constantly confuse these because both hit on the short side — but they're fundamentally different. The clean mental model: a <strong>locate fee is a one-time cover charge</strong> to get in the door; a <strong>borrow fee is the ongoing daily rent</strong> for staying.</p>
+      <p><strong>The locate fee</strong> is a one-time, flat charge your broker bills <em>up front</em> just to find and secure the shares of a hard-to-borrow stock <em>before</em> you're allowed to short it. The reason is legal: under <strong>Regulation SHO (Rule 204)</strong>, a broker can't execute your short sale unless it has "reasonable grounds" to believe it can actually deliver the shares at settlement. For an easy-to-borrow stock the broker skips this step; for a heavily-shorted one, it has to actively hunt down those rare shares through other clearing firms and institutional lending desks, and it charges you a flat fee for that labor. You pay it the moment you accept the locate — whether you hold for five minutes or five months, and <em>even if you cancel before the order fills</em>.</p>
+      <p><strong>The borrow fee</strong> is the ongoing, annualized interest rate you pay for <em>every calendar day</em> the short stays open — exactly like interest on a loan. It's calculated on the total dollar value of the shorted shares, divided over the days in the year, and billed daily. Critically, the rate floats with supply and demand: if a stock gets squeezed, its borrow fee can leap from, say, 5% to 150% annualized <em>overnight</em>, and you're billed the new rate for as long as you hold.</p>
+
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Feature</th><th>Locate fee</th><th>Borrow fee</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">When it's charged</td><td>One-time, up front before execution.</td><td>Daily, for every day you hold the position.</td></tr>
+          <tr><td class="co-name">Pricing structure</td><td>A flat dollar amount or static per-share fee.</td><td>An annualized % rate that changes dynamically.</td></tr>
+          <tr><td class="co-name">Can it change on you?</td><td>No — once you accept it, the price is frozen.</td><td>Yes — it can skyrocket intraday if the stock gets crowded.</td></tr>
+          <tr><td class="co-name">Which stocks have it?</td><td>Only hard-to-borrow (HTB) stocks.</td><td>All shorts, but near-zero for easy-to-borrow names.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>You short $10,000 of a hot, heavily-shorted stock. Your broker charges a <strong>$50 locate fee</strong> up front just to secure the shares — gone the instant you accept it, win or lose. The borrow fee is running at <strong>60% annualized</strong>, so the daily rent is roughly $10,000 × 60% ÷ 365 ≈ <strong>$16.40 every day</strong> you hold. Wait three weeks for the price to fall and that's $50 + ~$345 in borrow — nearly $400 in pure carrying cost before the trade is even right. And if a squeeze spikes the borrow rate to 150%, your daily rent more than doubles overnight.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>Shorting a volatile, crowded stock isn't just risky on price — it's expensive to simply <em>hold</em>. The locate fee plus a compounding daily borrow charge quietly eat your margin every day you wait to be right, and the borrow rate can balloon at the worst moment (right as a squeeze runs against you). Always check both costs <em>before</em> shorting; on the most heavily-shorted names they can dwarf the spread and turn a correct call into a losing trade.</p></div>
+
       <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>If you hold popular stocks in a <em>margin</em> account, your broker may be <strong>lending your shares out</strong> to short sellers — and pocketing most of the fee. Usually harmless, but while your shares are on loan you can lose your voting rights and the protection of owning the actual security. Some brokers offer to share the lending income with you; it's worth knowing it's happening.</p></div>
 
       <h3>The short squeeze, step by step</h3>
@@ -3014,6 +3035,9 @@ footer b{color:#dce7f6}
         <dt>Short float %</dt><dd>Short interest as a percentage of float; the key gauge of how crowded a short bet is.</dd>
         <dt>Days to cover</dt><dd>Short interest ÷ average daily volume — how long shorts would need to buy back; squeeze fuel.</dd>
         <dt>Cost to borrow</dt><dd>The annual fee to borrow shares to short; spikes when a stock is "hard to borrow."</dd>
+        <dt>Locate fee</dt><dd>A one-time upfront charge to secure shares of a hard-to-borrow stock before shorting it.</dd>
+        <dt>Borrow fee</dt><dd>The ongoing daily (annualized %) rent paid for every day a short position stays open.</dd>
+        <dt>Regulation SHO</dt><dd>The rule requiring a broker to reasonably locate deliverable shares before executing a short sale.</dd>
         <dt>Buy-in</dt><dd>When a share lender recalls shares, forcing a short to cover immediately at any price.</dd>
         <dt>Meme stock</dt><dd>A stock driven by social-media hype and crowd coordination rather than fundamentals (e.g. GameStop, 2021).</dd>
         <dt>Greater fool theory</dt><dd>Buying an overpriced asset hoping to sell it to someone willing to pay even more.</dd>
