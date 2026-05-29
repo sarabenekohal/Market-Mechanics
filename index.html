@@ -293,6 +293,7 @@ footer b{color:#dce7f6}
       <a href="#ch33">33 · Currency & Central Bank Cascades</a>
       <a href="#ch34">34 · Keyword & Sentiment Scraping</a>
       <a href="#ch35">35 · The Quant Risk Toolkit</a>
+      <a href="#ch36">36 · Factor Models & Construction</a>
       <a href="#players">The Players (Who's Who)</a>
       <a href="#glossary">Glossary</a>
     </nav>
@@ -1797,6 +1798,23 @@ footer b{color:#dce7f6}
 
       <div class="callout note"><span class="lab">🌍 Big Picture</span><p>There are cousins of the Sharpe ratio worth knowing the names of: the <strong>Sortino ratio</strong> only counts <em>downside</em> volatility (punishing losses but not happy upside surprises), and <strong>maximum drawdown</strong> measures the worst peak-to-trough fall you'd have lived through. Together these answer "how much pain did I sign up for to get this return?"</p></div>
 
+      <h4>The family of risk-adjusted ratios</h4>
+      <p>Sharpe is the famous one, but each ratio divides return by a <em>different</em> notion of risk. Knowing which is which lets you read any fund fact-sheet:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Ratio</th><th>Return ÷ …</th><th>Answers</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Sharpe</td><td>Total volatility (std dev)</td><td>Return per unit of <em>total</em> risk. The default.</td></tr>
+          <tr><td class="co-name">Sortino</td><td><em>Downside</em> volatility only</td><td>Return per unit of <em>bad</em> risk — ignores upside swings.</td></tr>
+          <tr><td class="co-name">Treynor</td><td>Beta (market risk)</td><td>Return per unit of <em>systematic</em> (undiversifiable) risk.</td></tr>
+          <tr><td class="co-name">Information ratio</td><td>Tracking error</td><td>How much a manager beat their <em>benchmark</em> per unit of how far they strayed from it. The key "active skill" gauge.</td></tr>
+          <tr><td class="co-name">Calmar</td><td>Max drawdown</td><td>Return per unit of <em>worst-loss pain</em>. Beloved by trend-followers.</td></tr>
+          <tr><td class="co-name">Jensen's alpha</td><td>(not a ratio)</td><td>Return <em>above</em> what CAPM predicts for your beta — the formal regression version of alpha (Ch 15, 36).</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><strong>Tracking error</strong> (the Information ratio's denominator) is just the standard deviation of a portfolio's <em>active</em> returns — how much it deviates from its benchmark. Low tracking error = hugs the index; high = makes big independent bets. (The fuller factor-model machinery behind alpha and beta lives in Chapter 36.)</p>
+
       <h3>The VIX: the market's fear gauge</h3>
       <p>The <strong>VIX</strong> is an index that measures the market's <em>expected</em> volatility over the next 30 days, derived from the prices people are paying for S&amp;P 500 options. Because people pay up for options (insurance) when they're scared, the VIX spikes during panics and sits low during calm. It's nicknamed the "fear index."</p>
 
@@ -3206,6 +3224,64 @@ footer b{color:#dce7f6}
     </div>
   </section>
 
+  <!-- ===================== CHAPTER 36 ===================== -->
+  <section id="ch36">
+    <div class="wrap">
+      <div class="chapnum">Chapter 36</div>
+      <h2 class="chap">Factor Models &amp; Advanced Construction</h2>
+      <p class="lede">Chapter 15 gave you alpha and beta as a single market relationship. Real quant goes further: it explains returns with <em>several</em> systematic factors, fits them with regressions, and uses the result to build portfolios more cleverly than naïve mean-variance. This is the deep end — academic but foundational. The aim is to understand the vocabulary and the logic, not to run the regressions by hand.</p>
+
+      <h3>Factor models: from CAPM to multi-factor</h3>
+      <p>A <strong>factor model</strong> says a stock's return is explained by its exposure to a handful of systematic drivers, plus a leftover that's unique to the stock. The models build on each other:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Model</th><th>Factors</th><th>The idea</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">CAPM (1 factor)</td><td>Market</td><td>Return is explained by market exposure (beta) alone (Ch 15, 17). Everything else is "alpha" or noise.</td></tr>
+          <tr><td class="co-name">Fama-French 3-factor</td><td>Market · Size (SMB) · Value (HML)</td><td>Adds that <em>small</em> companies and <em>cheap/value</em> companies have historically earned extra return. SMB = "small minus big," HML = "high minus low" book-to-market.</td></tr>
+          <tr><td class="co-name">Carhart 4-factor</td><td>+ Momentum (UMD)</td><td>Adds momentum (Ch 22): recent winners keep winning. "Up minus down."</td></tr>
+          <tr><td class="co-name">Fama-French 5-factor</td><td>+ Profitability (RMW) · Investment (CMA)</td><td>Adds that profitable, conservatively-investing firms outperform.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>CAPM says a stock's return rides on one wave — the market. Multi-factor models say there are several waves at once — the market wave, a "small-company" wave, a "cheap-stock" wave, a "momentum" wave. A stock's return is how much it's lifted by each wave, plus its own splash. Most of what looked like a manager's "alpha" turns out to be exposure to these known waves.</p></div>
+
+      <h4>Jensen's alpha &amp; R-squared</h4>
+      <p>When you regress a portfolio's returns on these factors, two outputs matter. The intercept is <strong>Jensen's alpha</strong> — return the factors <em>can't</em> explain, the genuine skill (or luck) left over. The <strong>R-squared</strong> tells you what fraction of the portfolio's movement the factors explain; a high R² means "you're basically a bundle of known factors," a low R² means something idiosyncratic is going on. The sobering quant finding: once you account for these factors, most apparent alpha vanishes.</p>
+
+      <h3>Barra-style cross-sectional regression: how factor models are fit</h3>
+      <p>There are two ways to actually estimate a factor model, and the distinction matters:</p>
+      <div class="grid g2">
+        <div class="card" style="border-top-color:var(--sky)"><h5>Time-series regression (Fama-French style)</h5><p>Take <em>one stock</em> and regress its returns <em>over time</em> against the factor returns to estimate its sensitivities (loadings).</p></div>
+        <div class="card" style="border-top-color:var(--purple)"><h5>Cross-sectional regression (Barra style)</h5><p>At <em>each date</em>, regress the returns of <em>all stocks at once</em> against their known characteristics (size, value, momentum, sector). This <em>solves for</em> the factor returns that day.</p></div>
+      </div>
+      <p>The <strong>Barra cross-sectional</strong> approach is the industry-standard risk-model engine: it starts from observable stock characteristics as the factor exposures, then backs out what each factor "earned" each period. That's what powers the factor risk decomposition and MCTR from Chapter 35 — it's the machinery that answers "how much of my risk is the momentum factor?"</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English — the two directions</span><p>Time-series asks: "<em>Given the factor waves, how much does this one boat bob?</em>" Cross-sectional asks: "<em>Looking at every boat's bobbing today, how big was each wave?</em>" Barra does the second, across thousands of stocks, every day.</p></div>
+
+      <h3>Advanced portfolio construction</h3>
+      <p>Plain Markowitz MVO (Ch 17) is famously fragile — it amplifies the noise in its inputs and spits out extreme, unstable weights. Three established refinements tame it:</p>
+
+      <h4>1. Factor-model covariance</h4>
+      <p>Instead of feeding the optimizer a noisy raw sample covariance matrix, build the covariance <em>from the factor model</em>. With a handful of factors you estimate far fewer parameters, so the matrix is more stable and better-conditioned for optimization. (Ledoit-Wolf shrinkage, Ch 35, is the other standard fix for the same problem.)</p>
+
+      <h4>2. Black-Litterman</h4>
+      <p>The <strong>Black-Litterman model</strong> is the established way to put <em>your own views</em> into an optimizer without it blowing up. It starts from the market's <strong>equilibrium</strong> portfolio (what you'd hold if you had no opinions — reverse-engineered from market caps), then lets you blend in specific <strong>views</strong> ("I think tech beats utilities by 3%") with a <strong>confidence</strong> weight on each. The result is a sensible, diversified tilt toward your convictions — not the wild all-in bets naïve MVO produces. It's the rigorous answer to "how do I express conviction in a portfolio?"</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>Naïve MVO is like a contractor who, told one room might be slightly nicer, knocks down the whole house to rebuild around it. Black-Litterman starts from the sensible existing house (the market), and nudges it toward your preferences <em>in proportion to how sure you are</em> — a renovation, not a demolition.</p></div>
+
+      <h4>3. Risk parity</h4>
+      <p><strong>Risk parity</strong> flips the construction question. Instead of allocating <em>dollars</em>, it allocates <em>risk</em> — sizing each holding so every one contributes the <em>same</em> Marginal Contribution to Risk (Ch 35). A classic 60/40 stock/bond split is ~90% <em>risk</em> from stocks; a risk-parity version holds far more bonds (often levered up) so stocks and bonds contribute equally. It aims for smoother, more balanced risk — though it leans on leverage and on bonds behaving as a diversifier (which can fail, as in 2022).</p>
+
+      <div class="callout note"><span class="lab">🌍 Big Picture — two more tools to know by name</span><p><strong>Monte Carlo simulation</strong>: rather than one formula, run thousands of randomized future paths to see the <em>range</em> of outcomes — widely used for VaR and retirement "will my money last?" planning. <strong>GARCH</strong>: a volatility model (a step beyond EWMA, Ch 35) that captures <em>volatility clustering</em> — the fact that calm follows calm and turbulence follows turbulence — to forecast how volatility itself evolves.</p></div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap</span><p>More sophisticated does not mean safer. Every model here is only as good as its inputs and assumptions — factor premia can vanish for a decade, optimizers maximize <em>estimation error</em> as eagerly as return, and "diversifiers" can correlate to 1 in a crisis. The 1998 LTCM collapse and 2008 are monuments to brilliant quant models trusted past their limits. Use these to <em>understand structure</em>, not to manufacture false precision.</p></div>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters</span><p>For a beginner this chapter is mostly <em>literacy</em>: it lets you read quant research, fund factsheets, and risk reports without bluffing. The practical distillation is humbling and freeing at once — most "alpha" is really factor exposure you can buy cheaply, naïve optimization is a trap, and even the best models break when their assumptions do. The same throughline as the whole book: understand the machine, respect its limits, and don't confuse sophistication with an edge.</p></div>
+    </div>
+  </section>
+
   <!-- ===================== THE PLAYERS ===================== -->
   <section id="players">
     <div class="wrap">
@@ -3330,7 +3406,6 @@ footer b{color:#dce7f6}
         <dt>Correlation</dt><dd>Whether two assets move together (+1), oppositely (−1), or independently (0).</dd>
         <dt>Diversification</dt><dd>Combining assets that move differently to reduce risk for free.</dd>
         <dt>Efficient frontier</dt><dd>The set of portfolios with the most return for each level of risk.</dd>
-        <dt>CAPM</dt><dd>The model that says expected return depends on systematic (non-diversifiable) risk.</dd>
         <dt>Position sizing</dt><dd>Deciding how much money to put into a single trade.</dd>
         <dt>Leverage</dt><dd>Using borrowed money to amplify gains — and losses.</dd>
         <dt>Margin</dt><dd>Borrowing from your broker using your investments as collateral.</dd>
@@ -3539,6 +3614,21 @@ footer b{color:#dce7f6}
         <dt>Effective number of bets</dt><dd>How many truly independent bets a portfolio holds, after accounting for correlations.</dd>
         <dt>Factor decomposition</dt><dd>Splitting portfolio risk into macro factors (market, size, value, momentum, sectors).</dd>
         <dt>Marginal Contribution to Risk (MCTR)</dt><dd>How much each position adds to total portfolio risk, correlations included; sums to 100%.</dd>
+        <dt>Factor model</dt><dd>Explains returns via exposure to systematic factors (market, size, value, momentum…) plus a residual.</dd>
+        <dt>CAPM</dt><dd>The one-factor model: return explained by market exposure (beta) alone.</dd>
+        <dt>Fama-French 3-factor</dt><dd>Market + size (SMB) + value (HML) factors.</dd>
+        <dt>Carhart 4-factor</dt><dd>Fama-French plus a momentum (UMD) factor.</dd>
+        <dt>Jensen's alpha</dt><dd>The return a factor regression can't explain — the formal regression measure of skill.</dd>
+        <dt>R-squared</dt><dd>The fraction of a portfolio's movement explained by its factors/benchmark.</dd>
+        <dt>Cross-sectional regression</dt><dd>Barra-style: regress all stocks' returns at a date on their characteristics to back out factor returns.</dd>
+        <dt>Tracking error</dt><dd>The standard deviation of a portfolio's returns relative to its benchmark.</dd>
+        <dt>Information ratio</dt><dd>Active return ÷ tracking error — the key gauge of active-management skill.</dd>
+        <dt>Treynor ratio</dt><dd>Excess return ÷ beta — return per unit of systematic risk.</dd>
+        <dt>Calmar ratio</dt><dd>Return ÷ maximum drawdown.</dd>
+        <dt>Black-Litterman</dt><dd>A model blending market-equilibrium weights with the investor's confidence-weighted views.</dd>
+        <dt>Risk parity</dt><dd>Constructing a portfolio so each holding contributes equal risk, not equal dollars.</dd>
+        <dt>Monte Carlo simulation</dt><dd>Running many randomized future paths to map the range of outcomes.</dd>
+        <dt>GARCH</dt><dd>A volatility model capturing volatility clustering (calm follows calm, turbulence follows turbulence).</dd>
         <dt>Bond ladder</dt><dd>A staircase of bonds with staggered maturities; one rung matures each period and is reinvested at the long end.</dd>
         <dt>Treasury / CD ladder</dt><dd>The bond ladder built from US Treasuries or bank CDs.</dd>
         <dt>Barbell strategy</dt><dd>Holding only short and long bonds, skipping the middle — a bet, not an averaging.</dd>
