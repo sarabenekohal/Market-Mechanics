@@ -292,6 +292,7 @@ footer b{color:#dce7f6}
       <a href="#ch32">32 · The Macro Trigger Layer</a>
       <a href="#ch33">33 · Currency & Central Bank Cascades</a>
       <a href="#ch34">34 · Keyword & Sentiment Scraping</a>
+      <a href="#ch35">35 · The Quant Risk Toolkit</a>
       <a href="#players">The Players (Who's Who)</a>
       <a href="#glossary">Glossary</a>
     </nav>
@@ -3108,6 +3109,103 @@ footer b{color:#dce7f6}
     </div>
   </section>
 
+  <!-- ===================== CHAPTER 35 ===================== -->
+  <section id="ch35">
+    <div class="wrap">
+      <div class="chapnum">Chapter 35</div>
+      <h2 class="chap">The Quant Risk Toolkit</h2>
+      <p class="lede">Chapters 16–17 gave you the foundations — volatility, the Sharpe ratio, correlation, diversification. This chapter is the next rung up: the established risk measures real quant desks compute on a portfolio's return history. None of it requires fancy AI — it's all deterministic math on past returns. The goal here is <em>literacy</em>: to understand what each number means, how it's built, and where it lies to you.</p>
+
+      <h3>Value at Risk (VaR): the one-number loss gauge</h3>
+      <p><strong>Value at Risk</strong> answers: "How bad is a <em>normal</em> bad day?" Formally, VaR at a confidence level (say 95%) over a horizon (say 1 day) is the loss you should <em>not</em> exceed on 95% of days. A 1-day 95% VaR of $4,000 means: on about 19 of every 20 days you lose less than $4,000 — and roughly 1 day in 20 is worse. Two dials define it: the <strong>confidence level</strong> (95% or 99%) and the <strong>horizon</strong> (1-day, 10-day).</p>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English</span><p>VaR is a "worst normal day" estimate. It draws a line and says "you'll usually lose less than this." It does <em>not</em> say what happens on the truly ugly days beyond the line — that's its famous blind spot (and why it's paired with Expected Shortfall, below).</p></div>
+
+      <p>There are three standard ways to estimate it — same question, different assumptions:</p>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>Method</th><th>How it works</th><th>Strength / weakness</th></tr></thead>
+        <tbody>
+          <tr><td class="co-name">Parametric (variance-covariance)</td><td>Assume returns follow a normal bell curve. VaR ≈ portfolio volatility × a z-score (1.65 for 95%, 2.33 for 99%).</td><td>Fast and simple — but <em>understates</em> real risk because markets have fatter tails than a bell curve.</td></tr>
+          <tr><td class="co-name">Historical</td><td>No assumptions. Line up your actual past daily returns and read off the 5th-percentile (95%) or 1st-percentile (99%) worst day.</td><td>Captures real-world weirdness — but is limited to events that already happened in your sample.</td></tr>
+          <tr><td class="co-name">Cornish-Fisher (modified)</td><td>Start parametric, then <em>adjust the z-score</em> for the distribution's actual <strong>skew</strong> and <strong>kurtosis</strong> (defined below).</td><td>A middle ground: keeps the formula but widens it for fat tails and lopsidedness.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout plain"><span class="lab">🧒 Plain English — skew &amp; kurtosis</span><p><strong>Skewness</strong> = how lopsided the returns are (stocks tend to be negatively skewed: many small gains, occasional brutal crashes). <strong>Kurtosis</strong> = how "fat" the tails are — how often extreme moves happen versus what a bell curve predicts. Real markets have high kurtosis, which is exactly why plain parametric VaR is too optimistic.</p></div>
+
+      <h4>Scaling across time</h4>
+      <p>To convert a 1-day VaR to a 10-day VaR, quants use the <strong>square-root-of-time rule</strong>: multiply by √10 ≈ 3.16 (it assumes returns are independent day to day). So a $4,000 1-day VaR becomes roughly $12,600 over 10 days.</p>
+
+      <div class="callout emerging"><span class="lab">🧮 Worked Example</span><p>A $100,000 portfolio has a daily volatility of 1.5% (= $1,500). <strong>Parametric 95% 1-day VaR</strong> = 1.65 × $1,500 ≈ <strong>$2,475</strong>. At 99% it's 2.33 × $1,500 ≈ <strong>$3,495</strong>. Now suppose the <em>historical</em> method — using actual past returns with their fat tails — gives a 95% VaR of <strong>$3,200</strong>. The gap ($3,200 vs $2,475) is the fat-tail reality the bell curve missed. Cornish-Fisher would land somewhere in between by adjusting for skew/kurtosis.</p></div>
+
+      <h3>Expected Shortfall (CVaR): how bad the bad days really get</h3>
+      <p>VaR's weakness is that it's silent about the tail beyond the line. <strong>Expected Shortfall (ES)</strong> — also called <strong>Conditional VaR (CVaR)</strong> — fixes this: it's the <em>average</em> loss on the days that <em>do</em> breach VaR. If your 95% VaR is $3,200, the CVaR is the mean of all losses worse than $3,200 — say $5,100. It's always ≥ VaR and is the more honest measure of true tail pain (and, unlike VaR, it's mathematically "well-behaved" for optimization).</p>
+
+      <div class="fig light">
+        <p class="fig-title">Figure 35.1</p>
+        <p class="fig-sub">VaR vs. Expected Shortfall on the distribution of returns</p>
+        <svg viewBox="0 0 920 240" role="img" aria-label="Bell curve of returns with VaR threshold and the shaded tail averaged by CVaR">
+          <g font-family="inherit">
+            <path d="M70 200 C 250 200, 320 40, 460 40 C 600 40, 670 200, 850 200" fill="#eef3fa" stroke="#2f7df6" stroke-width="2"/>
+            <!-- shaded tail left of VaR -->
+            <path d="M70 200 C 160 200, 200 130, 235 110 L 235 200 Z" fill="#e2563f" fill-opacity=".35" stroke="none"/>
+            <line x1="235" y1="40" x2="235" y2="210" stroke="#bf3c25" stroke-width="2" stroke-dasharray="4 3"/>
+            <text x="235" y="228" font-size="11.5" font-weight="700" fill="#bf3c25" text-anchor="middle">VaR threshold (95%)</text>
+            <text x="150" y="160" font-size="10.5" fill="#bf3c25" text-anchor="middle">worst 5%</text>
+            <path d="M120 150 L 90 185" stroke="#bf3c25" stroke-width="1"/>
+            <text x="90" y="120" font-size="11" font-weight="700" fill="#a01b06">CVaR = average loss</text>
+            <text x="90" y="135" font-size="11" font-weight="700" fill="#a01b06">inside this red tail</text>
+            <text x="600" y="120" font-size="11" fill="#5b6b82">most days cluster</text>
+            <text x="600" y="135" font-size="11" fill="#5b6b82">near the average →</text>
+          </g>
+        </svg>
+        <p class="fig-cap">VaR is the line where the worst 5% begins. CVaR is the <em>average</em> of everything in the red tail beyond it — so it tells you not just "where bad starts" but "how bad bad gets."</p>
+      </div>
+
+      <div class="callout choke"><span class="lab">⚠️ Rookie Trap — VaR's false comfort</span><p>VaR breeds dangerous overconfidence: a "$4k VaR" feels like a cap, but it's explicitly the loss you exceed <em>5% of the time</em>, and it says nothing about how catastrophic those breaches are. Over-reliance on parametric VaR (which assumes tidy bell curves) was a real contributor to the 2008 blowups — the "25-standard-deviation days, several days in a row" that supposedly can't happen. Always read VaR <em>with</em> CVaR, and never treat either as a hard ceiling.</p></div>
+
+      <h3>Estimating volatility: not all averages are equal</h3>
+      <p>Volatility (Ch 16) is the raw input to most of this, and <em>how</em> you estimate it matters:</p>
+      <div class="kv">
+        <dt>Realized (historical)</dt><dd>Plain standard deviation of past returns — every day weighted equally. Simple, but slow to notice a regime change.</dd>
+        <dt>EWMA</dt><dd>Exponentially-Weighted Moving Average — weights <em>recent</em> days more, decaying older ones by a factor λ. RiskMetrics' classic λ = 0.94 means each prior day counts 94% as much as the next. Reacts fast when markets turn turbulent.</dd>
+        <dt>Rolling-window</dt><dd>Realized vol recomputed over a moving window (e.g. 30-day), plotted over time.</dd>
+        <dt>Vol cone</dt><dd>A chart of the historical min / median / max of volatility at different horizons, so you can see whether <em>today's</em> vol is high or low versus its own history.</dd>
+      </div>
+      <div class="callout plain"><span class="lab">🧒 Plain English — why EWMA?</span><p>Equal-weighting treats a calm day from two months ago the same as yesterday's panic. EWMA says "recent news matters more," fading the past smoothly. That's why a risk desk's EWMA vol jumps the moment a crisis starts, while a 60-day simple average lags for weeks.</p></div>
+
+      <h3>Taming beta: shrinkage</h3>
+      <p>A raw rolling beta (Ch 15) computed from a short sample is <em>noisy</em> — and extreme betas tend to be partly luck that drifts back toward the market average over time. <strong>Beta shrinkage</strong> pulls the estimate toward 1.0 to de-noise it:</p>
+      <ul>
+        <li><strong>Blume</strong> — a fixed blend, roughly <em>shrunk β = ⅔ × raw β + ⅓ × 1.0</em>.</li>
+        <li><strong>Vasicek</strong> — smarter: it shrinks <em>more</em> when your raw estimate is statistically noisier (small sample, high error) and less when it's well-measured.</li>
+      </ul>
+      <p>The payoff: shrunk betas are more stable and more accurate <em>going forward</em> than the raw number — which is why professional data providers report adjusted, not raw, betas.</p>
+
+      <h3>Cleaning the correlation matrix</h3>
+      <p>Correlation (Ch 17) drives diversification and optimization — but estimating it across many assets is treacherous, because a raw matrix from limited data is full of noise (and can be mathematically unstable inside an optimizer).</p>
+      <div class="kv">
+        <dt>Pearson (sample)</dt><dd>The ordinary correlation you already know. Fine for a few assets; noisy for many.</dd>
+        <dt>Ledoit-Wolf shrinkage</dt><dd>Blends the noisy sample matrix with a simple, stable "target" matrix, producing a cleaner estimate that behaves far better in optimization. The matrix-level version of beta shrinkage.</dd>
+        <dt>Rolling-window</dt><dd>Recompute over a moving window to watch correlations change — they notoriously spike toward 1 in a crisis (Ch 17).</dd>
+      </div>
+
+      <h4>Effective number of bets</h4>
+      <p>If you hold 20 positions but they're all highly correlated, you don't really have 20 independent bets — maybe 4. The <strong>effective number of bets</strong> collapses the whole correlation structure into one number answering "how many <em>truly independent</em> bets am I actually making?" It's a far better diversification gauge than simply counting holdings — a portfolio of 30 tech stocks might score an effective 3.</p>
+
+      <h3>Risk decomposition: where is the risk <em>coming from</em>?</h3>
+      <p>Total portfolio volatility is one number; the useful question is what <em>drives</em> it. Two standard lenses:</p>
+      <ul>
+        <li><strong>Factor decomposition</strong> — split risk into the macro <strong>factors</strong> behind it (market, size, value, momentum, sectors), à la the Barra model. It answers "how much of my risk is a momentum tilt vs. plain market exposure?"</li>
+        <li><strong>Marginal Contribution to Risk (MCTR)</strong> — how much each <em>position</em> adds to total portfolio risk, <em>accounting for its correlations</em> — not just its standalone volatility. The contributions sum to 100% of portfolio risk.</li>
+      </ul>
+
+      <div class="callout investor"><span class="lab">📈 Why It Matters — standalone risk ≠ risk contribution</span><p>The single most useful insight here: a position's <em>own</em> volatility is <strong>not</strong> its contribution to <em>portfolio</em> risk. A wild-but-uncorrelated position can <em>lower</em> total risk (it's a diversifier), while a calm position that's correlated with everything else can be a top risk <em>contributor</em>. MCTR captures exactly this — it's why quants manage risk at the portfolio level, by correlation-aware contribution, not by eyeballing each holding's volatility in isolation. Everything in this chapter is just disciplined ways of asking the same question this whole book asks: <em>am I being paid enough for the risk I'm actually taking — and do I even know how much that is?</em></p></div>
+    </div>
+  </section>
+
   <!-- ===================== THE PLAYERS ===================== -->
   <section id="players">
     <div class="wrap">
@@ -3426,6 +3524,21 @@ footer b{color:#dce7f6}
         <dt>Counterparty risk</dt><dd>The risk the other side of a contract fails to pay; why clearing houses exist.</dd>
         <dt>Cost of carry</dt><dd>Storage, insurance, and financing costs that make later-dated futures pricier (causing contango).</dd>
         <dt>Path dependency</dt><dd>When a result depends on the route taken, not just start and end — the core of volatility decay.</dd>
+        <dt>Value at Risk (VaR)</dt><dd>The loss you shouldn't exceed at a given confidence (e.g. 95%) over a horizon (e.g. 1 day).</dd>
+        <dt>Parametric VaR</dt><dd>VaR assuming a normal bell curve: volatility × a z-score.</dd>
+        <dt>Historical VaR</dt><dd>VaR read off the empirical percentile of actual past returns.</dd>
+        <dt>Cornish-Fisher VaR</dt><dd>Parametric VaR adjusted for skew and kurtosis (fat tails).</dd>
+        <dt>Expected Shortfall (CVaR)</dt><dd>The average loss on the days that breach VaR — the true tail-pain measure.</dd>
+        <dt>Skewness</dt><dd>How lopsided a return distribution is (stocks lean to occasional big losses).</dd>
+        <dt>Kurtosis</dt><dd>How fat the tails are — how often extreme moves happen vs. a bell curve.</dd>
+        <dt>Square-root-of-time rule</dt><dd>Scaling 1-day risk to N days by multiplying by √N.</dd>
+        <dt>EWMA volatility</dt><dd>Exponentially-weighted volatility (RiskMetrics λ≈0.94) that weights recent days more.</dd>
+        <dt>Vol cone</dt><dd>A chart of historical min/median/max volatility by horizon, to judge if today's vol is high or low.</dd>
+        <dt>Beta shrinkage</dt><dd>Pulling a noisy raw beta toward 1.0 (Blume = fixed blend; Vasicek = noise-weighted).</dd>
+        <dt>Ledoit-Wolf shrinkage</dt><dd>Blending a noisy sample correlation/covariance matrix with a stable target for cleaner estimates.</dd>
+        <dt>Effective number of bets</dt><dd>How many truly independent bets a portfolio holds, after accounting for correlations.</dd>
+        <dt>Factor decomposition</dt><dd>Splitting portfolio risk into macro factors (market, size, value, momentum, sectors).</dd>
+        <dt>Marginal Contribution to Risk (MCTR)</dt><dd>How much each position adds to total portfolio risk, correlations included; sums to 100%.</dd>
         <dt>Bond ladder</dt><dd>A staircase of bonds with staggered maturities; one rung matures each period and is reinvested at the long end.</dd>
         <dt>Treasury / CD ladder</dt><dd>The bond ladder built from US Treasuries or bank CDs.</dd>
         <dt>Barbell strategy</dt><dd>Holding only short and long bonds, skipping the middle — a bet, not an averaging.</dd>
